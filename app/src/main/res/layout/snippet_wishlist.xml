@@ -17,7 +17,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semibold"
-                    android:text="Wishlist"
+                    android:text="Wishlist (wishes)"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
 
