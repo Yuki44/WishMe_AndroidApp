@@ -5,10 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/snippet_home"></include>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/emailET"
@@ -17,9 +30,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="130dp"
-
             android:ems="10"
             android:hint="Email"
+            android:imeOptions="actionDone"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -31,6 +44,7 @@
             android:layout_marginTop="206dp"
             android:ems="10"
             android:hint="Password"
+            android:imeOptions="actionDone"
             android:inputType="textPassword" />
 
         <Button
