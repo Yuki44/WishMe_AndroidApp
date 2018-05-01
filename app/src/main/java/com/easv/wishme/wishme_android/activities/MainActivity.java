@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
             LoginFragment fragment = new LoginFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, fragment);
-            transaction.addToBackStack(null);
             transaction.commit();
             return;
         }
