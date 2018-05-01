@@ -9,12 +9,12 @@
 
 
     <ImageView
-        android:id="@+id/wishImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/wishlist_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:srcCompat="@drawable/ic_wishlist_item" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -22,72 +22,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/wishImage"
+        android:layout_toEndOf="@+id/wishlist_image"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/wish_name"
+            android:id="@+id/wishlist_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/nunito_semibold"
-            android:text="Wish Name"
-            android:textColor="#000000"
-            android:textSize="25sp" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_semibold"
-                android:text="Price"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/stars"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_toEndOf="@+id/price"
-                app:srcCompat="@drawable/ic_full_star" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty"
-
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty" />
-
-
-        </LinearLayout>
+            android:text="Wishlist Name"
+            android:textColor="@color/darkGrey"
+            android:textSize="30sp" />
 
 
     </LinearLayout>
 
 
     <ProgressBar
-        android:id="@+id/wishProgressbar"
+        android:id="@+id/wishlistProgressbar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerInParent="true" />
