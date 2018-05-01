@@ -1,11 +1,13 @@
 package com.easv.wishme.wishme_android.entities;
 
+import java.util.List;
+
 public class Wishlist {
 
     String wListName;
-    Wish[] wList;
+    List<Wish> wList;
 
-    public Wishlist(String wListName, Wish[] wList) {
+    public Wishlist(String wListName, List<Wish> wList) {
         this.wListName = wListName;
         this.wList = wList;
     }
@@ -18,12 +20,11 @@ public class Wishlist {
         this.wListName = wListName;
     }
 
-    public Wish[] getwList() {
+    public List<Wish> getwList() {
         return wList;
     }
 
-    public void setwList(Wish[] wList) {
+    public void setwList(List<Wish> wList) {
         this.wList = wList;
     }
-
 }

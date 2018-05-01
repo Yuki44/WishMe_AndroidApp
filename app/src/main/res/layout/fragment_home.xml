@@ -72,16 +72,47 @@
         </android.support.v7.widget.CardView>
     </RelativeLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout2"
-        android:layout_marginTop="320dp">
+        android:layout_marginTop="320dp"
+        android:visibility="visible">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/grey_border"
+            app:cardElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/testingText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="75dp"
+                    android:text="HELLO I'M A TEXT"
+                    android:textAlignment="center"
+                    android:textColor="@color/lightGrey" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
 
         <ListView
             android:id="@+id/wishlist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
         </ListView>
 
