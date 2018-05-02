@@ -35,6 +35,12 @@ dependencies {
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //Circle ImageView Library
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
+
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

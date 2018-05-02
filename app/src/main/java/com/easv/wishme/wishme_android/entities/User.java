@@ -2,10 +2,10 @@ package com.easv.wishme.wishme_android.entities;
 
 public class User {
 
-    String userName, email, password, address, contactEmail, image;
+    String name, email, password, address, contactEmail, image;
 
-    public User(String userName, String email, String password, String address, String contactEmail, String image) {
-        this.userName = userName;
+    public User(String name, String email, String password, String address, String contactEmail, String image) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.address = address;
@@ -13,12 +13,12 @@ public class User {
         this.image = image;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getname() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setname(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -64,7 +64,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userName='" + userName + '\'' +
+                "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
