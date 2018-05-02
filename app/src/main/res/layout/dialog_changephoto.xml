@@ -25,7 +25,8 @@
         android:fontFamily="@font/nunito_semibold"
         android:text="Take a new photo"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/dialogChoosePhoto"
@@ -52,7 +53,7 @@
             android:elevation="3dp"
             android:fontFamily="@font/nunito_bold"
             android:text="CANCEL"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/skyBlue"
             android:textSize="15sp" />
 
     </RelativeLayout>
