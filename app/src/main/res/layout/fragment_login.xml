@@ -23,48 +23,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/nameET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="130dp"
-            android:ems="10"
-            android:hint="Email"
-            android:imeOptions="actionDone"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/contactEmailET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="206dp"
-            android:ems="10"
-            android:hint="Password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword" />
-
-        <Button
-            android:id="@+id/loginBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="231dp"
-            android:text="Login" />
 
 
-        <Button
-            android:id="@+id/signUpBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/loginBtn"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-231dp"
-            android:text="Sign Up" />
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingEnd="70dp"
+            android:paddingStart="70dp">
+
+
+
+            <EditText
+                android:id="@+id/emailET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:hint="Email"
+                android:imeOptions="actionDone"
+                android:layout_marginTop="80dp"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/passwordET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:hint="Password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/login_button_background"
+                android:layout_marginTop="40dp"
+                android:text="Login" />
+
+
+            <Button
+                android:id="@+id/signUpBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loginBtn"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/login_button_background"
+                android:layout_marginTop="20dp"
+                android:text="Sign Up" />
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -22,10 +22,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginFragment extends Fragment {
 
     private static final String TAG = "loginFragment";
-    private  EditText emailET;
-    private EditText passwordET;
-    private Button loginBtn;
-    private Button signUpBtn;
+    private  EditText mEmailET, mPasswordET;
+    private Button mLoginBtn, mSignUpBtn;
     private AuthenticationHelper authHelper;
 
     @Nullable
@@ -33,20 +31,20 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         authHelper = new AuthenticationHelper();
-        emailET = view.findViewById(R.id.nameET);
-        passwordET = view.findViewById(R.id.contactEmailET);
-        loginBtn = view.findViewById(R.id.loginBtn);
-        signUpBtn = view.findViewById(R.id.signUpBtn);
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
+        mEmailET = view.findViewById(R.id.emailET);
+        mPasswordET = view.findViewById(R.id.passwordET);
+        mLoginBtn = view.findViewById(R.id.loginBtn);
+        mSignUpBtn = view.findViewById(R.id.signUpBtn);
+        mSignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signUp();
             }
         });
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(emailET.getText().toString(), passwordET.getText().toString());
+                login(mEmailET.getText().toString(), mPasswordET.getText().toString());
             }
         });
      return view;
