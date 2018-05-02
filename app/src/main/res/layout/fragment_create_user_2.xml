@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.easv.wishme.wishme_android.fragments.CreateUserFragment2"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayout1">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -18,64 +22,111 @@
         </RelativeLayout>
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relLayout1"
+        android:id="@+id/relativeLayout2"
+        android:layout_marginTop="50dp">
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/relLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="20dp"
+        android:padding="20dp">
+
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            app:civ_border_color="@color/black"
+            android:src="@color/skyBlue"
+            app:civ_border_width="0dp" />
+
+
+        <ImageView
+            android:id="@+id/ivCamera"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
             android:elevation="10dp"
-            app:civ_border_color="@color/lightGrey"
-            app:civ_border_width="0dp"/>
-        <EditText
-            android:id="@+id/nameET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="130dp"
-            android:ems="10"
-            android:hint="Name"
-            android:imeOptions="actionDone"
-            android:inputType="textEmailAddress" />
+            android:src="@drawable/ic_addcamera" />
 
-        <EditText
-            android:id="@+id/contactEmailET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nameET"
-            android:layout_centerHorizontal="true"
-            android:ems="10"
-            android:hint="Contact Email"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:paddingTop="30dp" />
+    </RelativeLayout>
 
-        <EditText
-            android:id="@+id/addressET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/contactEmailET"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-1dp"
-            android:ems="10"
-            android:hint="Address"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:paddingTop="30dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relLayout3"
+        >
 
-        <Button
-            android:id="@+id/nextBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="136dp"
-            android:text="Next" />
+<android.support.v7.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingEnd="70dp"
+    android:paddingStart="70dp">
 
+    <EditText
+        android:id="@+id/nameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:imeOptions="actionDone"
+        android:layout_marginTop="20dp"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/contactEmailET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameET"
+        android:hint="Contact Email"
+        android:imeOptions="actionDone"
+        android:layout_marginTop="20dp"
+        android:inputType="textPassword"
+         />
+
+    <EditText
+        android:id="@+id/addressET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contactEmailET"
+        android:hint="Address"
+        android:imeOptions="actionDone"
+        android:layout_marginTop="20dp"
+        android:inputType="textPassword"
+    />
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addressET"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/login_button_background"
+        android:fontFamily="@font/nunito_semibold"
+        android:elevation="10dp"
+        android:text="Sign Up!"
+        android:textAllCaps="false"
+        android:textColor="@color/darkGrey"
+        android:textSize="26sp"
+        />
+
+
+</android.support.v7.widget.LinearLayoutCompat>
+
+
+    </RelativeLayout>
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

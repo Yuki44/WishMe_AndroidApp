@@ -23,50 +23,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/nameET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="130dp"
-            android:ems="10"
-            android:hint="Email"
-            android:imeOptions="actionDone"
-            android:inputType="textEmailAddress" />
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:paddingEnd="70dp"
+            android:paddingStart="70dp">
 
-        <EditText
-            android:id="@+id/contactEmailET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nameET"
-            android:paddingTop="30dp"
-            android:layout_centerHorizontal="true"
-            android:ems="10"
-            android:hint="Password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/nameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
+                android:hint="Email"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/repeatPasswordET"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/contactEmailET"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-1dp"
-            android:ems="10"
-            android:hint="Repeat Password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:paddingTop="30dp" />
+            <EditText
+                android:id="@+id/passwordET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameET"
+                android:layout_centerHorizontal="true"
+                android:hint="Password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:paddingTop="30dp" />
 
-        <Button
-            android:id="@+id/nextBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="136dp"
-            android:text="Next" />
+            <EditText
+                android:id="@+id/repeatPasswordET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passwordET"
+                android:hint="Repeat Password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:layout_marginBottom="30dp"
+                android:paddingTop="30dp" />
+
+            <Button
+                android:id="@+id/nextBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/login_button_background"
+                android:elevation="10dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textColor="@color/darkGrey"
+                android:textSize="26sp" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
