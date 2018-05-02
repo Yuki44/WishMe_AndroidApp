@@ -16,10 +16,179 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeLayout1"
+        android:layout_marginTop="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+
+                android:layout_marginEnd="20dp"
+               >
+
+
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@color/skyBlue"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/ivCamera"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="20dp"
+                    android:elevation="10dp"
+                    android:src="@drawable/ic_addcamera" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relLayout3"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/ivPerson"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_wishname_grey" />
+
+                <EditText
+                    android:id="@+id/name_Info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_toRightOf="@+id/ivPerson"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:hint="What is your wish?"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/relLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relLayout4"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/ivPhone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_wishprice_grey" />
+
+                <EditText
+                    android:id="@+id/phone_Info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_toRightOf="@+id/ivPhone"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:hint="What's the average price?"
+                    android:inputType="phone"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relLayout8"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/ivWebsite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_website_grey" />
+
+                <EditText
+                    android:id="@+id/websiteTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_toRightOf="@+id/ivWebsite"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:hint="Let's add a website link!"
+                    android:inputType="textUri"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relLayout5"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/ivAddress"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_description_grey" />
+
+                <EditText
+                    android:id="@+id/addressTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_toRightOf="@+id/ivAddress"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:hint="A short description"
+                    android:inputType="textCapSentences"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

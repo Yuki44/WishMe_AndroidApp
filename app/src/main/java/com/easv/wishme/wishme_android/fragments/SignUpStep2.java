@@ -22,7 +22,7 @@ public class SignUpStep2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signup_step_2, container, false);
 
-        profileImage = view.findViewById(R.id.profileImage);
+        profileImage = (CircleImageView) view.findViewById(R.id.profileImage);
 
 
 
