@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/snippet_home"></include>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:elevation="10dp"
+            app:civ_border_color="@color/lightGrey"
+            app:civ_border_width="0dp"/>
+        <EditText
+            android:id="@+id/nameET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="130dp"
+            android:ems="10"
+            android:hint="Name"
+            android:imeOptions="actionDone"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/contactEmailET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameET"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:hint="Contact Email"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:paddingTop="30dp" />
+
+        <EditText
+            android:id="@+id/addressET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contactEmailET"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-1dp"
+            android:ems="10"
+            android:hint="Address"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:paddingTop="30dp" />
+
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="136dp"
+            android:text="Next" />
+
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
