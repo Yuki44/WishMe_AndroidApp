@@ -3,6 +3,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
