@@ -2,11 +2,14 @@ package com.easv.wishme.wishme_android.entities;
 
 public class Wish {
 
-    String wishName, price, link, description, image;
+    String name, price, link, description, image;
     int rating;
 
-    public Wish(String wishName, String price, String link, String description, String image, int rating) {
-        this.wishName = wishName;
+    public Wish() {
+    }
+
+    public Wish(String name, String price, String link, String description, String image, int rating) {
+        this.name = name;
         this.price = price;
         this.link = link;
         this.description = description;
@@ -14,12 +17,12 @@ public class Wish {
         this.rating = rating;
     }
 
-    public String getWishName() {
-        return wishName;
+    public String getName() {
+        return name;
     }
 
-    public void setWishName(String wishName) {
-        this.wishName = wishName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPrice() {
@@ -60,17 +63,5 @@ public class Wish {
 
     public void setRating(int rating) {
         this.rating = rating;
-    }
-
-    @Override
-    public String toString() {
-        return "Wish{" +
-                "wishName='" + wishName + '\'' +
-                ", price='" + price + '\'' +
-                ", link='" + link + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                ", rating=" + rating +
-                '}';
     }
 }
