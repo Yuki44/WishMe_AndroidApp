@@ -12,4 +12,8 @@ public class AuthenticationHelper {
     public FirebaseAuth getmAuth() {
         return mAuth;
     }
+
+    public void signOut() {
+        mAuth.signOut();
+    }
 }

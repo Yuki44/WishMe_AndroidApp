@@ -2,9 +2,10 @@ package com.easv.wishme.wishme_android.entities;
 
 public class User {
 
-    String name, email, password, address, contactEmail, image;
+    String name, email, password, address, contactEmail;
+    boolean image;
 
-    public User(String name, String email, String password, String address, String contactEmail, String image) {
+    public User(String name, String email, String password, String address, String contactEmail, boolean image) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -53,11 +54,11 @@ public class User {
         this.contactEmail = contactEmail;
     }
 
-    public String getImage() {
+    public boolean getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(boolean image) {
         this.image = image;
     }
 
