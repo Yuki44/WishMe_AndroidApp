@@ -41,9 +41,11 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/lightGrey"
+        android:backgroundTint="@color/skyBlue"
         android:elevation="6dp"
+        app:backgroundTint="?android:attr/panelBackground"
         app:fabSize="normal"
+        app:rippleColor="@color/darkerSkyBlue"
         app:srcCompat="@drawable/ic_add_wish" />
 
 </android.support.design.widget.CoordinatorLayout>
