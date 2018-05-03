@@ -1,7 +1,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/addwishToolbar"
+        android:id="@+id/editProfileToolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -23,12 +23,12 @@
 
 
                 <TextView
-                    android:id="@+id/textContactToolbar"
+                    android:id="@+id/textEditProfileToolbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/ivBackArrow"
                     android:layout_marginStart="30dp"
-                    android:text="Add a new wish"
+                    android:text="Edit profile"
                     android:fontFamily="@font/nunito_semibold"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
