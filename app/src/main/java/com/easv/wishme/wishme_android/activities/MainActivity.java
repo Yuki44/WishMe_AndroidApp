@@ -27,6 +27,21 @@ public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUse
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 1;
 
+
+    @Override
+    public void getUser(User user) {
+        Log.d(TAG, "getUser: user received from SignupStep1");
+        SignUpStep2 fragment = new SignUpStep2();
+        Bundle args = new Bundle();
+        args.putParcelable("UserSecurity", user);
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(getString(R.string.sign_up_2));
+        transaction.commit();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +100,6 @@ public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUse
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         verifyPermissions();
-    }
-    @Override
-    public void getUser(String email, String password) {
     }
 
 
