@@ -42,8 +42,6 @@ public class SignUpStep2 extends Fragment {
             }
         });
         initProgressBar();
-
-
         return view;
     }
 
@@ -66,10 +64,6 @@ public class SignUpStep2 extends Fragment {
 
         mProgressBar.setVisibility(View.INVISIBLE);
     }
-
-
-
-
 
 
 

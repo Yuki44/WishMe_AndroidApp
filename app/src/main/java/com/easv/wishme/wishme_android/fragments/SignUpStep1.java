@@ -1,6 +1,8 @@
 package com.easv.wishme.wishme_android.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
 
 public class SignUpStep1 extends Fragment {
 
@@ -27,6 +30,11 @@ public class SignUpStep1 extends Fragment {
     private Context mContext;
     private String email, password;
     private User mUser;
+
+    public interface OnUserCreatedListener{
+        void getUser(String email, String password);
+    }
+    OnUserCreatedListener mOnUserCreatedListener;
 
     @Nullable
     @Override
@@ -48,26 +56,27 @@ public class SignUpStep1 extends Fragment {
         return view;
     }
 
+
+
     private void next() {
-//                email = mEmailET.getText().toString();
-//                password = mPasswordET.getText().toString();
-//
-//                if (checkInputs(email,  password, mRepeatPasswordET.getText().toString())) {
-//                    if(doStringsMatch(password, mRepeatPasswordET.getText().toString())){
-//                        registerNewEmail(email, password);
-//                    }else{
-//                        Toast.makeText(getActivity(), "passwords do not match", Toast.LENGTH_SHORT).show();
-//                    }
-//                }else{
-//                    Toast.makeText(getActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
-//                }
+               email = mEmailET.getText().toString();
+               password = mPasswordET.getText().toString();
+
+               if (checkInputs(email,  password, mRepeatPasswordET.getText().toString())) {
+                   if(doStringsMatch(password, mRepeatPasswordET.getText().toString())){
+                       mOnUserCreatedListener.getUser(email, password);
+                   }else{
+                       Toast.makeText(getActivity(), "passwords do not match", Toast.LENGTH_SHORT).show();
+                   }
+               }else{
+                   Toast.makeText(getActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+               }
 
         SignUpStep2 fragment = new SignUpStep2();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
-            }
+    }
 
     /**
      * Return true if @param 's1' matches @param 's2'
@@ -92,6 +101,15 @@ public class SignUpStep1 extends Fragment {
             return false;
         }
         return true;
+    }
+    @Override
+    public void onAttach(Context context) {
+        try{
+            mOnUserCreatedListener =  (OnUserCreatedListener) getActivity();
+        }catch(ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+        super.onAttach(context);
     }
 
 

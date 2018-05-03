@@ -16,10 +16,12 @@ import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
 import com.easv.wishme.wishme_android.fragments.LoginFragment;
+import com.easv.wishme.wishme_android.fragments.SignUpStep1;
+import com.easv.wishme.wishme_android.fragments.SignUpStep2;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener{
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
@@ -83,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         verifyPermissions();
+    }
+    @Override
+    public void getUser(String email, String password) {
     }
 
 
