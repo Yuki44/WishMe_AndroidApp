@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void signUp() {
-        CreateUserFragment1 fragment = new CreateUserFragment1();
+        SignUpStep1 fragment = new SignUpStep1();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
