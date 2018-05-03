@@ -1,6 +1,7 @@
 package com.easv.wishme.wishme_android.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,12 +25,19 @@ import java.io.File;
 
 public class ChangePhotoDialog extends DialogFragment {
     private static final String TAG = "ChangePhotoDialog";
-    private String mSelectedImagePath;
-    private static final int CAMERA_REQUEST_CODE = 10;
-    String mCurrentPhotoPath;
-    private static final int IMAGE_REQUEST_CODE = 1;
-    private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.easv.boldi.yuki.mapme.fileprovider";
-    private static final int PICKFILE_REQUEST_CODE = 8352;
+//    private String mSelectedImagePath;
+//    private static final int CAMERA_REQUEST_CODE = 10;
+//    String mCurrentPhotoPath;
+//    private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.easv.boldi.yuki.mapme.fileprovider";
+
+    private static final int CAMERA_REQUEST_CODE = 4321;
+    private static final int PICKFILE_REQUEST_CODE = 1234;
+
+    public interface OnPhotoSelectedListener{
+        void getImagePath(Uri imagePath);
+        void getImageBitmap(Bitmap bitmap);
+    }
+    OnPhotoSelectedListener mOnPhotoSelectedListener;
 
     public static Bitmap rotateImage(Bitmap src, float degree) {
         // create new matrix
@@ -45,31 +53,38 @@ public class ChangePhotoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_changephoto, container, false);
 
+
+
+
+
+
         //initalize the textview for starting the camera
+
         TextView takePhoto = view.findViewById(R.id.dialogTakePhoto);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: starting camera.");
-
-                File path = new File(getActivity().getFilesDir(), "your/path");
-                if (!path.exists()) path.mkdirs();
-                File image = new File(path, "image.jpg");
-                Uri imageUri = FileProvider.getUriForFile(getActivity(), CAPTURE_IMAGE_FILE_PROVIDER, image);
+//
+//                File path = new File(getActivity().getFilesDir(), "your/path");
+//                if (!path.exists()) path.mkdirs();
+//                File image = new File(path, "image.jpg");
+//                Uri imageUri = FileProvider.getUriForFile(getActivity(), CAPTURE_IMAGE_FILE_PROVIDER, image);
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent, IMAGE_REQUEST_CODE);
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(intent, CAMERA_REQUEST_CODE);
 
             }
         });
 
 
         //Initialize the textview for choosing an image from memory
+
         TextView selectPhoto = view.findViewById(R.id.dialogChoosePhoto);
         selectPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: accessing phones memory.");
+                Log.d(TAG, "onClick: accessing phone memory.");
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, PICKFILE_REQUEST_CODE);
@@ -86,46 +101,33 @@ public class ChangePhotoDialog extends DialogFragment {
             }
         });
 
-        mSelectedImagePath = null;
+//        mSelectedImagePath = null;
         return view;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        // FOR THE CAMERA
-
-//        if (requestCode == IMAGE_REQUEST_CODE) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                File path = new File(getActivity().getFilesDir(), "your/path");
-//                if (!path.exists()) path.mkdirs();
-//                File imageFile = new File(path, "image.jpg");
-//                Log.d(TAG, "onActivityResult: imageFile: " + imageFile);
-//                // use imageFile to open your image
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//                Bitmap bitmap = BitmapFactory.decodeFile(String.valueOf(imageFile), options);
-//                Bitmap finalBitmap = rotateImage(bitmap, 90);
-//                Uri finalPath = getImageUri(finalBitmap);
-//                Log.d(TAG, "onActivityResult: finalPath " + finalPath);
-//                getBitmapImage(String.valueOf(finalPath));
-//                getDialog().dismiss();
-//            }
-//        }
-
-
-        // FOR THE IMAGE PICKED FROM GALLERY
-
         super.onActivityResult(requestCode, resultCode, data);
 
-        // When an Image is picked
-//        if (requestCode == PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-//            Uri selectedImageUri = data.getData();
+
+        if (requestCode == PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+            mOnPhotoSelectedListener.getImagePath(selectedImageUri);
 //            File file = new File(selectedImageUri.toString());
 //            Log.d(TAG, "onActivityResult: images: " + file.getPath() + " " + mSelectedImagePath);
 //            getImagePath(file.getPath());
-//            getDialog().dismiss();
-//        }
+            getDialog().dismiss();
+        }
+
+       else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+Bitmap bitmap;
+bitmap = (Bitmap) data.getExtras().get("data");
+mOnPhotoSelectedListener.getImageBitmap(bitmap);
+            getDialog().dismiss();
+        }
+
+
+
     }
 
 //    public void getImagePath(String imagePath) {
@@ -147,10 +149,21 @@ public class ChangePhotoDialog extends DialogFragment {
 //        }
 //    }
 
-    private Uri getImageUri(Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+//    private Uri getImageUri(Bitmap inImage) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), inImage, "Title", null);
+//        return Uri.parse(path);
+//    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        try{
+            mOnPhotoSelectedListener =  (OnPhotoSelectedListener) getActivity();
+        }catch(ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+        super.onAttach(context);
     }
 }
