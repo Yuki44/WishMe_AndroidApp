@@ -21,18 +21,23 @@ import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 
 import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "homeFragment";
     private CardView mWishlistCard;
+    private CardView mProfileCard;
     private Toolbar toolbar;
     private AuthenticationHelper authHelper;
     private TextView mNameTV;
     private TextView mAddressTV;
     private TextView mContactTV;
+    private CircleImageView mImageView;
 
 
     @Nullable
@@ -46,7 +51,14 @@ public class HomeFragment extends Fragment {
         mAddressTV = view.findViewById(R.id.addressTV);
         mNameTV = view.findViewById(R.id.nameTV);
         mContactTV = view.findViewById(R.id.contactTV);
-
+        mImageView = view.findViewById(R.id.profileImager);
+        mProfileCard = view.findViewById(R.id.cardView);
+        mProfileCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editProfile();
+            }
+        });
         mWishlistCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +93,21 @@ public class HomeFragment extends Fragment {
             case R.id.menuitem_logout:
                 logout();
                 return true;
+            case R.id.menuitem_edit_user:
+                editProfile();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void editProfile() {
+        EditProfileFragment fragment = new EditProfileFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        return;
     }
 
     private void logout() {
@@ -102,6 +126,10 @@ public class HomeFragment extends Fragment {
               mNameTV.setText(user.getname());
               mContactTV.setText(user.getContactEmail());
               mAddressTV.setText(user.getAddress());
+             if(user.getImage() == false){
+                  UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
+
+              }
               Log.d(TAG, "setUserInfo: " + user.toString());
 
           }
