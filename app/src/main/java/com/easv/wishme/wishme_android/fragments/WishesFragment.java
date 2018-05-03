@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.adapters.WishAdapter;
 import com.easv.wishme.wishme_android.entities.Wish;
+import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class WishesFragment extends android.support.v4.app.Fragment {
+public class WishesFragment extends android.support.v4.app.Fragment implements HomeFragment.OnWishlistItemClicked {
 
 
     private static final String TAG = "WishesFragment";
@@ -35,6 +36,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private FirebaseFirestore db;
     private CollectionReference mDocRef = FirebaseFirestore.getInstance().collection("wish");
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mNoWishes = view.findViewById(R.id.textNoWishes);
         mWishList = view.findViewById(R.id.wishesList);
         db = FirebaseFirestore.getInstance();
+//        this.setTargetFragment(WishesFragment.this, 0);
 
         return view;
     }
@@ -85,6 +88,12 @@ public class WishesFragment extends android.support.v4.app.Fragment {
 
 
     private void checkIfChanged() {
+
+    }
+
+    @Override
+    public void getWishlistItemClicked(Wishlist wList) {
+        Log.d(TAG, "getWishlistItemClicked: get the clicked Wishlist" + wList);
 
     }
 

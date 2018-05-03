@@ -2,5 +2,8 @@
     <string name="app_name">WishMe_Android</string>
     <string name="change_photo_dialog">ChangePhotoDialog</string>
     <string name="sign_up_2">SignUp2</string>
+    <string name="wishes_list">WishesFragment</string>
+    <string name="logout">Logout</string>
+    <string name="create_wishlist">CreateWishlistDialog</string>
 
 </resources>

@@ -4,6 +4,10 @@ public class Wishlist {
 
     String wListName;
 
+    public Wishlist() {
+
+    }
+
     public Wishlist(String wListName) {
         this.wListName = wListName;
     }
@@ -16,4 +20,10 @@ public class Wishlist {
         this.wListName = wListName;
     }
 
+    @Override
+    public String toString() {
+        return "Wishlist{" +
+                "wListName='" + wListName + '\'' +
+                '}';
+    }
 }
