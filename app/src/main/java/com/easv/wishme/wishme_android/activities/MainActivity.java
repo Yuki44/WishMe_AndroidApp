@@ -1,14 +1,18 @@
 package com.easv.wishme.wishme_android.activities;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+
+
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
 import com.easv.wishme.wishme_android.fragments.LoginFragment;
@@ -17,7 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends AppCompatActivity {
     User user;
-
+    AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 1;
 
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started.");
+        authHelper = new AuthenticationHelper();
         initImageLoader();
         verifyPermissions();
     }
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     private void verifyPermissions(){
         Log.d(TAG, "verifyPermissions: asking user for permissions");
         String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -78,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         verifyPermissions();
     }
+
 
 }
 

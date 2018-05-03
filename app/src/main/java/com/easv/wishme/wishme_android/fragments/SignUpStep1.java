@@ -45,8 +45,6 @@ public class SignUpStep1 extends Fragment {
             }
         });
 
-
-
         return view;
     }
 
