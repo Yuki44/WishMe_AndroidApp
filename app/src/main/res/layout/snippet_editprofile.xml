@@ -1,13 +1,15 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/editProfileToolbar"
+        android:id="@+id/editProfileToolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/editProfileToolbar">
+">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

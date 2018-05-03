@@ -35,7 +35,7 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
-       // toolbar = view.findViewById(R.id.editProfileToolbar);
+        toolbar = view.findViewById(R.id.editProfileToolbar);
 
      //   ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
      /*   ivBackArrow.setOnClickListener(new View.OnClickListener() {
@@ -108,10 +108,9 @@ public class EditProfileFragment extends Fragment {
             }
 
         });
-
+*/
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        */
-        setHasOptionsMenu(true);
+
         return view;
     }
 }
