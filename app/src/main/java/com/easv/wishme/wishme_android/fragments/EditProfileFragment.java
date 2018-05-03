@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,7 +26,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfileFragment extends Fragment {
 
     private static final String TAG = "EditProfileFragment";
-
     private User mUser;
     private EditText mNameET, mContactEmailET, mAddressET;
     private CircleImageView mImageView;
@@ -35,22 +35,17 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
+        mNameET = view.findViewById(R.id.nameET);
+        mContactEmailET = view.findViewById(R.id.contactEmailET);
+        mAddressET = view.findViewById(R.id.locationET);
         toolbar = view.findViewById(R.id.editProfileToolbar);
 
-     //   ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
-     /*   ivBackArrow.setOnClickListener(new View.OnClickListener() {
+        ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
+        ivBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked back arrow.");
-                // get back to the HomeFragment
-                /*
-                        WishesFragment fragment = new WishesFragment();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragment_container, fragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                 */
-     /*
+                    goToHomeFragment();
             }
         });
 
@@ -59,22 +54,17 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: saving the edited profile.");
-                // save the profile and go back to the HomeFragment
-                /*
-                if (checkStringIfNull(mName.getText().toString()) && checkStringIfNull(mPhoneNumber.getText().toString())
-                        && checkStringIfNull(mAddressTxt.getText().toString())) {
-                    geoLocate();
-                    Log.d(TAG, "onClick: saving edited contact: " + mName.getText().toString());
-                    DatabaseHelper databaseHelper = new DatabaseHelper(EditFriendActivity.this);
-                    Cursor cursor = databaseHelper.getFriendID(mFriend);
-                    int friendID = -1;
-                    while (cursor.moveToNext()) {
-                        friendID = cursor.getInt(0);
-                    }
-                    if (friendID > -1) {
-                        if (mSelectedImagePath != null) {
-                            mFriend.setProfileImage(mSelectedImagePath);
-                        }
+                if (!mNameET.getText().toString().isEmpty()
+                    && !mContactEmailET.getText().toString().isEmpty()
+                    && !mAddressET.getText().toString().isEmpty()) {
+                    Log.d(TAG, "onClick: saving edited User: " + mNameET.getText().toString());
+
+                    //DatabaseHelper databaseHelper = new DatabaseHelper(EditFriendActivity.this);
+                    //Cursor cursor = databaseHelper.getFriendID(mFriend);/getUserWithInfo()?
+                    // if User found (!null)
+
+                    //mFriend.setProfileImage(mSelectedImagePath);
+                   /*
                         mFriend.setName(mName.getText().toString());
                         mFriend.setPhone(mPhoneNumber.getText().toString());
                         mFriend.setAddress(mAddressTxt.getText().toString());
@@ -99,18 +89,25 @@ public class EditProfileFragment extends Fragment {
                     } else {
                         Toast.makeText(EditFriendActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Toast.makeText(EditFriendActivity.this, "Name, Phone Number and Address are necessary", Toast.LENGTH_LONG).show();
                 }
                 */
-     /*
+                    //temporary }
+                }
+                goToHomeFragment();
             }
-
         });
-*/
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         return view;
+    }
+
+    private void goToHomeFragment(){
+        HomeFragment fragment = new HomeFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
