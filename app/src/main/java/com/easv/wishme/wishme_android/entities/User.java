@@ -3,6 +3,9 @@ package com.easv.wishme.wishme_android.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User implements Parcelable {
 
     String name, email, password, address, contactEmail;
@@ -114,5 +117,24 @@ public class User implements Parcelable {
         dest.writeString(address);
         dest.writeString(contactEmail);
         dest.writeByte((byte) (image ? 1 : 0));
+    }
+
+    public User(Map<String, Object> map)
+    {
+        name = (String)map.get("name");
+        email = (String)map.get("email");
+        password = (String)map.get("password");
+        address = (String)map.get("address");
+        contactEmail = (String)map.get("contactEmail");
+    }
+    public Map<String, Object> toMap()
+    {
+        Map<String, Object> res = new HashMap<>();
+        res.put("name", getname());
+        res.put("email", getEmail());
+        res.put("password", getPassword());
+        res.put("address", getAddress());
+        res.put("contactEmail", getContactEmail());
+        return res;
     }
 }
