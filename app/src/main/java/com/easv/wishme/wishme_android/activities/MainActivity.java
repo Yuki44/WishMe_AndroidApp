@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUse
         fragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(getString(R.string.sign_up_2));
         transaction.commit();
     }
 

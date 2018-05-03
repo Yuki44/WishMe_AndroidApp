@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
@@ -176,16 +177,21 @@ mCreateWishlist.setOnClickListener(new View.OnClickListener() {
     }
     private void setUserInfo(){
       User user =  authHelper.getUserWithInfo(new ICallBack() {
-          @Override
-          public void onFinish(User user) {
-              mNameTV.setText(user.getname());
-              mContactTV.setText(user.getContactEmail());
-              mAddressTV.setText(user.getAddress());
-             if(user.getImage() == false){
+                 @Override
+                 public void onFinish(User user) {
+                     mNameTV.setText(user.getname());
+                     mContactTV.setText(user.getContactEmail());
+                     mAddressTV.setText(user.getAddress());
+                     if(user.getImage() == false){
                   UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
 
               }
               Log.d(TAG, "setUserInfo: " + user.toString());
+          }
+
+          @Override
+          public void onFinishFireBaseUser(FirebaseUser user) {
+
           }
       });
 
