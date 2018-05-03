@@ -8,19 +8,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <RelativeLayout
             android:id="@+id/relativeLayoutToolbar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
 
-            <include layout="@layout/snippet_wishlist"></include>
+            >
+
+            <include layout="@layout/snippet_wishlist"
+               ></include>
         </RelativeLayout>
 
         <ListView
             android:id="@+id/wishesList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/relativeLayoutToolbar">
+            android:layout_below="@+id/relativeLayoutToolbar"
+            >
 
         </ListView>
 
