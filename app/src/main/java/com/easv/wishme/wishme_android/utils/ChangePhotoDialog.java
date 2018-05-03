@@ -120,9 +120,9 @@ public class ChangePhotoDialog extends DialogFragment {
         }
 
        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-Bitmap bitmap;
-bitmap = (Bitmap) data.getExtras().get("data");
-mOnPhotoSelectedListener.getImageBitmap(bitmap);
+            Bitmap bitmap;
+            bitmap = (Bitmap) data.getExtras().get("data");
+            mOnPhotoSelectedListener.getImageBitmap(bitmap);
             getDialog().dismiss();
         }
 
