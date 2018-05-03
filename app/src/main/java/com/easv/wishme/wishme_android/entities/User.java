@@ -13,6 +13,9 @@ public class User {
         this.contactEmail = contactEmail;
         this.image = image;
     }
+    public User() {
+
+    }
 
     public String getname() {
         return name;
