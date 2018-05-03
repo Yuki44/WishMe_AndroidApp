@@ -32,7 +32,7 @@ public class SignUpStep1 extends Fragment {
     private User mUser;
 
     public interface OnUserCreatedListener{
-        void getUser(String email, String password);
+        void getUser(User user);
     }
     OnUserCreatedListener mOnUserCreatedListener;
 
@@ -64,7 +64,8 @@ public class SignUpStep1 extends Fragment {
 
                if (checkInputs(email,  password, mRepeatPasswordET.getText().toString())) {
                    if(doStringsMatch(password, mRepeatPasswordET.getText().toString())){
-                       mOnUserCreatedListener.getUser(email, password);
+                       User user = new User(null, email, password, null, null, false);
+                       mOnUserCreatedListener.getUser(user);
                    }else{
                        Toast.makeText(getActivity(), "passwords do not match", Toast.LENGTH_SHORT).show();
                    }
@@ -72,10 +73,7 @@ public class SignUpStep1 extends Fragment {
                    Toast.makeText(getActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
                }
 
-        SignUpStep2 fragment = new SignUpStep2();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
+
     }
 
     /**
@@ -104,12 +102,13 @@ public class SignUpStep1 extends Fragment {
     }
     @Override
     public void onAttach(Context context) {
+        super.onAttach(context);
         try{
             mOnUserCreatedListener =  (OnUserCreatedListener) getActivity();
         }catch(ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
         }
-        super.onAttach(context);
+
     }
 
 
