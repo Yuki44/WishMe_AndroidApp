@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout1"
         android:layout_marginTop="50dp"
+        android:background="@color/white"
         android:padding="10dp">
 
         <android.support.v7.widget.CardView
@@ -123,7 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout2"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="300dp"
         android:visibility="visible">
 
 
@@ -134,7 +135,8 @@
             android:layout_margin="10dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/grey_border"
-            app:cardElevation="5dp">
+            app:cardElevation="5dp"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -158,22 +160,31 @@
             android:id="@+id/wishlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:background="@color/white"
+            android:divider="@null">
 
         </ListView>
 
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progressBar"
+            android:layout_centerInParent="true"
+            />
 
     </RelativeLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/createWishlistFab"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/lightGrey"
+        android:backgroundTint="@color/veryDarkBlue"
         android:elevation="6dp"
-        android:visibility="gone"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_add_wishlist" />
 </android.support.design.widget.CoordinatorLayout>

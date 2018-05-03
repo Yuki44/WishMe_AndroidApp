@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_semibold"
         android:gravity="center"
-        android:text="Add a Wishlist:"
+        android:text="Add a new Wishlist:"
         android:textColor="@color/black"
         android:textSize="21sp"
         android:textStyle="bold"
@@ -20,6 +20,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/newWishlistTX"
         android:fontFamily="@font/nunito_semibold"
         android:hint="Wishlist Name"
         android:inputType="textCapWords"

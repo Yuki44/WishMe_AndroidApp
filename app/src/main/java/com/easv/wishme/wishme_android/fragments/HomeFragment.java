@@ -1,7 +1,10 @@
 package com.easv.wishme.wishme_android.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,17 +17,34 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.adapters.WishAdapter;
+import com.easv.wishme.wishme_android.adapters.WishlistAdapter;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.entities.Wishlist;
+import com.easv.wishme.wishme_android.utils.CreateWishlistDialog;
 import com.easv.wishme.wishme_android.utils.LogOutDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,12 +54,22 @@ public class HomeFragment extends Fragment {
     private CardView mWishlistCard;
     private CardView mProfileCard;
     private Toolbar toolbar;
+    public WishlistAdapter wishlistAdapter;
     private AuthenticationHelper authHelper;
     private TextView mNameTV;
     private TextView mAddressTV;
     private TextView mContactTV;
+    private ProgressBar mProgressBar;
     private CircleImageView mImageView;
+    private ArrayList<Wishlist> wishList;
+    private FirebaseFirestore db;
+    public ListView mWishList;
+    private FloatingActionButton mCreateWishlist;
 
+    public interface OnWishlistItemClicked{
+    void getWishlistItemClicked(Wishlist wList);
+    }
+    OnWishlistItemClicked mOnWishlistItemClicked;
 
     @Nullable
     @Override
@@ -50,9 +80,12 @@ public class HomeFragment extends Fragment {
         authHelper = new AuthenticationHelper();
         mWishlistCard = view.findViewById(R.id.cardView2);
         mAddressTV = view.findViewById(R.id.addressTV);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mNameTV = view.findViewById(R.id.nameTV);
         mContactTV = view.findViewById(R.id.contactTV);
+        mCreateWishlist = (FloatingActionButton) view.findViewById(R.id.createWishlistFab);
         mImageView = view.findViewById(R.id.profileImager);
+        mWishList = view.findViewById(R.id.wishlist);
         mProfileCard = view.findViewById(R.id.cardView);
         mProfileCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +99,27 @@ public class HomeFragment extends Fragment {
                 wishlistClicked();
             }
         });
+        db = FirebaseFirestore.getInstance();
+        mWishList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Wishlist wList = wishList.get(position);
+                Log.d(TAG, "onItemClick: " + wList + " " + "<><><><><><><><><><><><><><><><>");
+//                mOnWishlistItemClicked.getWishlistItemClicked(wList);
+                wishlistClicked();
+            }
+        });
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        initProgressBar();
         setHasOptionsMenu(true);
+        setWishlist();
         setUserInfo();
+mCreateWishlist.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        showCreateWishListDialog();
+    }
+});
         return view;
     }
 
@@ -113,11 +164,14 @@ public class HomeFragment extends Fragment {
 
     private void logout() {
         LogOutDialog dialog = new LogOutDialog();
-        dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
+        dialog.show(getFragmentManager(), getString(R.string.logout));
         dialog.setTargetFragment(HomeFragment.this, 1);
+    }
 
-
-
+    private void showCreateWishListDialog(){
+        CreateWishlistDialog dialog = new CreateWishlistDialog();
+        dialog.show(getFragmentManager(), getString(R.string.create_wishlist));
+        dialog.setTargetFragment(HomeFragment.this, 1);
 
     }
     private void setUserInfo(){
@@ -132,12 +186,64 @@ public class HomeFragment extends Fragment {
 
               }
               Log.d(TAG, "setUserInfo: " + user.toString());
-
           }
       });
 
+    }
 
+
+
+
+    private void setWishlist(){
+        showProgressBar();
+        wishList = new ArrayList<>();
+        db.collection("wishlist")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            hideProgressBar();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Wishlist wishlist = document.toObject(Wishlist.class);
+                                wishList.add(wishlist);
+                            }
+                            wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList, "https://");
+                            mWishList.setAdapter(wishlistAdapter);
+//                            sortListByName();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
     }
 
+
+
+    private void showProgressBar(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initProgressBar(){
+
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mOnWishlistItemClicked = (OnWishlistItemClicked) getTargetFragment();
+
+        }catch(ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());
+
+        }
+    }
 }
