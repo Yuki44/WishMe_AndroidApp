@@ -80,32 +80,30 @@
         android:id="@+id/nameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:hint="Name"
         android:imeOptions="actionDone"
-        android:layout_marginTop="20dp"
-        android:inputType="textEmailAddress" />
+        android:inputType="textCapWords" />
 
     <EditText
         android:id="@+id/contactEmailET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameET"
+        android:layout_marginTop="20dp"
         android:hint="Contact Email"
         android:imeOptions="actionDone"
-        android:layout_marginTop="20dp"
-        android:inputType="textPassword"
-         />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/addressET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/contactEmailET"
+        android:layout_marginTop="20dp"
         android:hint="Address"
         android:imeOptions="actionDone"
-        android:layout_marginTop="20dp"
-        android:inputType="textPassword"
-    />
+        android:inputType="textCapWords" />
 
     <Button
         android:id="@+id/nextBtn"
@@ -127,6 +125,13 @@
 
 
     </RelativeLayout>
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/progressBar"
+            android:layout_centerInParent="true"
+            />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

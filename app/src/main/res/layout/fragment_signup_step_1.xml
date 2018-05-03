@@ -78,5 +78,12 @@
                 android:textSize="26sp" />
 
         </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+
     </RelativeLayout>
+
+
+
 </android.support.design.widget.CoordinatorLayout>
