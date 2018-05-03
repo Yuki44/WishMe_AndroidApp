@@ -23,6 +23,7 @@ import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.utils.LogOutDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
@@ -122,16 +123,21 @@ public class HomeFragment extends Fragment {
     }
     private void setUserInfo(){
       User user =  authHelper.getUserWithInfo(new ICallBack() {
-          @Override
-          public void onFinish(User user) {
-              mNameTV.setText(user.getname());
-              mContactTV.setText(user.getContactEmail());
-              mAddressTV.setText(user.getAddress());
-             if(user.getImage() == false){
+                 @Override
+                 public void onFinish(User user) {
+                     mNameTV.setText(user.getname());
+                     mContactTV.setText(user.getContactEmail());
+                     mAddressTV.setText(user.getAddress());
+                     if(user.getImage() == false){
                   UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
 
               }
               Log.d(TAG, "setUserInfo: " + user.toString());
+
+          }
+
+          @Override
+          public void onFinishFireBaseUser(FirebaseUser user) {
 
           }
       });
