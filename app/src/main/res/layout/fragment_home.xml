@@ -57,42 +57,49 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        tools:text="Name: "
-                        android:paddingBottom="10dp"/>
+                        android:fontFamily="@font/nunito_semibold"
+                        android:paddingBottom="10dp"
+                        android:text="Name:"
+                        tools:text="Name: " />
+
+                    <TextView
+                        android:id="@+id/nameTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:textSize="18sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/nameTV" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="20dp"
                         android:text="Address:"
-                        tools:text="Address:"
-                        android:paddingBottom="10dp"/>
+                        tools:text="Address:" />
+
+                    <TextView
+                        android:id="@+id/addressTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:textSize="18sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/addressTV" />
+                        android:fontFamily="@font/nunito_semibold"
+                        android:paddingBottom="10dp"
+                        android:text="Contact:" />
+
                     <TextView
+                        android:id="@+id/contactTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Contact:"
-                        android:paddingBottom="10dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/contactTV" />
+                        android:fontFamily="@font/nunito_semibold"
+                        android:textSize="18sp" />
 
                 </GridLayout>
-
-
-
-
-
-
-
-
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>

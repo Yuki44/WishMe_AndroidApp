@@ -14,9 +14,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
+import com.easv.wishme.wishme_android.dal.ICallBack;
+import com.easv.wishme.wishme_android.entities.User;
+
+import org.w3c.dom.Text;
 
 public class HomeFragment extends Fragment {
 
@@ -24,6 +30,9 @@ public class HomeFragment extends Fragment {
     private CardView mWishlistCard;
     private Toolbar toolbar;
     private AuthenticationHelper authHelper;
+    private TextView mNameTV;
+    private TextView mAddressTV;
+    private TextView mContactTV;
 
 
     @Nullable
@@ -34,6 +43,9 @@ public class HomeFragment extends Fragment {
 
         authHelper = new AuthenticationHelper();
         mWishlistCard = view.findViewById(R.id.cardView2);
+        mAddressTV = view.findViewById(R.id.addressTV);
+        mNameTV = view.findViewById(R.id.nameTV);
+        mContactTV = view.findViewById(R.id.contactTV);
 
         mWishlistCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +55,10 @@ public class HomeFragment extends Fragment {
         });
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
+        setUserInfo();
         return view;
     }
+
 
     private void wishlistClicked() {
         WishesFragment fragment = new WishesFragment();
@@ -79,6 +93,21 @@ public class HomeFragment extends Fragment {
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
         return;
+
+    }
+    private void setUserInfo(){
+      User user =  authHelper.getUserWithInfo(new ICallBack() {
+          @Override
+          public void onFinish(User user) {
+              mNameTV.setText(user.getname());
+              mContactTV.setText(user.getContactEmail());
+              mAddressTV.setText(user.getAddress());
+              Log.d(TAG, "setUserInfo: " + user.toString());
+
+          }
+      });
+
+
 
     }
 
