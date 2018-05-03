@@ -35,10 +35,10 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
-        toolbar = view.findViewById(R.id.editProfileToolbar);
+       // toolbar = view.findViewById(R.id.editProfileToolbar);
 
-        ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
-        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+     //   ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
+     /*   ivBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked back arrow.");
@@ -50,6 +50,7 @@ public class EditProfileFragment extends Fragment {
                         transaction.addToBackStack(null);
                         transaction.commit();
                  */
+     /*
             }
         });
 
@@ -103,11 +104,13 @@ public class EditProfileFragment extends Fragment {
                     Toast.makeText(EditFriendActivity.this, "Name, Phone Number and Address are necessary", Toast.LENGTH_LONG).show();
                 }
                 */
+     /*
             }
 
         });
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        */
         setHasOptionsMenu(true);
         return view;
     }
