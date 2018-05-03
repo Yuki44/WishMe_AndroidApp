@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WishMe_Android</string>
+    <string name="change_photo_dialog">ChangePhotoDialog</string>
 </resources>
