@@ -16,14 +16,31 @@ import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
 import com.easv.wishme.wishme_android.fragments.LoginFragment;
+import com.easv.wishme.wishme_android.fragments.SignUpStep1;
+import com.easv.wishme.wishme_android.fragments.SignUpStep2;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener{
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 1;
+
+
+    @Override
+    public void getUser(User user) {
+        Log.d(TAG, "getUser: user received from SignupStep1");
+        SignUpStep2 fragment = new SignUpStep2();
+        Bundle args = new Bundle();
+        args.putParcelable("UserSecurity", user);
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(getString(R.string.sign_up_2));
+        transaction.commit();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

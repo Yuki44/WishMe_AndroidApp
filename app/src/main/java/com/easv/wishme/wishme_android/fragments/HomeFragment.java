@@ -21,6 +21,7 @@ import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.utils.LogOutDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 
 import org.w3c.dom.Text;
@@ -111,12 +112,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void logout() {
-        authHelper.signOut();
-        LoginFragment fragment = new LoginFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
-        return;
+        LogOutDialog dialog = new LogOutDialog();
+        dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
+        dialog.setTargetFragment(HomeFragment.this, 1);
+
+
+
 
     }
     private void setUserInfo(){

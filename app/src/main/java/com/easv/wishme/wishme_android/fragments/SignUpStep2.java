@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -20,13 +21,16 @@ public class SignUpStep2 extends Fragment {
 
     private static final String TAG = "CreateUserFragment2";
     private CircleImageView profileImage;
+    private User mUser;
 
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar mProgressBar;
 
-
-
+    public SignUpStep2() {
+        super();
+        setArguments(new Bundle());
+    }
 
     @Nullable
     @Override
@@ -35,6 +39,13 @@ public class SignUpStep2 extends Fragment {
 
         profileImage = (CircleImageView) view.findViewById(R.id.profileImage);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        mUser = getUserFromBundle();
+
+        if(mUser != null){
+            Log.d(TAG, "onCreateView: received User: " + mUser.getEmail() + " " + mUser.getPassword());
+        }
+
+
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,8 +53,6 @@ public class SignUpStep2 extends Fragment {
             }
         });
         initProgressBar();
-
-
         return view;
     }
 
@@ -67,10 +76,15 @@ public class SignUpStep2 extends Fragment {
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
+private User getUserFromBundle(){
+    Log.d(TAG, "getUserFromBundle: arguments: " + getArguments());
 
-
-
-
-
+    Bundle bundle = this.getArguments();
+    if(bundle != null){
+        return bundle.getParcelable("UserSecurity");
+    } else {
+        return null;
+    }
+}
 
 }
