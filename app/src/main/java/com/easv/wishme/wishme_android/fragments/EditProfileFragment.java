@@ -3,6 +3,7 @@ package com.easv.wishme.wishme_android.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Debug;
 import android.support.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.utils.CreateWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +42,8 @@ public class EditProfileFragment extends Fragment {
     private CircleImageView mImageView;
     private Toolbar toolbar;
     private AuthenticationHelper authHelper;
+    public static Bitmap mSelectedImage;
+
 
     private static final String Name = "name";
     private static final String ContactEmail = "contactEmail";
@@ -54,6 +59,14 @@ public class EditProfileFragment extends Fragment {
         mAddressET = view.findViewById(R.id.locationET);
         toolbar = view.findViewById(R.id.editProfileToolbar);
         authHelper = new AuthenticationHelper();
+        mImageView = view.findViewById(R.id.profileImage);
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePic();
+            }
+        });
+
 
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +90,17 @@ public class EditProfileFragment extends Fragment {
             }
         });
         setUserInfo();
+        setProfileImage();
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
+    }
+
+    private void changePic() {
+        Log.d(TAG, "onClick: opening dialog to choose new photo");
+        ChangePhotoDialog dialog = new ChangePhotoDialog();
+        dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
+        dialog.setTargetFragment(EditProfileFragment.this, 1);
+
     }
 
     private void goToHomeFragment() {
@@ -88,6 +110,25 @@ public class EditProfileFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+    private void setProfileImage(){
+        mSelectedImage = authHelper.getProfileImage(new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                mImageView.setImageBitmap(bitmap);
+            }
+        });
+    }
+
 
     private void updateUser() {
         authHelper.getUserWithInfo(new ICallBack() {
@@ -97,16 +138,23 @@ public class EditProfileFragment extends Fragment {
                 user.setContactEmail(mContactEmailET.getText().toString());
                 user.setAddress(mAddressET.getText().toString());
                 authHelper.createUserProfile(user);
-                /*
-                if (user.getImage() == false) {
-                    UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
-                }
-                */
+
+                mImageView.setDrawingCacheEnabled(true);
+                mImageView.buildDrawingCache();
+                Bitmap bitmap = mImageView.getDrawingCache();
+
+
+                authHelper.createProfileImage(bitmap);
                 Log.d(TAG, "setUserInfo: " + user.toString());
             }
 
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+
             }
         });
     }
@@ -119,21 +167,29 @@ public class EditProfileFragment extends Fragment {
                 mContactEmailET.setText(user.getContactEmail());
                 mAddressET.setText(user.getAddress());
 
-               /* if(user.getImage() == false){
-                    UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
-
-                }
-                Log.d(TAG, "setUserInfo: " + user.toString());
-            */
             }
 
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {
 
             }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+
+            }
         });
 
     }
+    private void setNewProfileImage(){
+        mImageView.setImageBitmap(mSelectedImage);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        setNewProfileImage();
+    }
 }
 
