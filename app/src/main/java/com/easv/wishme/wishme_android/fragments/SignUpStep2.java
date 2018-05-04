@@ -120,10 +120,25 @@ public class SignUpStep2 extends Fragment {
                 Bitmap bitmap = profileImage.getDrawingCache();
 
 
-               authHelper.createProfileImage(bitmap);
+               authHelper.createProfileImage(bitmap, new ICallBack() {
+                   @Override
+                   public void onFinish(User user) {
+
+                   }
+
+                   @Override
+                   public void onFinishFireBaseUser(FirebaseUser user) {
+
+                   }
+
+                   @Override
+                   public void onFinishGetImage(Bitmap bitmap) {
+                       loadHomeFragment();
+
+                   }
+               });
 
 
-                loadHomeFragment();
 
             }
 

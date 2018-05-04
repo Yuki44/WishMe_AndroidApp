@@ -86,7 +86,6 @@ public class EditProfileFragment extends Fragment {
                     Log.d(TAG, "onClick: saving edited User: " + mNameET.getText().toString());
                     updateUser();
                 }
-                goToHomeFragment();
             }
         });
         setUserInfo();
@@ -144,7 +143,23 @@ public class EditProfileFragment extends Fragment {
                 Bitmap bitmap = mImageView.getDrawingCache();
 
 
-                authHelper.createProfileImage(bitmap);
+                authHelper.createProfileImage(bitmap, new ICallBack() {
+                    @Override
+                    public void onFinish(User user) {
+
+                    }
+
+                    @Override
+                    public void onFinishFireBaseUser(FirebaseUser user) {
+
+                    }
+
+                    @Override
+                    public void onFinishGetImage(Bitmap bitmap) {
+                        goToHomeFragment();
+
+                    }
+                });
                 Log.d(TAG, "setUserInfo: " + user.toString());
             }
 
