@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
@@ -43,6 +45,9 @@ public class EditProfileFragment extends Fragment {
     private Toolbar toolbar;
     private AuthenticationHelper authHelper;
     public static Bitmap mSelectedImage;
+    private RelativeLayout mRelativeLayout2;
+    private ProgressBar mProgressBar;
+
 
 
     private static final String Name = "name";
@@ -66,6 +71,10 @@ public class EditProfileFragment extends Fragment {
                 changePic();
             }
         });
+        mRelativeLayout2 = view.findViewById(R.id.relativeLayout2);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
+
 
 
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
@@ -88,6 +97,7 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         });
+        initProgressBar();
         setUserInfo();
         setProfileImage();
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -127,9 +137,22 @@ public class EditProfileFragment extends Fragment {
             }
         });
     }
+    private void showProgressBar(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
 
+    private void hideProgressBar(){
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initProgressBar(){
+
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
 
     private void updateUser() {
+       mRelativeLayout2.setVisibility(mRelativeLayout2.INVISIBLE);
+        showProgressBar();
         authHelper.getUserWithInfo(new ICallBack() {
             @Override
             public void onFinish(User user) {
