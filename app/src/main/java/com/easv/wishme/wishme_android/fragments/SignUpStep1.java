@@ -27,9 +27,7 @@ public class SignUpStep1 extends Fragment {
     private Button mNext;
 
 
-    private Context mContext;
     private String email, password;
-    private User mUser;
 
     public interface OnUserCreatedListener{
         void getUser(User user);
