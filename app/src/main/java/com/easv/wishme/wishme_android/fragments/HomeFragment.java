@@ -252,4 +252,12 @@ mCreateWishlist.setOnClickListener(new View.OnClickListener() {
 
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUserInfo();
+        Log.d("KKK", "OnResume");
+    }
+
 }
