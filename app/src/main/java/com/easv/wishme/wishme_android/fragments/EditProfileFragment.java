@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +21,14 @@ import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
+import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileFragment extends Fragment {
@@ -30,6 +38,12 @@ public class EditProfileFragment extends Fragment {
     private EditText mNameET, mContactEmailET, mAddressET;
     private CircleImageView mImageView;
     private Toolbar toolbar;
+    private AuthenticationHelper authHelper;
+
+    private static final String Name = "name";
+    private static final String ContactEmail = "contactEmail";
+    private static final String Address = "address";
+
 
     @Nullable
     @Override
@@ -39,13 +53,14 @@ public class EditProfileFragment extends Fragment {
         mContactEmailET = view.findViewById(R.id.contactEmailET);
         mAddressET = view.findViewById(R.id.locationET);
         toolbar = view.findViewById(R.id.editProfileToolbar);
+        authHelper = new AuthenticationHelper();
 
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked back arrow.");
-                    goToHomeFragment();
+                goToHomeFragment();
             }
         });
 
@@ -54,60 +69,71 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: saving the edited profile.");
-                if (!mNameET.getText().toString().isEmpty()
-                    && !mContactEmailET.getText().toString().isEmpty()
-                    && !mAddressET.getText().toString().isEmpty()) {
+                if (!mNameET.getText().toString().isEmpty() && !mContactEmailET.getText().toString().isEmpty() && !mAddressET.getText().toString().isEmpty()) {
                     Log.d(TAG, "onClick: saving edited User: " + mNameET.getText().toString());
-
-                    //DatabaseHelper databaseHelper = new DatabaseHelper(EditFriendActivity.this);
-                    //Cursor cursor = databaseHelper.getFriendID(mFriend);/getUserWithInfo()?
-                    // if User found (!null)
-
-                    //mFriend.setProfileImage(mSelectedImagePath);
-                   /*
-                        mFriend.setName(mName.getText().toString());
-                        mFriend.setPhone(mPhoneNumber.getText().toString());
-                        mFriend.setAddress(mAddressTxt.getText().toString());
-                        mFriend.setBirthday(mBirthdayTxt.getText().toString());
-                        mFriend.setEmail(mEmail.getText().toString());
-                        mFriend.setWebsite(mWebsite.getText().toString());
-                        mFriend.setLatitude(lat);
-                        mFriend.setLongitude(lng);
-                    }
-                    if (databaseHelper.updateFriend(mFriend, friendID)) {
-                        Toast.makeText(EditFriendActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        try {
-                            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                        } catch (NullPointerException e) {
-                            Log.d(TAG, "setAppBarState: NullPointerException " + e.getMessage());
-                        }
-                        Intent i = new Intent(EditFriendActivity.this, FriendActivity.class);
-                        i.putExtra("friendObj", mFriend);
-                        startActivity(i);
-                        finish();
-                    } else {
-                        Toast.makeText(EditFriendActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(EditFriendActivity.this, "Name, Phone Number and Address are necessary", Toast.LENGTH_LONG).show();
-                }
-                */
-                    //temporary }
+                    updateUser();
                 }
                 goToHomeFragment();
             }
         });
-
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        setUserInfo();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
     }
 
-    private void goToHomeFragment(){
+    private void goToHomeFragment() {
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    private void updateUser() {
+        authHelper.getUserWithInfo(new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+                user.setname(mNameET.getText().toString());
+                user.setContactEmail(mContactEmailET.getText().toString());
+                user.setAddress(mAddressET.getText().toString());
+                authHelper.createUserProfile(user);
+                /*
+                if (user.getImage() == false) {
+                    UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
+                }
+                */
+                Log.d(TAG, "setUserInfo: " + user.toString());
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+            }
+        });
+    }
+
+    private void setUserInfo(){
+        User user =  authHelper.getUserWithInfo(new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+                mNameET.setText(user.getname());
+                mContactEmailET.setText(user.getContactEmail());
+                mAddressET.setText(user.getAddress());
+
+               /* if(user.getImage() == false){
+                    UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
+
+                }
+                Log.d(TAG, "setUserInfo: " + user.toString());
+            */
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+        });
+
+    }
+
 }
+

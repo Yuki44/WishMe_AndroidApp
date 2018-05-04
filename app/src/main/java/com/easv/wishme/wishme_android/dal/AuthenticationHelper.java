@@ -45,8 +45,6 @@ public class AuthenticationHelper {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-
     public AuthenticationHelper() {
         mAuth = FirebaseAuth.getInstance();
         user  = new User();
@@ -81,11 +79,7 @@ public class AuthenticationHelper {
             return user;
         } else {
             return null;
-
         }
-
-
-
     }
 
     public FirebaseUser signUpNewUser(User user, final ICallBack callBack) {

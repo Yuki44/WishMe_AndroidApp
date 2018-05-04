@@ -298,4 +298,12 @@ public class HomeFragment extends Fragment {
 
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUserInfo();
+        Log.d("KKK", "OnResume");
+    }
+
 }
