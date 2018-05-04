@@ -3,6 +3,7 @@ package com.easv.wishme.wishme_android.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Debug;
 import android.support.annotation.Nullable;
@@ -108,6 +109,11 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {
             }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+
+            }
         });
     }
 
@@ -129,6 +135,11 @@ public class EditProfileFragment extends Fragment {
 
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
 
             }
         });
