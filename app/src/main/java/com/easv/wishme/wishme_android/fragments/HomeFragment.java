@@ -1,6 +1,7 @@
 package com.easv.wishme.wishme_android.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -61,11 +62,15 @@ public class HomeFragment extends Fragment {
     private TextView mAddressTV;
     private TextView mContactTV;
     private ProgressBar mProgressBar;
+    private ProgressBar mProfileProgressBar;
+
     private CircleImageView mImageView;
     private ArrayList<Wishlist> wishList;
     private FirebaseFirestore db;
     public ListView mWishList;
     private FloatingActionButton mCreateWishlist;
+    public static Bitmap mSelectedImage;
+
 
     public interface OnWishlistItemClicked{
     void getWishlistItemClicked(Wishlist wList);
@@ -82,6 +87,8 @@ public class HomeFragment extends Fragment {
         mWishlistCard = view.findViewById(R.id.cardView2);
         mAddressTV = view.findViewById(R.id.addressTV);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        mProfileProgressBar = (ProgressBar) view.findViewById(R.id.profileImageProgressBar);
+
         mNameTV = view.findViewById(R.id.nameTV);
         mContactTV = view.findViewById(R.id.contactTV);
         mCreateWishlist = (FloatingActionButton) view.findViewById(R.id.createWishlistFab);
@@ -112,10 +119,12 @@ public class HomeFragment extends Fragment {
         });
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         initProgressBar();
+        initImageProgressBar();
         setHasOptionsMenu(true);
         setWishlist();
         setUserInfo();
-mCreateWishlist.setOnClickListener(new View.OnClickListener() {
+        setProfileImage();
+        mCreateWishlist.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         showCreateWishListDialog();
@@ -176,16 +185,16 @@ mCreateWishlist.setOnClickListener(new View.OnClickListener() {
 
     }
     private void setUserInfo(){
+        showImageProgressBar();
       User user =  authHelper.getUserWithInfo(new ICallBack() {
                  @Override
                  public void onFinish(User user) {
                      mNameTV.setText(user.getname());
                      mContactTV.setText(user.getContactEmail());
                      mAddressTV.setText(user.getAddress());
-                     if(user.getImage() == false){
-                  UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
 
-              }
+
+
               Log.d(TAG, "setUserInfo: " + user.toString());
           }
 
@@ -193,8 +202,32 @@ mCreateWishlist.setOnClickListener(new View.OnClickListener() {
           public void onFinishFireBaseUser(FirebaseUser user) {
 
           }
+
+          @Override
+          public void onFinishGetImage(Bitmap bitmap) {
+              setProfileImage();
+
+          }
       });
 
+    }
+    private void setProfileImage(){
+        mSelectedImage = authHelper.getProfileImage(new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                mImageView.setImageBitmap(bitmap);
+            }
+        });
     }
 
 
@@ -239,6 +272,19 @@ mCreateWishlist.setOnClickListener(new View.OnClickListener() {
     private void initProgressBar(){
 
         mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void showImageProgressBar(){
+        mProfileProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideImageProgressBar(){
+        mProfileProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initImageProgressBar(){
+
+        mProfileProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
