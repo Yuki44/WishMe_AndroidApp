@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
@@ -46,6 +47,7 @@ public class SignUpStep2 extends Fragment {
     private EditText nameET;
     private EditText contactEmailET;
     private AuthenticationHelper authHelper;
+    private RelativeLayout mRelativeLayout2;
 
     private EditText addressET;
 
@@ -83,6 +85,7 @@ public class SignUpStep2 extends Fragment {
                 signUp();
             }
         });
+        mRelativeLayout2 = view.findViewById(R.id.relativeLayout2);
         UniversalImageLoader.setImage("", profileImage, null, "drawable://" + R.drawable.ic_no_profile_img);
 
         if(mUser != null){
@@ -101,6 +104,8 @@ public class SignUpStep2 extends Fragment {
     }
 
     private void signUp() {
+        mRelativeLayout2.setVisibility(mRelativeLayout2.INVISIBLE);
+        showProgressBar();
         authHelper.signUpNewUser(mUser, new ICallBack() {
             @Override
             public void onFinish(User user) {
@@ -120,10 +125,25 @@ public class SignUpStep2 extends Fragment {
                 Bitmap bitmap = profileImage.getDrawingCache();
 
 
-               authHelper.createProfileImage(bitmap);
+               authHelper.createProfileImage(bitmap, new ICallBack() {
+                   @Override
+                   public void onFinish(User user) {
+
+                   }
+
+                   @Override
+                   public void onFinishFireBaseUser(FirebaseUser user) {
+
+                   }
+
+                   @Override
+                   public void onFinishGetImage(Bitmap bitmap) {
+                       loadHomeFragment();
+
+                   }
+               });
 
 
-                loadHomeFragment();
 
             }
 
