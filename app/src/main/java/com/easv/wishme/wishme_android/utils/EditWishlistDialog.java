@@ -31,16 +31,19 @@ public class EditWishlistDialog extends DialogFragment {
     private DatabaseHelper dataHelper;
     private ProgressBar mProgressBar;
     private LinearLayout linear;
+    private Wishlist listFromHome;
 
-
-
+    public EditWishlistDialog() {
+        super();
+        setArguments(new Bundle());
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_wishlist_edit, container, false);
 
         mNewWishlistName = (EditText) view.findViewById(R.id.newWishlistNameTX);
-
+        listFromHome = getWishListFromBundle();
         db = FirebaseFirestore.getInstance();
         authHelper = new AuthenticationHelper();
         dataHelper = new DatabaseHelper();
@@ -49,36 +52,29 @@ public class EditWishlistDialog extends DialogFragment {
         initProgressBar();
 
 
-
-
         final TextView saveDialog = view.findViewById(R.id.dialogSave);
         saveDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 linear.setVisibility(View.INVISIBLE);
-            showProgressBar();
-if(!mNewWishlistName.getText().equals(null)){
-    saveDialog.setVisibility(View.GONE);
-    Wishlist wList = new Wishlist(mNewWishlistName.getText().toString(), authHelper.getmAuth().getUid());
-    dataHelper.createWishList(wList, new ICallBackDatabase() {
-        @Override
-        public void onFinishWishList(Wishlist wList) {
-            getDialog().dismiss();
-            loadHomeFragment();
-        }
+                showProgressBar();
+                if (!mNewWishlistName.getText().equals(null)) {
+                    saveDialog.setVisibility(View.GONE);
+                    dataHelper.editWishList(listFromHome, new ICallBackDatabase() {
+                        @Override
+                        public void onFinishWishList(Wishlist wList) {
+                            getDialog().dismiss();
+                            loadHomeFragment();
+                        }
 
-        @Override
-        public void onFinishWishListList(ArrayList list) {
+                        @Override
+                        public void onFinishWishListList(ArrayList list) {
 
-        }
-    });
-}
+                        }
+                    });
+                }
             }
         });
-
-
-
-
 
 
         // Cancel button for closing the dialog
@@ -94,23 +90,34 @@ if(!mNewWishlistName.getText().equals(null)){
         return view;
     }
 
-    private void loadHomeFragment(){
+    private void loadHomeFragment() {
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
     }
-    private void showProgressBar(){
+
+    private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar(){
+    private void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private void initProgressBar(){
+    private void initProgressBar() {
 
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
+    private Wishlist getWishListFromBundle() {
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            return bundle.getParcelable("WishList");
+        } else {
+            return null;
+        }
+
+    }
 }

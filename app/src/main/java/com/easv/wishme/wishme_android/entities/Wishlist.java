@@ -1,8 +1,29 @@
 package com.easv.wishme.wishme_android.entities;
 
-public class Wishlist {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Wishlist implements Parcelable{
 
     String wListName, owner, id;
+
+    protected Wishlist(Parcel in) {
+        wListName = in.readString();
+        owner = in.readString();
+        id = in.readString();
+    }
+
+    public static final Creator<Wishlist> CREATOR = new Creator<Wishlist>() {
+        @Override
+        public Wishlist createFromParcel(Parcel in) {
+            return new Wishlist(in);
+        }
+
+        @Override
+        public Wishlist[] newArray(int size) {
+            return new Wishlist[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -42,5 +63,17 @@ public class Wishlist {
         return "Wishlist{" +
                 "wListName='" + wListName + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(wListName);
+        dest.writeString(owner);
+        dest.writeString(id);
     }
 }

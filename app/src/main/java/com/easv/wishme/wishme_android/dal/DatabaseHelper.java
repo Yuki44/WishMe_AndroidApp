@@ -55,21 +55,8 @@ public class DatabaseHelper {
  }
     public void editWishList(final Wishlist wList, final ICallBackDatabase callBackDatabase)
     {
-        db.collection("wishlist")
-                .add(wList)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                        callBackDatabase.onFinishWishList(wList);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        db.collection("wishlist").document(wList.getId())
+             .set(wList);
     }
  public void getWishLists(final ICallBackDatabase callBackDatabase){
      wishListList = new ArrayList<>();

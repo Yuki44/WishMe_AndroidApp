@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
                 Wishlist wList = wishList.get(position);
                 Log.d(TAG, "onItemClick: " + wList.getId() + " " + "<><><><><><><><><><><><><><><><>");
                 mOnWishlistItemClicked.getWishlistItemClicked(wList);
-                wishlistClicked();
+               // wishlistClicked();
             }
         });
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);

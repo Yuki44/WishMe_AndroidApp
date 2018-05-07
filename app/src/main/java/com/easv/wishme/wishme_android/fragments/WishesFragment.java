@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.adapters.WishAdapter;
+import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.easv.wishme.wishme_android.utils.EditWishlistDialog;
@@ -43,9 +44,12 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private Wishlist listFromHome;
     private FirebaseFirestore db;
     private Toolbar toolbar;
-    private CollectionReference mDocRef = FirebaseFirestore.getInstance().collection("wish");
 
 
+    public WishesFragment() {
+        super();
+        setArguments(new Bundle());
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -55,11 +59,21 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         db = FirebaseFirestore.getInstance();
         toolbar = view.findViewById(R.id.wishlistToolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-
+        listFromHome = getWishListFromBundle();
+        Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
         return view;
     }
 
+    private Wishlist getWishListFromBundle(){
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            return bundle.getParcelable("WishList");
+        } else {
+            return null;
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
