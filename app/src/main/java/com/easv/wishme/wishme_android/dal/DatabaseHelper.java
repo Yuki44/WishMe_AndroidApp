@@ -73,5 +73,11 @@ public class DatabaseHelper {
                  }
              });
  }
+
+ public void addWish(){
+
+ }
+
+
 }
 

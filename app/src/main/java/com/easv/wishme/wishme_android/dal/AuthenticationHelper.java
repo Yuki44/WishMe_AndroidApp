@@ -57,7 +57,7 @@ public class AuthenticationHelper {
 
 
     public void signOut() {
-        SignUpStep2.mSelectedImage = null;
+       // SignUpStep2.mSelectedImage = null;
         HomeFragment.mSelectedImage = null;
         mAuth.signOut();
     }
