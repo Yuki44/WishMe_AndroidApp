@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment {
 
     public interface OnWishlistItemClicked{
     void getWishlistItemClicked(Wishlist wList);
+
     }
     OnWishlistItemClicked mOnWishlistItemClicked;
 
@@ -117,9 +118,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Wishlist wList = wishList.get(position);
-                Log.d(TAG, "onItemClick: " + wList + " " + "<><><><><><><><><><><><><><><><>");
-//                mOnWishlistItemClicked.getWishlistItemClicked(wList);
-                wishlistClicked();
+                Log.d(TAG, "onItemClick: " + wList.getId() + " " + "<><><><><><><><><><><><><><><><>");
+                mOnWishlistItemClicked.getWishlistItemClicked(wList);
+               // wishlistClicked();
             }
         });
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -191,7 +192,7 @@ public class HomeFragment extends Fragment {
     }
     private void setUserInfo(){
         showImageProgressBar();
-      User user =  authHelper.getUserWithInfo(new ICallBack() {
+        User user =  authHelper.getUserWithInfo(new ICallBack() {
                  @Override
                  public void onFinish(User user) {
                      mNameTV.setText(user.getname());
@@ -306,7 +307,7 @@ public class HomeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try{
-            mOnWishlistItemClicked = (OnWishlistItemClicked) getTargetFragment();
+            mOnWishlistItemClicked = (OnWishlistItemClicked) getActivity();
 
         }catch(ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());

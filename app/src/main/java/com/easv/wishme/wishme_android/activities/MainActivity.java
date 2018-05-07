@@ -15,16 +15,18 @@ import android.util.Log;
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.easv.wishme.wishme_android.fragments.AddWishFragment;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
 import com.easv.wishme.wishme_android.fragments.LoginFragment;
 import com.easv.wishme.wishme_android.fragments.SignUpStep1;
 import com.easv.wishme.wishme_android.fragments.SignUpStep2;
+import com.easv.wishme.wishme_android.fragments.WishesFragment;
 import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, ChangePhotoDialog.OnPhotoSelectedListener{
+public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, ChangePhotoDialog.OnPhotoSelectedListener, HomeFragment.OnWishlistItemClicked{
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
@@ -125,6 +127,17 @@ public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUse
     public void sendImageToAddWish(){
         AddWishFragment fragment = new AddWishFragment();
         fragment.setArguments(imgBundle);
+    }
+
+    @Override
+    public void getWishlistItemClicked(Wishlist wList) {
+            WishesFragment fragment = new WishesFragment();
+            args = new Bundle();
+            args.putParcelable("WishList", wList);
+            fragment.setArguments(args);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.commit();
     }
 }
 
