@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
     public WishlistAdapter wishlistAdapter;
     private AuthenticationHelper authHelper;
     private TextView mNameTV;
+    private TextView mNoListTV;
     private TextView mAddressTV;
     private TextView mContactTV;
     private ProgressBar mProgressBar;
@@ -86,7 +87,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         toolbar = view.findViewById(R.id.logoutToolbar);
         dataHelper = new DatabaseHelper();
-
+        mNoListTV = view.findViewById(R.id.noListTV);
         authHelper = new AuthenticationHelper();
         mWishlistCard = view.findViewById(R.id.cardView2);
         mAddressTV = view.findViewById(R.id.addressTV);
@@ -250,12 +251,23 @@ public class HomeFragment extends Fragment {
                 wishList = list;
                 wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList , "https://");
                 mWishList.setAdapter(wishlistAdapter);
+                mNoListTV.setText("");
                 hideProgressBar();
+                return;
+
             }
 
 
 
+
+
         });
+        if(wishList == null) {
+            mWishlistCard.setVisibility(View.INVISIBLE);
+            mNoListTV.setText("You don't have a Wish list yet!");
+            hideProgressBar();
+        }
+
 
 
 
@@ -307,7 +319,6 @@ public class HomeFragment extends Fragment {
         super.onResume();
         setUserInfo();
         setProfileImage();
-        Log.d("KKK", "OnResume");
     }
 
 }

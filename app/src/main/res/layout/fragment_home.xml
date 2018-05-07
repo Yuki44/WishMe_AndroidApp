@@ -138,6 +138,8 @@
         android:visibility="visible">
 
 
+
+
         <android.support.v7.widget.CardView
             android:id="@+id/cardView2"
             android:layout_width="match_parent"
@@ -165,7 +167,6 @@
 
         </android.support.v7.widget.CardView>
 
-
         <ListView
             android:id="@+id/wishlist"
             android:layout_width="match_parent"
@@ -181,6 +182,15 @@
             android:id="@+id/progressBar"
             android:layout_centerInParent="true"
             />
+
+        <TextView
+            android:id="@+id/noListTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+
+
 
     </RelativeLayout>
 
