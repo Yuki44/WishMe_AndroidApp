@@ -97,34 +97,6 @@ public class WishesFragment extends android.support.v4.app.Fragment implements H
 
     }
 
-//private void setWishList(){
-
-
-    // THIS DOESN'T WORK BECAUSE OF SOME DARK UNKNOWN MAGIC
-
-
-//        mNoWishes.setText("Loading...");
-//    wishList = new ArrayList<>();
-//    DatabaseHelper databaseHelper = new DatabaseHelper();
-//    wishList = databaseHelper.getAllWishes();
-//    Collections.sort(wishList, new Comparator<Wish>() {
-//        @Override
-//        public int compare(Wish o1, Wish o2) {
-//            return o1.getName().compareToIgnoreCase(o2.getName());
-//        }
-//    });
-//
-//    if (wishList.isEmpty()) {
-//        Toast.makeText(getActivity(), "Add some wishes!", Toast.LENGTH_SHORT).show();
-//        mNoWishes.setText("No wishes to show");
-//    } else {
-//        mNoWishes.setText("");
-//    }
-//    wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wishList, "http://");
-//    mNoWishes.setText("");
-//    mWishList.setAdapter(wishAdapter);
-//
-//}
 
 
 
