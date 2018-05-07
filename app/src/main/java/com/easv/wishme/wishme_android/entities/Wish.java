@@ -5,8 +5,8 @@ import android.os.Parcelable;
 
 public class Wish implements Parcelable {
 
-    String name, price, link, description, image;
-    int rating;
+    private String name, price, link, description, image;
+    private int rating;
 
     public Wish() {
     }
