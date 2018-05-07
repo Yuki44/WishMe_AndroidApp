@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class WishesFragment extends android.support.v4.app.Fragment implements HomeFragment.OnWishlistItemClicked {
+public class WishesFragment extends android.support.v4.app.Fragment {
 
 
     private static final String TAG = "WishesFragment";
@@ -102,11 +102,6 @@ public class WishesFragment extends android.support.v4.app.Fragment implements H
 
     }
 
-    @Override
-    public void getWishlistItemClicked(Wishlist wList) {
-        Log.d(TAG, "getWishlistItemClicked: get the clicked Wishlist" + wList);
-
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

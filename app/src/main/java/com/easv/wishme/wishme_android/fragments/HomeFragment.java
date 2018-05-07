@@ -307,7 +307,7 @@ public class HomeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try{
-            mOnWishlistItemClicked = (OnWishlistItemClicked) getTargetFragment();
+            mOnWishlistItemClicked = (OnWishlistItemClicked) getActivity();
 
         }catch(ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());
