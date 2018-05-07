@@ -14,7 +14,7 @@ import android.provider.MediaStore;
 
 import java.io.IOException;
 
-public class ImageHandeler {
+public class ImageHandler {
     public static Bitmap modifyOrientation(Bitmap bitmap, String image_absolute_path) throws IOException {
         ExifInterface ei = new ExifInterface(image_absolute_path);
         int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
