@@ -303,6 +303,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setUserInfo();
+        setProfileImage();
         Log.d("KKK", "OnResume");
     }
 

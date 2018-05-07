@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.ICallBack;
+import com.easv.wishme.wishme_android.fragments.EditProfileFragment;
 import com.easv.wishme.wishme_android.fragments.SignUpStep2;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -123,6 +124,8 @@ public class ChangePhotoDialog extends DialogFragment {
             final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
             final Bitmap imgRotated = imgHandeler.modifyOrientation(selectedImage, imagePath);
             SignUpStep2.mSelectedImage = imgRotated;
+            EditProfileFragment.mSelectedImage = imgRotated;
+            Log.d(TAG, imgRotated.toString());
 
             getDialog().dismiss();
         } catch(FileNotFoundException e) {

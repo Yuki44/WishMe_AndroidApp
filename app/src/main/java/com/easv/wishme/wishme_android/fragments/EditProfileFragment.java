@@ -18,12 +18,16 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.utils.CreateWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +44,11 @@ public class EditProfileFragment extends Fragment {
     private CircleImageView mImageView;
     private Toolbar toolbar;
     private AuthenticationHelper authHelper;
+    public static Bitmap mSelectedImage;
+    private RelativeLayout mRelativeLayout2;
+    private ProgressBar mProgressBar;
+
+
 
     private static final String Name = "name";
     private static final String ContactEmail = "contactEmail";
@@ -55,6 +64,18 @@ public class EditProfileFragment extends Fragment {
         mAddressET = view.findViewById(R.id.locationET);
         toolbar = view.findViewById(R.id.editProfileToolbar);
         authHelper = new AuthenticationHelper();
+        mImageView = view.findViewById(R.id.profileImage);
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePic();
+            }
+        });
+        mRelativeLayout2 = view.findViewById(R.id.relativeLayout2);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
+
+
 
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
@@ -74,12 +95,21 @@ public class EditProfileFragment extends Fragment {
                     Log.d(TAG, "onClick: saving edited User: " + mNameET.getText().toString());
                     updateUser();
                 }
-                goToHomeFragment();
             }
         });
+        initProgressBar();
         setUserInfo();
+        setProfileImage();
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
+    }
+
+    private void changePic() {
+        Log.d(TAG, "onClick: opening dialog to choose new photo");
+        ChangePhotoDialog dialog = new ChangePhotoDialog();
+        dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
+        dialog.setTargetFragment(EditProfileFragment.this, 1);
+
     }
 
     private void goToHomeFragment() {
@@ -89,8 +119,40 @@ public class EditProfileFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+    private void setProfileImage(){
+        mSelectedImage = authHelper.getProfileImage(new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                mImageView.setImageBitmap(bitmap);
+            }
+        });
+    }
+    private void showProgressBar(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initProgressBar(){
+
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
 
     private void updateUser() {
+       mRelativeLayout2.setVisibility(mRelativeLayout2.INVISIBLE);
+        showProgressBar();
         authHelper.getUserWithInfo(new ICallBack() {
             @Override
             public void onFinish(User user) {
@@ -98,11 +160,29 @@ public class EditProfileFragment extends Fragment {
                 user.setContactEmail(mContactEmailET.getText().toString());
                 user.setAddress(mAddressET.getText().toString());
                 authHelper.createUserProfile(user);
-                /*
-                if (user.getImage() == false) {
-                    UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
-                }
-                */
+
+                mImageView.setDrawingCacheEnabled(true);
+                mImageView.buildDrawingCache();
+                Bitmap bitmap = mImageView.getDrawingCache();
+
+
+                authHelper.createProfileImage(bitmap, new ICallBack() {
+                    @Override
+                    public void onFinish(User user) {
+
+                    }
+
+                    @Override
+                    public void onFinishFireBaseUser(FirebaseUser user) {
+
+                    }
+
+                    @Override
+                    public void onFinishGetImage(Bitmap bitmap) {
+                        goToHomeFragment();
+
+                    }
+                });
                 Log.d(TAG, "setUserInfo: " + user.toString());
             }
 
@@ -125,12 +205,6 @@ public class EditProfileFragment extends Fragment {
                 mContactEmailET.setText(user.getContactEmail());
                 mAddressET.setText(user.getAddress());
 
-               /* if(user.getImage() == false){
-                    UniversalImageLoader.setImage("", mImageView, null, "drawable://" + R.drawable.ic_no_profile_img);
-
-                }
-                Log.d(TAG, "setUserInfo: " + user.toString());
-            */
             }
 
             @Override
@@ -145,6 +219,15 @@ public class EditProfileFragment extends Fragment {
         });
 
     }
+    private void setNewProfileImage(){
+        mImageView.setImageBitmap(mSelectedImage);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        setNewProfileImage();
+    }
 }
 

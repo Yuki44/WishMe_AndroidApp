@@ -111,7 +111,7 @@ public class AuthenticationHelper {
 
     }
 
-    public void createProfileImage(Bitmap bitmap){
+    public Bitmap createProfileImage(final Bitmap bitmap, final ICallBack callBack){
         StorageReference userRef = storageRef.child("profile-images/" + getmAuth().getUid());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -127,9 +127,11 @@ public class AuthenticationHelper {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                callBack.onFinishGetImage(bitmap);
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
             }
         });
+        return bitmap;
 
     }
     public Bitmap getProfileImage(final ICallBack callBack){
