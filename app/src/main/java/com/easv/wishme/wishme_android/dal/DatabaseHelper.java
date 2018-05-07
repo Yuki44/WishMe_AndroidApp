@@ -53,6 +53,11 @@ public class DatabaseHelper {
            }
           });
  }
+    public void editWishList(final Wishlist wList, final ICallBackDatabase callBackDatabase)
+    {
+        db.collection("wishlist").document(wList.getId())
+             .set(wList);
+    }
  public void getWishLists(final ICallBackDatabase callBackDatabase){
      wishListList = new ArrayList<>();
      db.collection("wishlist").whereEqualTo("owner", authHelper.getmAuth().getUid().toString())
@@ -64,6 +69,7 @@ public class DatabaseHelper {
                          for (QueryDocumentSnapshot document : task.getResult()) {
                              Log.d(TAG, document.getId() + " => " + document.getData());
                              Wishlist wishlist = document.toObject(Wishlist.class);
+                             wishlist.setId(document.getId());
                              wishListList.add(wishlist);
                              callBackDatabase.onFinishWishListList(wishListList);
                          }
