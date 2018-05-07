@@ -5,5 +5,8 @@
     <string name="wishes_list">WishesFragment</string>
     <string name="logout">Logout</string>
     <string name="create_wishlist">CreateWishlistDialog</string>
+    <string name="what_is_your_wish">What is your wish?</string>
+    <string name="average_price">What\'s the average price?</string>
+    <string name="website_link">Let\'s add a website link!</string>
 
 </resources>
