@@ -1,6 +1,9 @@
 package com.easv.wishme.wishme_android.entities;
 
-public class Wish {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Wish implements Parcelable {
 
     String name, price, link, description, image;
     int rating;
@@ -16,6 +19,27 @@ public class Wish {
         this.image = image;
         this.rating = rating;
     }
+
+    protected Wish(Parcel in) {
+        name = in.readString();
+        price = in.readString();
+        link = in.readString();
+        description = in.readString();
+        image = in.readString();
+        rating = in.readInt();
+    }
+
+    public static final Creator<Wish> CREATOR = new Creator<Wish>() {
+        @Override
+        public Wish createFromParcel(Parcel in) {
+            return new Wish(in);
+        }
+
+        @Override
+        public Wish[] newArray(int size) {
+            return new Wish[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -63,5 +87,20 @@ public class Wish {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(link);
+        dest.writeString(description);
+        dest.writeString(image);
+        dest.writeInt(rating);
     }
 }
