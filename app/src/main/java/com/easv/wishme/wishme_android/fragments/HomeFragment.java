@@ -29,7 +29,9 @@ import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.adapters.WishAdapter;
 import com.easv.wishme.wishme_android.adapters.WishlistAdapter;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
+import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
+import com.easv.wishme.wishme_android.dal.ICallBackDatabase;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.easv.wishme.wishme_android.utils.CreateWishlistDialog;
@@ -70,6 +72,7 @@ public class HomeFragment extends Fragment {
     public ListView mWishList;
     private FloatingActionButton mCreateWishlist;
     public static Bitmap mSelectedImage;
+    private DatabaseHelper dataHelper;
 
 
     public interface OnWishlistItemClicked{
@@ -82,6 +85,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         toolbar = view.findViewById(R.id.logoutToolbar);
+        dataHelper = new DatabaseHelper();
 
         authHelper = new AuthenticationHelper();
         mWishlistCard = view.findViewById(R.id.cardView2);
@@ -235,27 +239,26 @@ public class HomeFragment extends Fragment {
 
     private void setWishlist(){
         showProgressBar();
-        wishList = new ArrayList<>();
-        db.collection("wishlist")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            hideProgressBar();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                Wishlist wishlist = document.toObject(Wishlist.class);
-                                wishList.add(wishlist);
-                            }
-                            wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList, "https://");
-                            mWishList.setAdapter(wishlistAdapter);
-//                            sortListByName();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
+        dataHelper.getWishLists(new ICallBackDatabase() {
+            @Override
+            public void onFinishWishList(Wishlist wList) {
+
+            }
+
+            @Override
+            public void onFinishWishListList(ArrayList list) {
+                wishList = list;
+                wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList , "https://");
+                mWishList.setAdapter(wishlistAdapter);
+                hideProgressBar();
+            }
+
+
+
+        });
+
+
+
 
     }
 

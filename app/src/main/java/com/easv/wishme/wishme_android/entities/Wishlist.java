@@ -2,14 +2,23 @@ package com.easv.wishme.wishme_android.entities;
 
 public class Wishlist {
 
-    String wListName;
+    String wListName, owner;
 
-    public Wishlist() {
-
+    public String getOwner() {
+        return owner;
     }
 
-    public Wishlist(String wListName) {
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+
+    public Wishlist() {
+    }
+
+    public Wishlist(String wListName, String owner) {
         this.wListName = wListName;
+        this.owner = owner;
     }
 
     public String getwListName() {
