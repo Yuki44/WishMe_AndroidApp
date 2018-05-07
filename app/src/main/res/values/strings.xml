@@ -8,5 +8,7 @@
     <string name="what_is_your_wish">What is your wish?</string>
     <string name="average_price">What\'s the average price?</string>
     <string name="website_link">Let\'s add a website link!</string>
+    <string name="a_short_description">A short description:</string>
+    <string name="rating_text">From 1 to 5, how much do you want it?</string>
 
 </resources>

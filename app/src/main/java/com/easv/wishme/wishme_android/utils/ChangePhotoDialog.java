@@ -41,18 +41,15 @@ import java.io.InputStream;
 
 public class ChangePhotoDialog extends DialogFragment {
     private static final String TAG = "ChangePhotoDialog";
-    private ImageHandeler imgHandeler;
+    private ImageHandler imgHandler;
 
-//    private String mSelectedImagePath;
-//    private static final int CAMERA_REQUEST_CODE = 10;
-//    String mCurrentPhotoPath;
-//    private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.easv.boldi.yuki.mapme.fileprovider";
 
     private static final int CAMERA_REQUEST_CODE = 4321;
     private static final int PICKFILE_REQUEST_CODE = 1234;
     private String picturePath;
+
+
     public interface OnPhotoSelectedListener{
-        void getImagePath(String imagePath);
         void getImageBitmap(Bitmap bitmap);
     }
     OnPhotoSelectedListener mOnPhotoSelectedListener;
@@ -71,7 +68,7 @@ public class ChangePhotoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_changephoto, container, false);
 
-        imgHandeler = new ImageHandeler();
+        imgHandler = new ImageHandler();
         TextView takePhoto = view.findViewById(R.id.dialogTakePhoto);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,12 +116,15 @@ public class ChangePhotoDialog extends DialogFragment {
         if (requestCode == PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             try{
             final Uri selectedImageUri = data.getData();
-            final String imagePath = imgHandeler.getFilePath(  getContext(),selectedImageUri);
+            final String imagePath = imgHandler.getFilePath(  getContext(),selectedImageUri);
             final InputStream imageStream = getContext().getContentResolver().openInputStream(selectedImageUri);
             final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            final Bitmap imgRotated = imgHandeler.modifyOrientation(selectedImage, imagePath);
-            SignUpStep2.mSelectedImage = imgRotated;
-            EditProfileFragment.mSelectedImage = imgRotated;
+            final Bitmap imgRotated = imgHandler.modifyOrientation(selectedImage, imagePath);
+//            SignUpStep2.mSelectedImage = imgRotated;
+//            EditProfileFragment.mSelectedImage = imgRotated;
+                Log.d("abc", "Image send to main activity");
+                mOnPhotoSelectedListener.getImageBitmap(imgRotated);
+
             Log.d(TAG, imgRotated.toString());
 
             getDialog().dismiss();
@@ -143,6 +143,7 @@ public class ChangePhotoDialog extends DialogFragment {
     public void onAttach(Context context) {
         try{
             mOnPhotoSelectedListener =  (OnPhotoSelectedListener) getActivity();
+            Log.d("abc", "onAttach - ref to mainactivity set");
         }catch(ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
         }

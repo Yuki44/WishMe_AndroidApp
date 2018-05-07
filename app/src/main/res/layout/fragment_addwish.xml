@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -40,7 +41,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:src="@color/skyBlue" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/ivCamera"
@@ -130,10 +131,9 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relLayout9"
+                android:id="@+id/relLayout6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relLayout8"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:padding="10dp">
@@ -167,34 +167,116 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relLayout6"
+                android:id="@+id/relLayout7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relLayout5"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/ivAddress"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_location" />
-
-                <EditText
-                    android:id="@+id/addressTxt"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_toRightOf="@+id/ivAddress"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivDescription"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_description"
+                    android:layout_marginTop="5dp"/>
+
+                <EditText
+                    android:id="@+id/descriptionTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/nunito_semibold"
-                    android:hint="A short description:"
+                    android:hint="@string/a_short_description"
                     android:inputType="textCapSentences"
-                    android:singleLine="false"
+                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
+                </LinearLayout>
             </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/relLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating_text"
+                            android:textSize="20sp"
+                            android:id="@+id/rating"
+                            />
+
+                        <ImageView
+                            android:id="@+id/stars"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/rating"
+
+                            app:srcCompat="@drawable/ic_full_star" />
+
+                        <ImageView
+                            android:id="@+id/stars2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_toEndOf="@+id/stars"
+                            android:layout_below="@+id/rating"
+                            app:srcCompat="@drawable/ic_star_empty" />
+
+                        <ImageView
+                            android:id="@+id/stars3"
+                            android:layout_width="50dp"
+                            android:layout_toEndOf="@+id/stars2"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/rating"
+                            app:srcCompat="@drawable/ic_star_empty"
+/>
+
+                        <ImageView
+                            android:id="@+id/stars4"
+                            android:layout_width="50dp"
+                            android:layout_toEndOf="@+id/stars3"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/rating"
+                            app:srcCompat="@drawable/ic_star_empty" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_toEndOf="@+id/stars4"
+                            android:layout_below="@+id/rating"
+                            app:srcCompat="@drawable/ic_star_empty" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </RelativeLayout>
+
 
         </LinearLayout>
     </ScrollView>

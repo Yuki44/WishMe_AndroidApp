@@ -49,4 +49,10 @@ public class DatabaseHelper {
 //          });
   return list;
  }
+
+ public void addWish(){
+
+ }
+
+
 }
