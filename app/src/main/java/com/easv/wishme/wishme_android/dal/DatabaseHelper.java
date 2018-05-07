@@ -53,6 +53,24 @@ public class DatabaseHelper {
            }
           });
  }
+    public void editWishList(final Wishlist wList, final ICallBackDatabase callBackDatabase)
+    {
+        db.collection("wishlist")
+                .add(wList)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        callBackDatabase.onFinishWishList(wList);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
  public void getWishLists(final ICallBackDatabase callBackDatabase){
      wishListList = new ArrayList<>();
      db.collection("wishlist").whereEqualTo("owner", authHelper.getmAuth().getUid().toString())
@@ -64,6 +82,7 @@ public class DatabaseHelper {
                          for (QueryDocumentSnapshot document : task.getResult()) {
                              Log.d(TAG, document.getId() + " => " + document.getData());
                              Wishlist wishlist = document.toObject(Wishlist.class);
+                             wishlist.setId(document.getId());
                              wishListList.add(wishlist);
                              callBackDatabase.onFinishWishListList(wishListList);
                          }

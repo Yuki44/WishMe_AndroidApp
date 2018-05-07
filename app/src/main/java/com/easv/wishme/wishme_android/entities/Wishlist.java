@@ -2,7 +2,15 @@ package com.easv.wishme.wishme_android.entities;
 
 public class Wishlist {
 
-    String wListName, owner;
+    String wListName, owner, id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getOwner() {
         return owner;
