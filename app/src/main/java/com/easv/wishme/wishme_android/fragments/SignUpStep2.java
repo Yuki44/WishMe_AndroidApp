@@ -40,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SignUpStep2 extends Fragment {
 
     private static final String TAG = "CreateUserFragment2";
-    public static Bitmap mSelectedImage;
+//    public static Bitmap mSelectedImage;
     private CircleImageView profileImage;
     private User mUser;
     private Button signUpBtn;
@@ -168,8 +168,11 @@ public class SignUpStep2 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Bitmap mSelectedImage = getBitmapFromBundle();
+        Log.d("abc", "onResume: got image from bundle");
         if(mSelectedImage != null){
             profileImage.setImageBitmap(mSelectedImage);
+            Log.d("abc", "onResume: set image on the view ");
         }
         Log.d(TAG, "resumed");
 
@@ -189,7 +192,7 @@ public class SignUpStep2 extends Fragment {
     }
 
 private User getUserFromBundle(){
-    Log.d(TAG, "getUserFromBundle: arguments: " + getArguments());
+    Log.d("abc", "getUserFromBundle: arguments: " + getArguments());
 
     Bundle bundle = this.getArguments();
     if(bundle != null){
@@ -198,6 +201,19 @@ private User getUserFromBundle(){
         return null;
     }
 }
+
+    private Bitmap getBitmapFromBundle(){
+        Log.d("abc", "getUserFromBundle: arguments: " + getArguments());
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            return bundle.getParcelable("Image");
+        } else {
+            return null;
+        }
+    }
+
+
 private void loadHomeFragment(){
     HomeFragment fragment = new HomeFragment();
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
