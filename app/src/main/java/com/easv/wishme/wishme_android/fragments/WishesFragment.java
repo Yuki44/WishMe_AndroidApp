@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -43,6 +45,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private TextView mNoWishes, mNameOfWishlist;
     private ArrayList<Wish> wishListList;
     private Wishlist listFromHome;
+    private FloatingActionButton mAddWish;
     private FirebaseFirestore db;
     private Toolbar toolbar;
 
@@ -63,6 +66,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mNoWishes = view.findViewById(R.id.textNoWishes);
         mWishList = view.findViewById(R.id.wishesList);
         mNameOfWishlist = view.findViewById(R.id.nameOfWishlist);
+        mAddWish = (FloatingActionButton) view.findViewById(R.id.addWishFab);
         db = FirebaseFirestore.getInstance();
         toolbar = view.findViewById(R.id.wishlistToolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -70,7 +74,21 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mNameOfWishlist.setText(listFromHome.getwListName());
         Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
+        mAddWish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               addWish();
+            }
+        });
         return view;
+    }
+
+    private void addWish(){
+        AddWishFragment fragment = new AddWishFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private Wishlist getWishListFromBundle(){

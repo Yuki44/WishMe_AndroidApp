@@ -97,6 +97,9 @@ public class EditProfileFragment extends Fragment {
         transaction.commit();
     }
 
+
+
+
     private void setProfileImage(){
         MainActivity.mSelectedImage = authHelper.getProfileImage(new ICallBack() {
             @Override
@@ -175,14 +178,19 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setNewProfileImage(){
-        mImageView.setImageBitmap(MainActivity.mSelectedImage);
+       mImageView.setImageBitmap(MainActivity.mSelectedImage);
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        setNewProfileImage();
+        if(MainActivity.mSelectedImage != null){
+            mImageView.setImageBitmap(MainActivity.mSelectedImage);
+            Log.d("abc", "onResume: set image on the view ");
+        }
+        Log.d(TAG, "resumed");
     }
 }
 
