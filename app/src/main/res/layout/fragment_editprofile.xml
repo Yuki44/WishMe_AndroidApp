@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/snippet_editprofile"></include>
+            <include layout="@layout/snippet_profile_edit"></include>
         </RelativeLayout>
     </RelativeLayout>
 

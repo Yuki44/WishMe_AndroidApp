@@ -5,18 +5,19 @@ import android.os.Parcelable;
 
 public class Wish implements Parcelable {
 
-    private String name, price, link, description, image;
+    private String name, price, link, description, image, owner;
     private int rating;
 
     public Wish() {
     }
 
-    public Wish(String name, String price, String link, String description, String image, int rating) {
+    public Wish(String name, String price, String link, String description, String image, String owner, int rating) {
         this.name = name;
         this.price = price;
         this.link = link;
         this.description = description;
         this.image = image;
+        this.owner = owner;
         this.rating = rating;
     }
 
@@ -26,6 +27,7 @@ public class Wish implements Parcelable {
         link = in.readString();
         description = in.readString();
         image = in.readString();
+        owner = in.readString();
         rating = in.readInt();
     }
 
@@ -81,6 +83,14 @@ public class Wish implements Parcelable {
         this.image = image;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public int getRating() {
         return rating;
     }
@@ -95,12 +105,13 @@ public class Wish implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(price);
-        dest.writeString(link);
-        dest.writeString(description);
-        dest.writeString(image);
-        dest.writeInt(rating);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(price);
+        parcel.writeString(link);
+        parcel.writeString(description);
+        parcel.writeString(image);
+        parcel.writeString(owner);
+        parcel.writeInt(rating);
     }
 }
