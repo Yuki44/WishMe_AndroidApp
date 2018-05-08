@@ -82,7 +82,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="Name"
-        android:imeOptions="actionDone"
+        android:fontFamily="@font/nunito_bold"
+        android:imeOptions="actionNext"
+        android:nextFocusDown="@id/contactEmailET"
         android:inputType="textCapWords" />
 
     <EditText
@@ -92,7 +94,9 @@
         android:layout_below="@+id/nameET"
         android:layout_marginTop="20dp"
         android:hint="Contact Email"
-        android:imeOptions="actionDone"
+        android:fontFamily="@font/nunito_bold"
+        android:nextFocusDown="@id/addressET"
+        android:imeOptions="actionNext"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -101,7 +105,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/contactEmailET"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/nunito_bold"
         android:hint="Address"
+        android:nextFocusDown="@id/nextBtn"
         android:imeOptions="actionDone"
         android:inputType="textCapWords" />
 

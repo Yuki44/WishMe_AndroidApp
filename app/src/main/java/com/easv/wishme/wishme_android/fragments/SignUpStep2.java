@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
@@ -40,7 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SignUpStep2 extends Fragment {
 
     private static final String TAG = "CreateUserFragment2";
-//    public static Bitmap mSelectedImage;
+
     private CircleImageView profileImage;
     private User mUser;
     private Button signUpBtn;
@@ -168,10 +169,10 @@ public class SignUpStep2 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Bitmap mSelectedImage = getBitmapFromBundle();
+//        Bitmap mSelectedImage = getBitmapFromBundle();
         Log.d("abc", "onResume: got image from bundle");
-        if(mSelectedImage != null){
-            profileImage.setImageBitmap(mSelectedImage);
+        if(MainActivity.mSelectedImage != null){
+            profileImage.setImageBitmap(MainActivity.mSelectedImage);
             Log.d("abc", "onResume: set image on the view ");
         }
         Log.d(TAG, "resumed");
@@ -202,16 +203,16 @@ private User getUserFromBundle(){
     }
 }
 
-    private Bitmap getBitmapFromBundle(){
-        Log.d("abc", "getUserFromBundle: arguments: " + getArguments());
-
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            return bundle.getParcelable("Image");
-        } else {
-            return null;
-        }
-    }
+//    private Bitmap getBitmapFromBundle(){
+//        Log.d("abc", "getUserFromBundle: arguments: " + getArguments());
+//
+//        Bundle bundle = this.getArguments();
+//        if(bundle != null){
+//            return bundle.getParcelable("Image");
+//        } else {
+//            return null;
+//        }
+//    }
 
 
 private void loadHomeFragment(){

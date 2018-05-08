@@ -42,8 +42,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:hint="Email"
-                android:imeOptions="actionDone"
+                android:nextFocusDown="@id/passwordET"
+                android:imeOptions="actionNext"
                 android:layout_marginTop="80dp"
+                android:fontFamily="@font/nunito_bold"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -53,7 +55,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/nunito_bold"
                 android:hint="Password"
+                android:nextFocusDown="@id/loginBtn"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword" />
 

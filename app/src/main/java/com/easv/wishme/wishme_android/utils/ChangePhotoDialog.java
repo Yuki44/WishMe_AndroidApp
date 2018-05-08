@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.fragments.EditProfileFragment;
 import com.easv.wishme.wishme_android.fragments.SignUpStep2;
@@ -48,11 +49,11 @@ public class ChangePhotoDialog extends DialogFragment {
     private static final int PICKFILE_REQUEST_CODE = 1234;
     private String picturePath;
 
-
-    public interface OnPhotoSelectedListener{
-        void getImageBitmap(Bitmap bitmap);
-    }
-    OnPhotoSelectedListener mOnPhotoSelectedListener;
+//
+//    public interface OnPhotoSelectedListener{
+//        void getImageBitmap(Bitmap bitmap);
+//    }
+//    OnPhotoSelectedListener mOnPhotoSelectedListener;
 
     public static Bitmap rotateImage(Bitmap src, float degree) {
         // create new matrix
@@ -122,8 +123,8 @@ public class ChangePhotoDialog extends DialogFragment {
             final Bitmap imgRotated = imgHandler.modifyOrientation(selectedImage, imagePath);
 //            SignUpStep2.mSelectedImage = imgRotated;
 //            EditProfileFragment.mSelectedImage = imgRotated;
-                Log.d("abc", "Image send to main activity");
-                mOnPhotoSelectedListener.getImageBitmap(imgRotated);
+                MainActivity.mSelectedImage = imgRotated;
+                Log.d(TAG, "Image sent to main activity");
 
             Log.d(TAG, imgRotated.toString());
 
@@ -139,15 +140,15 @@ public class ChangePhotoDialog extends DialogFragment {
 
     }
 
-    @Override
-    public void onAttach(Context context) {
-        try{
-            mOnPhotoSelectedListener =  (OnPhotoSelectedListener) getActivity();
-            Log.d("abc", "onAttach - ref to mainactivity set");
-        }catch(ClassCastException e){
-            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
-        }
-        super.onAttach(context);
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        try{
+//            mOnPhotoSelectedListener =  (OnPhotoSelectedListener) getActivity();
+//            Log.d("abc", "onAttach - ref to mainactivity set");
+//        }catch(ClassCastException e){
+//            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+//        }
+//        super.onAttach(context);
+//    }
 
 }

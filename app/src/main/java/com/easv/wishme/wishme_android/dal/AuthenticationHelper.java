@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
 import com.easv.wishme.wishme_android.fragments.SignUpStep2;
@@ -57,8 +58,9 @@ public class AuthenticationHelper {
 
 
     public void signOut() {
-       // SignUpStep2.mSelectedImage = null;
-        HomeFragment.mSelectedImage = null;
+//        SignUpStep2.mSelectedImage = null;
+//        HomeFragment.mSelectedImage = null;
+        MainActivity.mSelectedImage = null;
         mAuth.signOut();
     }
 
