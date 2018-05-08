@@ -5,18 +5,19 @@ import android.os.Parcelable;
 
 public class Wish implements Parcelable {
 
-    private String name, price, link, description, image;
+    private String name, price, link, description, image, owner;
     private int rating;
 
     public Wish() {
     }
 
-    public Wish(String name, String price, String link, String description, String image, int rating) {
+    public Wish(String name, String price, String link, String description, String image, String owner, int rating) {
         this.name = name;
         this.price = price;
         this.link = link;
         this.description = description;
         this.image = image;
+        this.owner = owner;
         this.rating = rating;
     }
 
@@ -26,6 +27,7 @@ public class Wish implements Parcelable {
         link = in.readString();
         description = in.readString();
         image = in.readString();
+        owner = in.readString();
         rating = in.readInt();
     }
 
@@ -89,6 +91,10 @@ public class Wish implements Parcelable {
         this.rating = rating;
     }
 
+    public String getOwner() { return owner; }
+
+    public void setOwner(String owner) { this.owner = owner; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -101,6 +107,7 @@ public class Wish implements Parcelable {
         dest.writeString(link);
         dest.writeString(description);
         dest.writeString(image);
+        dest.writeString(owner);
         dest.writeInt(rating);
     }
 }
