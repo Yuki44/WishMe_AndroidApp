@@ -59,6 +59,12 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         setArguments(new Bundle());
     }
 
+    public interface OnWishRetrievedListener {
+        void getWish(Wish wish);
+    }
+
+    OnWishRetrievedListener mOnWishRetrievedListener;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -70,29 +76,35 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         db = FirebaseFirestore.getInstance();
         toolbar = view.findViewById(R.id.wishlistToolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         listFromHome = getWishListFromBundle();
         mNameOfWishlist.setText(listFromHome.getwListName());
         Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
 
         mWishList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                wishClicked();
+               // String selectedWish = ((TextView) view.findViewById(R.id.)).getText().toString();
+                //Wish selectedWish = (Wish)mWishList.getItemAtPosition(position);
+                //wishClicked(selectedWish);
+                Wish selectedWish = (Wish)mWishList.getItemAtPosition(position);
+                Log.d(TAG, "onItemClick: " +selectedWish);
+                //mOnWishRetrievedListener.getWish(selectedWish);
             }
         });
 
         mAddWish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               addWish();
+                addWish();
             }
         });
         return view;
     }
 
-    private void wishClicked() {
-        Log.d(TAG, "wishClicked: GOING TO WISHDETAILSFRAGMENT");
+    private void wishClicked(String wish) {
+        Log.d(TAG, "wishClicked: position:  " + wish);
         WishDetailsFragment fragment = new WishDetailsFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
@@ -100,7 +112,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         transaction.commit();
     }
 
-    private void addWish(){
+    private void addWish() {
         AddWishFragment fragment = new AddWishFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
@@ -108,9 +120,9 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         transaction.commit();
     }
 
-    private Wishlist getWishListFromBundle(){
+    private Wishlist getWishListFromBundle() {
         Bundle bundle = this.getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             return bundle.getParcelable("WishList");
         } else {
             return null;
@@ -122,27 +134,25 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         super.onStart();
         mNoWishes.setText("Loading...");
         wishListList = new ArrayList<>();
-        db.collection("wish").whereEqualTo("owner", listFromHome.getId())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            mNoWishes.setText("");
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                Wish wish = document.toObject(Wish.class);
-                                wishListList.add(wish);
-                            }
-                            wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wishListList, "https://");
-                            mWishList.setAdapter(wishAdapter);
-                            sortListByName();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                            mNoWishes.setText("Something went wrong :(");
-                        }
+        db.collection("wish").whereEqualTo("owner", listFromHome.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    mNoWishes.setText("");
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        Wish wish = document.toObject(Wish.class);
+                        wishListList.add(wish);
                     }
-                });
+                    wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wishListList, "https://");
+                    mWishList.setAdapter(wishAdapter);
+                    sortListByName();
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                    mNoWishes.setText("Something went wrong :(");
+                }
+            }
+        });
     }
 
     private void sortListByName() {
@@ -154,8 +164,8 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         });
     }
 
-
-    private void checkIfChanged() {}
+    private void checkIfChanged() {
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -163,6 +173,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -171,7 +182,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                 mOnEditWishList.getWishlist(listFromHome);
                 return true;
             case R.id.menuitem_delet_wishlist:
-              //  editProfile();
+                //  editProfile();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -181,11 +192,17 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try{
+        try {
             mOnEditWishList = (WishesFragment.OnEditWishList) getActivity();
 
-        }catch(ClassCastException e){
-            Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
+        }
+
+        try {
+            mOnWishRetrievedListener = (OnWishRetrievedListener) getActivity();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
         }
     }
 }
