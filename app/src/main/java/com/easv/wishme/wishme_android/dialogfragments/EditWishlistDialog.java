@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
+import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
 import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
@@ -74,6 +75,11 @@ public class EditWishlistDialog extends DialogFragment {
 
                         @Override
                         public void onFinishWishListList(ArrayList list) {
+
+                        }
+
+                        @Override
+                        public void onFinishWish(Wish wish) {
 
                         }
                     });

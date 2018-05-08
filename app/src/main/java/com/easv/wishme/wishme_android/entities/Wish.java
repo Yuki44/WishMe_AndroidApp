@@ -108,6 +108,7 @@ public class Wish implements Parcelable {
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 ", owner='" + owner + '\'' +
+                ", rating='" + rating + '\'' +
                 '}';
     }
 

@@ -1,9 +1,6 @@
 package com.easv.wishme.wishme_android.fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,14 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.entities.Wish;
+import com.easv.wishme.wishme_android.entities.Wishlist;
+import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
+
+import java.util.ArrayList;
 
 public class AddWishFragment extends Fragment {
     private static final String TAG = "AddWishFragment";
@@ -29,19 +32,31 @@ public class AddWishFragment extends Fragment {
     private ImageView mCameraIcon, mWishImage, mIvCheckMark;
     private RatingBar mRatingBar;
     private float rating;
+    private Wishlist mWishList;
+    private ProgressBar mProgressBar;
+    private ScrollView scrollView;
+
 
     public AddWishFragment() {
         super();
         setArguments(new Bundle());
     }
+    public interface OnWishCreated {
+        void getWishlistFromAddWish(Wishlist wList);
+
+    }
+
+    AddWishFragment.OnWishCreated mOnWishCreated;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_addwish, container, false);
 
+        scrollView = view.findViewById(R.id.scrollView);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mNameInfo = (EditText) view.findViewById(R.id.name_Info);
-        mWishPrice = (EditText) view.findViewById(R.id.wish_price);
+        mWishPrice = (EditText) view.findViewById(R.id.wishPrice);
         mWebsiteTxt = (EditText) view.findViewById(R.id.websiteTxt);
         mDescriptionTxt = (EditText) view.findViewById(R.id.descriptionTxt);
         mCameraIcon = (ImageView) view.findViewById(R.id.cameraIcon);
@@ -49,6 +64,8 @@ public class AddWishFragment extends Fragment {
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
+        mWishList = getWishListFromBundle();
+        initProgressBar();
 //        LayerDrawable stars = (LayerDrawable) mRatingBar.getProgressDrawable();
 //        stars.getDrawable(2).setColorFilter(Color.parseColor("#ca0c05"), PorterDuff.Mode.SRC_ATOP);
         mWishImage.setVisibility(View.GONE);
@@ -82,6 +99,18 @@ public class AddWishFragment extends Fragment {
         });
         return view;
     }
+    private void showProgressBar(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initProgressBar(){
+
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
 
     private void setRating() {
         rating = mRatingBar.getRating();
@@ -108,20 +137,42 @@ public class AddWishFragment extends Fragment {
     }
 
     private void saveNewWish() {
+        scrollView.setVisibility(View.INVISIBLE);
+        showProgressBar();
         Log.d(TAG, "saveNewWish: Clicked on the checkMark");
         if(checkStringIfNull(mNameInfo.getText().toString())){
             Log.d(TAG, "saveNewWish: Adding a new wish");
             DatabaseHelper databaseHelper = new DatabaseHelper();
-          String wishName = mNameInfo.getText().toString();
-            String wishPrice = mWishPrice.getText().toString();
-            String websiteLink = mWebsiteTxt.getText().toString();
-            String wishDescription = mDescriptionTxt.getText().toString();
-             float finalRating = rating;
-            Bitmap wishImage = MainActivity.mSelectedImage;
+            Wish wish = new Wish();
+            wish.setName(mNameInfo.getText().toString());
+            wish.setPrice(mWishPrice.getText().toString());
+            wish.setLink(mWebsiteTxt.getText().toString());
+            wish.setDescription(mDescriptionTxt.getText().toString());
+            wish.setRating(rating);
+            wish.setOwner(mWishList.getId());
+           // Bitmap wishImage = MainActivity.mSelectedImage;
+
+            Log.d(TAG, "Wish: " + wish);
 
 
 
-//            databaseHelper.createWish(wish);
+           databaseHelper.createWish(wish, new ICallBackDatabase() {
+               @Override
+               public void onFinishWishList(Wishlist wList) {
+
+               }
+
+               @Override
+               public void onFinishWishListList(ArrayList list) {
+
+               }
+
+               @Override
+               public void onFinishWish(Wish wish) {
+                    mOnWishCreated.getWishlistFromAddWish(mWishList);
+               }
+
+        });
         }
     }
 
@@ -152,6 +203,27 @@ public class AddWishFragment extends Fragment {
 
     public boolean checkStringIfNull(String string) {
         return !string.equals("");
+    }
+    private Wishlist getWishListFromBundle() {
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            return bundle.getParcelable("WishList");
+        } else {
+            return null;
+        }
+
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnWishCreated = (AddWishFragment.OnWishCreated) getActivity();
+
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
+
+        }
     }
 
 }

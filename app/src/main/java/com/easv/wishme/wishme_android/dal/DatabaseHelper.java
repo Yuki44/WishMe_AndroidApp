@@ -84,22 +84,22 @@ public class DatabaseHelper {
              });
  }
 
- public void createWish(final Wish wish){
-//     db.collection("wish")
-//             .add(wish)
-//             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                 @Override
-//                 public void onSuccess(DocumentReference documentReference) {
-//                     Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-//                     mWishInterface.onFinishedAddWish(wish);
-//                 }
-//             })
-//             .addOnFailureListener(new OnFailureListener() {
-//                 @Override
-//                 public void onFailure(@NonNull Exception e) {
-//                     Log.w(TAG, "Error adding document", e);
-//                 }
-//             });
+ public void createWish(final Wish wish, final ICallBackDatabase callBackDatabase ){
+    db.collection("wish")
+            .add(wish)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                    callBackDatabase.onFinishWish(wish);
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error adding document", e);
+                }
+            });
  }
 
 
