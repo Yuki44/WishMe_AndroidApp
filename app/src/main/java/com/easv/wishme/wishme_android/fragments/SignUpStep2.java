@@ -195,7 +195,6 @@ public class SignUpStep2 extends Fragment {
 // from here
 private User getUserFromBundle(){
     Log.d("abc", "getUserFromBundle: arguments: " + getArguments());
-
     Bundle bundle = this.getArguments();
     if(bundle != null){
         return bundle.getParcelable("UserSecurity");
