@@ -27,7 +27,9 @@ import com.easv.wishme.wishme_android.utils.EditWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, HomeFragment.OnWishlistItemClicked,
+public class MainActivity extends AppCompatActivity implements
+        SignUpStep1.OnUserCreatedListener,
+        HomeFragment.OnWishlistItemClicked,
 WishesFragment.OnEditWishList{
     User user;
     AuthenticationHelper authHelper;
@@ -101,7 +103,7 @@ WishesFragment.OnEditWishList{
     }
 
     Bundle args;
-
+// from here
     @Override
     public void getUser(User user) {
         Log.d(TAG, "getUser: user received from SignupStep1");
@@ -113,7 +115,7 @@ WishesFragment.OnEditWishList{
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
     }
-
+//to here
 
 
 //    Bundle imgBundle;

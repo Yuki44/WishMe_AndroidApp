@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,16 +50,17 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private FirebaseFirestore db;
     private Toolbar toolbar;
 
-    public interface OnEditWishList{
+    public interface OnEditWishList {
         void getWishlist(Wishlist wList);
-
     }
+
     WishesFragment.OnEditWishList mOnEditWishList;
 
     public WishesFragment() {
         super();
         setArguments(new Bundle());
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +76,13 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mNameOfWishlist.setText(listFromHome.getwListName());
         Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
+
+        mWishList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                wishClicked();
+            }
+        });
+
         mAddWish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +90,15 @@ public class WishesFragment extends android.support.v4.app.Fragment {
             }
         });
         return view;
+    }
+
+    private void wishClicked() {
+        Log.d(TAG, "wishClicked: GOING TO WISHDETAILSFRAGMENT");
+        WishDetailsFragment fragment = new WishDetailsFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private void addWish(){
@@ -138,10 +156,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     }
 
 
-    private void checkIfChanged() {
-
-    }
-
+    private void checkIfChanged() {}
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -164,7 +179,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         }
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -173,12 +187,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
 
         }catch(ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());
-
         }
     }
-
-
-
-
-
 }
