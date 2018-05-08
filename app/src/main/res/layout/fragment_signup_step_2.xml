@@ -2,7 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.easv.wishme.wishme_android.fragments.CreateUserFragment2"
+    tools:context="com.easv.wishme.wishme_android.fragments.EditProfileFragment"
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
@@ -49,7 +49,8 @@
             android:layout_marginTop="20dp"
             app:civ_border_color="@color/black"
             android:src="@color/skyBlue"
-            app:civ_border_width="0dp" />
+            app:civ_border_width="0dp"
+           />
 
 
         <ImageView
@@ -76,16 +77,24 @@
     android:paddingEnd="70dp"
     android:paddingStart="70dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Only your name is required to SignUp"
+        android:textSize="10sp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/nunito_bold"/>
+
     <EditText
         android:id="@+id/nameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Name"
+        android:hint="Name (Public)"
         android:fontFamily="@font/nunito_bold"
         android:imeOptions="actionNext"
         android:nextFocusDown="@id/contactEmailET"
         android:inputType="textCapWords" />
+
 
     <EditText
         android:id="@+id/contactEmailET"
@@ -93,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameET"
         android:layout_marginTop="20dp"
-        android:hint="Contact Email"
+        android:hint="Any Contact Email (Public)"
         android:fontFamily="@font/nunito_bold"
         android:nextFocusDown="@id/addressET"
         android:imeOptions="actionNext"
@@ -106,7 +115,7 @@
         android:layout_below="@+id/contactEmailET"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/nunito_bold"
-        android:hint="Address"
+        android:hint="Address (Public)"
         android:nextFocusDown="@id/nextBtn"
         android:imeOptions="actionDone"
         android:inputType="textCapWords" />

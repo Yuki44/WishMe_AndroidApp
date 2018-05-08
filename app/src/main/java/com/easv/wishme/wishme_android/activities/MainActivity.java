@@ -14,23 +14,24 @@ import android.util.Log;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
+import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.entities.User;
+import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
-import com.easv.wishme.wishme_android.fragments.AddWishFragment;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
 import com.easv.wishme.wishme_android.fragments.LoginFragment;
 import com.easv.wishme.wishme_android.fragments.SignUpStep1;
 import com.easv.wishme.wishme_android.fragments.SignUpStep2;
 import com.easv.wishme.wishme_android.fragments.WishesFragment;
-import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
-import com.easv.wishme.wishme_android.utils.EditWishlistDialog;
+import com.easv.wishme.wishme_android.dialogfragments.EditWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends AppCompatActivity implements
         SignUpStep1.OnUserCreatedListener,
         HomeFragment.OnWishlistItemClicked,
-WishesFragment.OnEditWishList{
+WishesFragment.OnEditWishList,
+        DatabaseHelper.WishInterface{
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
@@ -155,6 +156,15 @@ WishesFragment.OnEditWishList{
         dialog.setArguments(args);
 
         dialog.show(getSupportFragmentManager(), getString(R.string.edit));
+    }
+
+    @Override
+    public void onFinishedAddWish(Wish wish) {
+        Log.d(TAG, "getUser: user received from SignupStep1");
+        WishesFragment fragment = new WishesFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 }
 

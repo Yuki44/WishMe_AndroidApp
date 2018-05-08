@@ -10,17 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
-import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
 
 public class AddWishFragment extends Fragment {
     private static final String TAG = "AddWishFragment";
     private EditText mNameInfo, mWishPrice, mWebsiteTxt, mDescriptionTxt;
-    private ImageView mCamera, mWishImage, mIvCheckMark;
-    private int mRating;
-
+    private TextView mRatingText;
+    private ImageView mCameraIcon, mWishImage, mIvCheckMark;
+    private RatingBar mRatingBar;
+    private int rating;
 
     public AddWishFragment() {
         super();
@@ -36,11 +41,21 @@ public class AddWishFragment extends Fragment {
         mWishPrice = (EditText) view.findViewById(R.id.wish_price);
         mWebsiteTxt = (EditText) view.findViewById(R.id.websiteTxt);
         mDescriptionTxt = (EditText) view.findViewById(R.id.descriptionTxt);
-        mWishImage = (ImageView) view.findViewById(R.id.ivCamera);
-        mCamera = (ImageView) view.findViewById(R.id.wishImage);
+        mCameraIcon = (ImageView) view.findViewById(R.id.cameraIcon);
+        mWishImage = (ImageView) view.findViewById(R.id.wishImage);
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
+        mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
+        mRatingText = (TextView) view.findViewById(R.id.ratingText);
         mWishImage.setVisibility(View.GONE);
-        mCamera.setOnClickListener(new View.OnClickListener() {
+        mCameraIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCameraIcon.setVisibility(View.GONE);
+                openPhotoDialog();
+            }
+        });
+
+        mWishImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -54,8 +69,37 @@ public class AddWishFragment extends Fragment {
                 saveNewWish();
             }
         });
-
+        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                setRating();
+            }
+        });
         return view;
+    }
+
+    private void setRating() {
+        rating = (int)mRatingBar.getRating();
+        mRatingText.setText(String.valueOf(rating));
+        switch ((int) mRatingBar.getRating()) {
+            case 1:
+                mRatingText.setText("Meh...");
+                break;
+            case 2:
+                mRatingText.setText("Good");
+                break;
+            case 3:
+                mRatingText.setText("I like this");
+                break;
+            case 4:
+                mRatingText.setText("I like this A LOT!");
+                break;
+            case 5:
+                mRatingText.setText("Absolutely! It's my mission in life to have this");
+                break;
+            default:
+                mRatingText.setText("");
+        }
     }
 
     private void saveNewWish() {
@@ -67,35 +111,31 @@ public class AddWishFragment extends Fragment {
             String wishPrice = mWishPrice.getText().toString();
             String websiteLink = mWebsiteTxt.getText().toString();
             String wishDescription = mDescriptionTxt.getText().toString();
-//            ImageView wishImage = mWishImage.
-//
-//            databaseHelper.addWish(wish);
+             int finalRating = rating;
+            Bitmap wishImage = MainActivity.mSelectedImage;
+
+
+
+//            databaseHelper.createWish(wish);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Bitmap mSelectedImage = getBitmapFromBundle();
         Log.d("abc", "onResume: got image from bundle");
-        if(mSelectedImage != null){
-            mWishImage.setImageBitmap(mSelectedImage);
+        if(MainActivity.mSelectedImage != null){
+            mWishImage.setImageBitmap(MainActivity.mSelectedImage);
             Log.d("abc", "onResume: set image on the view ");
+        }else {
+            mCameraIcon.setVisibility(View.VISIBLE);
+            mWishImage.setVisibility(View.GONE);
         }
         Log.d(TAG, "resumed");
 
     }
 
-    private Bitmap getBitmapFromBundle(){
-        Log.d("abc", "getBitmapFromBundle: arguments: " + getArguments());
 
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            return bundle.getParcelable("Image");
-        } else {
-            return null;
-        }
-    }
 
     private void openPhotoDialog() {
         Log.d(TAG, "openPhotoDialog: Opening dialog to choose a photo");

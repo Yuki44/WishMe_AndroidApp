@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
 import com.easv.wishme.wishme_android.R;
-import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 

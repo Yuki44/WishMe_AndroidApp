@@ -1,13 +1,14 @@
 package com.easv.wishme.wishme_android.dal;
 
+import android.app.Fragment;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
 
-import com.easv.wishme.wishme_android.R;
-import com.easv.wishme.wishme_android.adapters.WishlistAdapter;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
+import com.easv.wishme.wishme_android.fragments.SignUpStep1;
+import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,13 +22,18 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class DatabaseHelper {
+public class DatabaseHelper extends Fragment {
 
  private static final String TAG = "DatabaseHelper";
  FirebaseStorage storage = FirebaseStorage.getInstance("gs://wishme-a73d1.appspot.com/");
  StorageReference storageRef = storage.getReference();
  FirebaseFirestore db = FirebaseFirestore.getInstance();
  private ArrayList wishListList;
+
+    public interface WishInterface{
+        void onFinishedAddWish(Wish wish);
+    }
+    WishInterface mWishInterface;
 
  private AuthenticationHelper authHelper;
 
@@ -61,7 +67,7 @@ public class DatabaseHelper {
     }
  public void getWishLists(final ICallBackDatabase callBackDatabase){
      wishListList = new ArrayList<>();
-     db.collection("wishlist").whereEqualTo("owner", authHelper.getmAuth().getUid().toString())
+     db.collection("wishlist").whereEqualTo("owner", authHelper.getmAuth().getUid())
              .get()
              .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                  @Override
@@ -81,10 +87,32 @@ public class DatabaseHelper {
              });
  }
 
- public void addWish(){
-
+ public void createWish(final Wish wish){
+     db.collection("wish")
+             .add(wish)
+             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                 @Override
+                 public void onSuccess(DocumentReference documentReference) {
+                     Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                     mWishInterface.onFinishedAddWish(wish);
+                 }
+             })
+             .addOnFailureListener(new OnFailureListener() {
+                 @Override
+                 public void onFailure(@NonNull Exception e) {
+                     Log.w(TAG, "Error adding document", e);
+                 }
+             });
  }
 
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mWishInterface =  (WishInterface) getActivity();
+        }catch(ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+    }
 }
 

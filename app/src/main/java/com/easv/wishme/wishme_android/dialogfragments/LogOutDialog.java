@@ -1,4 +1,4 @@
-package com.easv.wishme.wishme_android.utils;
+package com.easv.wishme.wishme_android.dialogfragments;
 
 import android.app.Activity;
 import android.content.Context;

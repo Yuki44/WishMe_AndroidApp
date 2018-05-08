@@ -19,9 +19,9 @@ import android.widget.RelativeLayout;
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
-import com.easv.wishme.wishme_android.dal.ICallBack;
+import com.easv.wishme.wishme_android.interfaces.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
-import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
 import com.google.firebase.auth.FirebaseUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 
