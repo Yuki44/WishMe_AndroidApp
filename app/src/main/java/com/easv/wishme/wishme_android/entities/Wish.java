@@ -83,6 +83,14 @@ public class Wish implements Parcelable {
         this.image = image;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public int getRating() {
         return rating;
     }
@@ -91,23 +99,19 @@ public class Wish implements Parcelable {
         this.rating = rating;
     }
 
-    public String getOwner() { return owner; }
-
-    public void setOwner(String owner) { this.owner = owner; }
-
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(price);
-        dest.writeString(link);
-        dest.writeString(description);
-        dest.writeString(image);
-        dest.writeString(owner);
-        dest.writeInt(rating);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(price);
+        parcel.writeString(link);
+        parcel.writeString(description);
+        parcel.writeString(image);
+        parcel.writeString(owner);
+        parcel.writeInt(rating);
     }
 }

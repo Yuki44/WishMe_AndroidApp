@@ -72,7 +72,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     }
 
     private Wishlist getWishListFromBundle(){
-
         Bundle bundle = this.getArguments();
         if(bundle != null){
             return bundle.getParcelable("WishList");
@@ -80,12 +79,13 @@ public class WishesFragment extends android.support.v4.app.Fragment {
             return null;
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
         mNoWishes.setText("Loading...");
         wishListList = new ArrayList<>();
-        db.collection("wish")
+        db.collection("wish").whereEqualTo("owner", listFromHome.getId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
