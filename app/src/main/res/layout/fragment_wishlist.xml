@@ -51,6 +51,7 @@
         app:backgroundTint="?android:attr/panelBackground"
         app:fabSize="normal"
         app:rippleColor="@color/darkerSkyBlue"
-        app:srcCompat="@drawable/ic_add_wish" />
+        app:srcCompat="@drawable/ic_add_wish"
+        android:id="@+id/addWishFab"/>
 
 </android.support.design.widget.CoordinatorLayout>

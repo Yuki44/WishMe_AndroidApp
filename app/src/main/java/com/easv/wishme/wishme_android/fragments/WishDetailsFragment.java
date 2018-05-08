@@ -14,70 +14,77 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.easv.wishme.wishme_android.R;
-import com.easv.wishme.wishme_android.activities.MainActivity;
-import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
-import com.easv.wishme.wishme_android.dal.ICallBack;
-import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
-import com.google.firebase.auth.FirebaseUser;
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class EditProfileFragment extends Fragment {
+public class WishDetailsFragment extends Fragment {
 
-    private static final String TAG = "EditProfileFragment";
-    private EditText mNameET, mContactEmailET, mAddressET;
-    private CircleImageView mImageView;
+    private static final String TAG = "EditWishFragment";
+    private EditText mWishName, mWishPrice, mWishLink, mWishDescription;
+    private ImageView mImageView;
     private Toolbar toolbar;
-    private AuthenticationHelper authHelper;
-
-    private RelativeLayout mRelativeLayout2;
+    public static Bitmap mSelectedImage;
+    private ScrollView mScrollView;
     private ProgressBar mProgressBar;
+    private FirebaseFirestore db;
+    private CollectionReference mDocRef = FirebaseFirestore.getInstance().collection("wish");
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
-        mNameET = view.findViewById(R.id.nameET);
-        mContactEmailET = view.findViewById(R.id.contactEmailET);
-        mAddressET = view.findViewById(R.id.locationET);
-        mImageView = view.findViewById(R.id.profileImage);
+        View view = inflater.inflate(R.layout.fragment_wish_detail, container, false);
+        mWishName = view.findViewById(R.id.nameET);
+        mWishPrice = view.findViewById(R.id.wishPriceET);
+        mWishLink = view.findViewById(R.id.wishLinkET);
+        //mWishDescription = view.findViewById(R.id.descriptionET);
+        mImageView = view.findViewById(R.id.wishImage);
+       /*
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changePic();
             }
         });
-        mRelativeLayout2 = view.findViewById(R.id.relativeLayout2);
+        */
+        toolbar = view.findViewById(R.id.editWishToolbar);
+
+        mScrollView = view.findViewById(R.id.ScrollView);
         mProgressBar = view.findViewById(R.id.progressBar);
-        toolbar = view.findViewById(R.id.editProfileToolbar);
-        authHelper = new AuthenticationHelper();
 
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked back arrow.");
-                goToHomeFragment();
+                goToWishesFragment();
             }
         });
 
-        ImageView ivCheckMark = view.findViewById(R.id.ivCheckMark);
+       // ImageView ivCheckMark = view.findViewById(R.id.ivCheckMark);
+        /*
         ivCheckMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: saving the edited profile.");
-                if (!mNameET.getText().toString().isEmpty() && !mContactEmailET.getText().toString().isEmpty() && !mAddressET.getText().toString().isEmpty()) {
-                    Log.d(TAG, "onClick: saving edited User: " + mNameET.getText().toString());
-                    updateUser();
+                if (!mWishName.getText().toString().isEmpty()
+                        && !mWishPrice.getText().toString().isEmpty()
+                        && !mWishLink.getText().toString().isEmpty()
+                        //&& !mmWishDescription.getText().toString().isEmpty()
+                        ) {
+                    Log.d(TAG, "onClick: saving edited Wish: " + mWishName.getText().toString());
+                    updateWish();
                 }
             }
         });
+*/
         initProgressBar();
-        setUserInfo();
+        setWishInfo();
         setProfileImage();
+
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
     }
@@ -86,22 +93,21 @@ public class EditProfileFragment extends Fragment {
         Log.d(TAG, "onClick: opening dialog to choose new photo");
         ChangePhotoDialog dialog = new ChangePhotoDialog();
         dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
-        dialog.setTargetFragment(EditProfileFragment.this, 1);
+        dialog.setTargetFragment(WishDetailsFragment.this, 1);
     }
 
-    private void goToHomeFragment() {
-        HomeFragment fragment = new HomeFragment();
+    private void goToWishesFragment() {
+        WishesFragment fragment = new WishesFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-
-
-
     private void setProfileImage(){
-        MainActivity.mSelectedImage = authHelper.getProfileImage(new ICallBack() {
+       /*
+       mSelectedImage = authHelper.getProfileImage(new ICallBack() {
+
             @Override
             public void onFinish(User user) {}
 
@@ -113,26 +119,28 @@ public class EditProfileFragment extends Fragment {
                 mImageView.setImageBitmap(bitmap);
             }
         });
+        */
     }
+
     private void showProgressBar(){ mProgressBar.setVisibility(View.VISIBLE); }
 
-    private void hideProgressBar(){
-        mProgressBar.setVisibility(View.GONE);
-    }
+    private void hideProgressBar(){ mProgressBar.setVisibility(View.GONE); }
 
     private void initProgressBar(){ mProgressBar.setVisibility(View.INVISIBLE); }
 
-    private void updateUser() {
-       mRelativeLayout2.setVisibility(mRelativeLayout2.INVISIBLE);
-        showProgressBar();
-        authHelper.getUserWithInfo(new ICallBack() {
+    private void updateWish() {
+        /*
+               mScrollView.setVisibility(mScrollView.INVISIBLE);
+               showProgressBar();
+               authHelper.getUserWithInfo(new ICallBack() {
             @Override
-            public void onFinish(User user) {
-                user.setname(mNameET.getText().toString());
-                user.setContactEmail(mContactEmailET.getText().toString());
-                user.setAddress(mAddressET.getText().toString());
-                authHelper.createUserProfile(user);
+            public void onFinish(Wish wish) {
+                wish.setName(mWishName.getText().toString());
+                wish.setPrice(mWishLink.getText().toString());
+                wish.setLink(mWishLink.getText().toString());
+                wish.setDescription(mWishDescription).getText.toString();
 
+                authHelper.createUserProfile(user);
                 mImageView.setDrawingCacheEnabled(true);
                 mImageView.buildDrawingCache();
                 Bitmap bitmap = mImageView.getDrawingCache();
@@ -146,51 +154,39 @@ public class EditProfileFragment extends Fragment {
 
                     @Override
                     public void onFinishGetImage(Bitmap bitmap) {
-                        goToHomeFragment();
+                        goToWishesFragment();
                     }
                 });
-                Log.d(TAG, "setUserInfo: " + user.toString());
+                Log.d(TAG, "updateWish: " + wish.toString());
             }
-
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {}
 
             @Override
             public void onFinishGetImage(Bitmap bitmap) {}
         });
+        */
     }
 
-    private void setUserInfo(){
-        User user =  authHelper.getUserWithInfo(new ICallBack() {
+    private void setWishInfo() {
+        /*
+        User user = authHelper.getUserWithInfo(new ICallBack() {
             @Override
-            public void onFinish(User user) {
-                mNameET.setText(user.getname());
-                mContactEmailET.setText(user.getContactEmail());
-                mAddressET.setText(user.getAddress());
+            public void onFinish(Wish wish) {
+                mWishName.setText(wish.getName());
+                mWishPrice.setText(wish.getPrice());
+                mWishLink.setText(wish.getLink());
+                mWishDescription.setText(wish.getDescription());
             }
 
             @Override
-            public void onFinishFireBaseUser(FirebaseUser user) { }
+            public void onFinishFireBaseUser(FirebaseUser user) {
+            }
 
             @Override
-            public void onFinishGetImage(Bitmap bitmap) { }
+            public void onFinishGetImage(Bitmap bitmap) {
+            }
         });
-    }
-
-    private void setNewProfileImage(){
-       mImageView.setImageBitmap(MainActivity.mSelectedImage);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-        if(MainActivity.mSelectedImage != null){
-            mImageView.setImageBitmap(MainActivity.mSelectedImage);
-            Log.d("abc", "onResume: set image on the view ");
-        }
-        Log.d(TAG, "resumed");
+        */
     }
 }
-

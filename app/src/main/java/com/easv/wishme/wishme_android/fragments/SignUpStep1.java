@@ -29,11 +29,12 @@ public class SignUpStep1 extends Fragment {
 
     private String email, password;
 
+    // From here
     public interface OnUserCreatedListener{
         void getUser(User user);
     }
     OnUserCreatedListener mOnUserCreatedListener;
-
+// to here
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +64,9 @@ public class SignUpStep1 extends Fragment {
                if (checkInputs(email,  password, mRepeatPasswordET.getText().toString())) {
                    if(doStringsMatch(password, mRepeatPasswordET.getText().toString())){
                        User user = new User(null, email, password, null, null, false);
+                       //from here
                        mOnUserCreatedListener.getUser(user);
+                       //to here
                    }else{
                        Toast.makeText(getActivity(), "passwords do not match", Toast.LENGTH_SHORT).show();
                    }
@@ -98,6 +101,7 @@ public class SignUpStep1 extends Fragment {
         }
         return true;
     }
+    //from here
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -108,6 +112,6 @@ public class SignUpStep1 extends Fragment {
         }
 
     }
-
+//to here
 
 }

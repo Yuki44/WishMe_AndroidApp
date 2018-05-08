@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,19 +46,21 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private TextView mNoWishes, mNameOfWishlist;
     private ArrayList<Wish> wishListList;
     private Wishlist listFromHome;
+    private FloatingActionButton mAddWish;
     private FirebaseFirestore db;
     private Toolbar toolbar;
 
-    public interface OnEditWishList{
+    public interface OnEditWishList {
         void getWishlist(Wishlist wList);
-
     }
+
     WishesFragment.OnEditWishList mOnEditWishList;
 
     public WishesFragment() {
         super();
         setArguments(new Bundle());
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mNoWishes = view.findViewById(R.id.textNoWishes);
         mWishList = view.findViewById(R.id.wishesList);
         mNameOfWishlist = view.findViewById(R.id.nameOfWishlist);
+        mAddWish = (FloatingActionButton) view.findViewById(R.id.addWishFab);
         db = FirebaseFirestore.getInstance();
         toolbar = view.findViewById(R.id.wishlistToolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -70,7 +76,37 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mNameOfWishlist.setText(listFromHome.getwListName());
         Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
+
+        mWishList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                wishClicked();
+            }
+        });
+
+        mAddWish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               addWish();
+            }
+        });
         return view;
+    }
+
+    private void wishClicked() {
+        Log.d(TAG, "wishClicked: GOING TO WISHDETAILSFRAGMENT");
+        WishDetailsFragment fragment = new WishDetailsFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void addWish(){
+        AddWishFragment fragment = new AddWishFragment();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private Wishlist getWishListFromBundle(){
@@ -120,10 +156,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     }
 
 
-    private void checkIfChanged() {
-
-    }
-
+    private void checkIfChanged() {}
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -146,7 +179,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         }
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -155,12 +187,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
 
         }catch(ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());
-
         }
     }
-
-
-
-
-
 }

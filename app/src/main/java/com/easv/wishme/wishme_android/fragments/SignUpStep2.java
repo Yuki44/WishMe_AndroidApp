@@ -62,11 +62,12 @@ public class SignUpStep2 extends Fragment {
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar mProgressBar;
-
+//from here
     public SignUpStep2() {
         super();
         setArguments(new Bundle());
     }
+    // to here
 
     @Nullable
     @Override
@@ -191,7 +192,7 @@ public class SignUpStep2 extends Fragment {
 
         mProgressBar.setVisibility(View.INVISIBLE);
     }
-
+// from here
 private User getUserFromBundle(){
     Log.d("abc", "getUserFromBundle: arguments: " + getArguments());
 
@@ -202,6 +203,10 @@ private User getUserFromBundle(){
         return null;
     }
 }
+//to here
+
+
+
 
 //    private Bitmap getBitmapFromBundle(){
 //        Log.d("abc", "getUserFromBundle: arguments: " + getArguments());
