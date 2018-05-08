@@ -6,12 +6,12 @@ import android.os.Parcelable;
 public class Wish implements Parcelable {
 
     private String name, price, link, description, image, owner;
-    private int rating;
+    private float rating;
 
     public Wish() {
     }
 
-    public Wish(String name, String price, String link, String description, String image, String owner, int rating) {
+    public Wish(String name, String price, String link, String description, String image, String owner, float rating) {
         this.name = name;
         this.price = price;
         this.link = link;
@@ -28,7 +28,7 @@ public class Wish implements Parcelable {
         description = in.readString();
         image = in.readString();
         owner = in.readString();
-        rating = in.readInt();
+        rating = in.readFloat();
     }
 
     public static final Creator<Wish> CREATOR = new Creator<Wish>() {
@@ -91,12 +91,24 @@ public class Wish implements Parcelable {
         this.owner = owner;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Wish{" +
+                "name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", link='" + link + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", owner='" + owner + '\'' +
+                '}';
     }
 
     @Override
@@ -105,13 +117,13 @@ public class Wish implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(price);
-        parcel.writeString(link);
-        parcel.writeString(description);
-        parcel.writeString(image);
-        parcel.writeString(owner);
-        parcel.writeInt(rating);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(price);
+        dest.writeString(link);
+        dest.writeString(description);
+        dest.writeString(image);
+        dest.writeString(owner);
+        dest.writeFloat(rating);
     }
 }
