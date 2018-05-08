@@ -1,6 +1,7 @@
 package com.easv.wishme.wishme_android.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,6 +46,11 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private FirebaseFirestore db;
     private Toolbar toolbar;
 
+    public interface OnEditWishList{
+        void getWishlist(Wishlist wList);
+
+    }
+    WishesFragment.OnEditWishList mOnEditWishList;
 
     public WishesFragment() {
         super();
@@ -128,7 +134,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
 
         switch (item.getItemId()) {
             case R.id.menuitem_edit_wishlist:
-              edit();
+                mOnEditWishList.getWishlist(listFromHome);
                 return true;
             case R.id.menuitem_delet_wishlist:
               //  editProfile();
@@ -138,11 +144,17 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    private void edit(){
-        EditWishlistDialog dialog = new EditWishlistDialog();
-        dialog.show(getFragmentManager(), getString(R.string.create_wishlist));
-        dialog.setTargetFragment(WishesFragment.this, 1);
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mOnEditWishList = (WishesFragment.OnEditWishList) getActivity();
+
+        }catch(ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());
+
+        }
     }
 
 

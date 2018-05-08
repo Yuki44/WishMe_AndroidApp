@@ -59,6 +59,7 @@ public class EditWishlistDialog extends DialogFragment {
                 linear.setVisibility(View.INVISIBLE);
                 showProgressBar();
                 if (!mNewWishlistName.getText().equals(null)) {
+                    listFromHome.setwListName(mNewWishlistName.getText().toString());
                     saveDialog.setVisibility(View.GONE);
                     dataHelper.editWishList(listFromHome, new ICallBackDatabase() {
                         @Override

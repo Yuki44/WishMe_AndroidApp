@@ -57,6 +57,7 @@ public class DatabaseHelper {
     {
         db.collection("wishlist").document(wList.getId())
              .set(wList);
+        callBackDatabase.onFinishWishList(wList);
     }
  public void getWishLists(final ICallBackDatabase callBackDatabase){
      wishListList = new ArrayList<>();
