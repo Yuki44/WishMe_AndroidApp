@@ -65,6 +65,10 @@ public class WishesFragment extends android.support.v4.app.Fragment {
 
     OnWishRetrievedListener mOnWishRetrievedListener;
 
+    public interface OnWishListToAddWishListener {
+        void getWishListToAddWish(Wishlist wList);
+    }
+    OnWishListToAddWishListener mOnWishListToAddWishListener;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -113,11 +117,12 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     }
 
     private void addWish() {
-        AddWishFragment fragment = new AddWishFragment();
+     /*   AddWishFragment fragment = new AddWishFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commit();*/
+     mOnWishListToAddWishListener.getWishListToAddWish(listFromHome);
     }
 
     private Wishlist getWishListFromBundle() {
@@ -201,6 +206,12 @@ public class WishesFragment extends android.support.v4.app.Fragment {
 
         try {
             mOnWishRetrievedListener = (OnWishRetrievedListener) getActivity();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
+        }
+        try {
+            mOnWishListToAddWishListener = (WishesFragment.OnWishListToAddWishListener) getActivity();
+
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
         }

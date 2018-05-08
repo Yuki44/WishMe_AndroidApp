@@ -26,6 +26,7 @@ import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.adapters.WishlistAdapter;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
+import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.interfaces.ICallBack;
 import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
 import com.easv.wishme.wishme_android.entities.User;
@@ -245,6 +246,11 @@ public class HomeFragment extends Fragment {
                     hideProgressBar();
                 }
 
+
+            }
+
+            @Override
+            public void onFinishWish(Wish wish) {
 
             }
         });

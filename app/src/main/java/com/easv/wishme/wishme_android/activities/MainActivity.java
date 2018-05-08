@@ -18,6 +18,7 @@ import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
+import com.easv.wishme.wishme_android.fragments.AddWishFragment;
 import com.easv.wishme.wishme_android.fragments.HomeFragment;
 import com.easv.wishme.wishme_android.fragments.LoginFragment;
 import com.easv.wishme.wishme_android.fragments.SignUpStep1;
@@ -30,7 +31,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class MainActivity extends AppCompatActivity implements
         SignUpStep1.OnUserCreatedListener,
         HomeFragment.OnWishlistItemClicked,
-WishesFragment.OnEditWishList {
+WishesFragment.OnEditWishList,
+WishesFragment.OnWishListToAddWishListener,
+AddWishFragment.OnWishCreated{
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
@@ -128,6 +131,33 @@ WishesFragment.OnEditWishList {
             transaction.commit();
     }
 
+
+
+
+    @Override
+    public void getWishListToAddWish(Wishlist wList) {
+        AddWishFragment fragment = new AddWishFragment();
+        args = new Bundle();
+        args.putParcelable("WishList", wList);
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void getWishlistFromAddWish(Wishlist wList) {
+        WishesFragment fragment = new WishesFragment();
+        args = new Bundle();
+        args.putParcelable("WishList", wList);
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+
+    }
+
     @Override
     public void getWishlist(Wishlist wList) {
         EditWishlistDialog dialog = new EditWishlistDialog();
@@ -137,7 +167,5 @@ WishesFragment.OnEditWishList {
 
         dialog.show(getSupportFragmentManager(), getString(R.string.edit));
     }
-
-
 }
 
