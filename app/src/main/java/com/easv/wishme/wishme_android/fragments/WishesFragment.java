@@ -40,7 +40,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private static final String TAG = "WishesFragment";
     public ListView mWishList;
     public WishAdapter wishAdapter;
-    private TextView mNoWishes;
+    private TextView mNoWishes, mNameOfWishlist;
     private ArrayList<Wish> wishListList;
     private Wishlist listFromHome;
     private FirebaseFirestore db;
@@ -62,10 +62,12 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_wishlist, container, false);
         mNoWishes = view.findViewById(R.id.textNoWishes);
         mWishList = view.findViewById(R.id.wishesList);
+        mNameOfWishlist = view.findViewById(R.id.nameOfWishlist);
         db = FirebaseFirestore.getInstance();
         toolbar = view.findViewById(R.id.wishlistToolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         listFromHome = getWishListFromBundle();
+        mNameOfWishlist.setText(listFromHome.getwListName());
         Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
         return view;

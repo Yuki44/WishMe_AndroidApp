@@ -33,6 +33,7 @@
         android:id="@+id/newWishlistNameTX"
         android:fontFamily="@font/nunito_semibold"
         android:hint="Wishlist Name"
+        android:imeOptions="actionDone"
         android:inputType="textCapWords"
         android:textColor="@color/darkGrey"
         android:textSize="18sp"

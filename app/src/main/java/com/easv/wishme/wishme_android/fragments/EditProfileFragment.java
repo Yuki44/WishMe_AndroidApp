@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.ICallBack;
 import com.easv.wishme.wishme_android.entities.User;
@@ -31,7 +32,7 @@ public class EditProfileFragment extends Fragment {
     private CircleImageView mImageView;
     private Toolbar toolbar;
     private AuthenticationHelper authHelper;
-    public static Bitmap mSelectedImage;
+
     private RelativeLayout mRelativeLayout2;
     private ProgressBar mProgressBar;
 
@@ -97,7 +98,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setProfileImage(){
-        mSelectedImage = authHelper.getProfileImage(new ICallBack() {
+        MainActivity.mSelectedImage = authHelper.getProfileImage(new ICallBack() {
             @Override
             public void onFinish(User user) {}
 
@@ -174,7 +175,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setNewProfileImage(){
-        mImageView.setImageBitmap(mSelectedImage);
+        mImageView.setImageBitmap(MainActivity.mSelectedImage);
     }
 
     @Override

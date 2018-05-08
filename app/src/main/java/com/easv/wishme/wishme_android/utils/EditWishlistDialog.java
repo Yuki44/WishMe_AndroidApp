@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -33,6 +34,7 @@ public class EditWishlistDialog extends DialogFragment {
     private LinearLayout linear;
     private Wishlist listFromHome;
 
+
     public EditWishlistDialog() {
         super();
         setArguments(new Bundle());
@@ -49,6 +51,9 @@ public class EditWishlistDialog extends DialogFragment {
         dataHelper = new DatabaseHelper();
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         linear = view.findViewById(R.id.linear);
+        String oldWishlistName = listFromHome.getwListName();
+        mNewWishlistName.setText(oldWishlistName);
+        mNewWishlistName.setSelection(mNewWishlistName.getText().length());
         initProgressBar();
 
 
