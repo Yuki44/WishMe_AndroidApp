@@ -1,6 +1,9 @@
 package com.easv.wishme.wishme_android.fragments;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +28,7 @@ public class AddWishFragment extends Fragment {
     private TextView mRatingText;
     private ImageView mCameraIcon, mWishImage, mIvCheckMark;
     private RatingBar mRatingBar;
-    private int rating;
+    private float rating;
 
     public AddWishFragment() {
         super();
@@ -46,6 +49,8 @@ public class AddWishFragment extends Fragment {
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
+//        LayerDrawable stars = (LayerDrawable) mRatingBar.getProgressDrawable();
+//        stars.getDrawable(2).setColorFilter(Color.parseColor("#ca0c05"), PorterDuff.Mode.SRC_ATOP);
         mWishImage.setVisibility(View.GONE);
         mCameraIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +84,7 @@ public class AddWishFragment extends Fragment {
     }
 
     private void setRating() {
-        rating = (int)mRatingBar.getRating();
+        rating = mRatingBar.getRating();
         mRatingText.setText(String.valueOf(rating));
         switch ((int) mRatingBar.getRating()) {
             case 1:
@@ -111,7 +116,7 @@ public class AddWishFragment extends Fragment {
             String wishPrice = mWishPrice.getText().toString();
             String websiteLink = mWebsiteTxt.getText().toString();
             String wishDescription = mDescriptionTxt.getText().toString();
-             int finalRating = rating;
+             float finalRating = rating;
             Bitmap wishImage = MainActivity.mSelectedImage;
 
 

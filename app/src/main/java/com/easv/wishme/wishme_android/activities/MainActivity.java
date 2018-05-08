@@ -30,8 +30,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class MainActivity extends AppCompatActivity implements
         SignUpStep1.OnUserCreatedListener,
         HomeFragment.OnWishlistItemClicked,
-WishesFragment.OnEditWishList,
-        DatabaseHelper.WishInterface{
+WishesFragment.OnEditWishList {
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
@@ -104,7 +103,6 @@ WishesFragment.OnEditWishList,
     }
 
     Bundle args;
-// from here
     @Override
     public void getUser(User user) {
         Log.d(TAG, "getUser: user received from SignupStep1");
@@ -116,25 +114,7 @@ WishesFragment.OnEditWishList,
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
     }
-//to here
 
-
-//    Bundle imgBundle;
-
-//    @Override
-//    public void getImageBitmap(Bitmap bitmap) {
-//        Log.d("abc", "getImageBitmap: image received from ChangePhotoDialog");
-//        args.putParcelable("Image", bitmap);
-//
-//       imgBundle = new Bundle();
-//       imgBundle.putParcelable("Img", bitmap);
-//
-//    }
-
-//    public void sendImageToAddWish(){
-//        AddWishFragment fragment = new AddWishFragment();
-//        fragment.setArguments(imgBundle);
-//    }
 
     @Override
     public void getWishlistItemClicked(Wishlist wList) {
@@ -158,13 +138,6 @@ WishesFragment.OnEditWishList,
         dialog.show(getSupportFragmentManager(), getString(R.string.edit));
     }
 
-    @Override
-    public void onFinishedAddWish(Wish wish) {
-        Log.d(TAG, "getUser: user received from SignupStep1");
-        WishesFragment fragment = new WishesFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
-    }
+
 }
 

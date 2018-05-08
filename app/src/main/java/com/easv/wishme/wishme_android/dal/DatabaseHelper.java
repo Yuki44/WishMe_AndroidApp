@@ -22,7 +22,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class DatabaseHelper extends Fragment {
+public class DatabaseHelper {
 
  private static final String TAG = "DatabaseHelper";
  FirebaseStorage storage = FirebaseStorage.getInstance("gs://wishme-a73d1.appspot.com/");
@@ -30,10 +30,7 @@ public class DatabaseHelper extends Fragment {
  FirebaseFirestore db = FirebaseFirestore.getInstance();
  private ArrayList wishListList;
 
-    public interface WishInterface{
-        void onFinishedAddWish(Wish wish);
-    }
-    WishInterface mWishInterface;
+
 
  private AuthenticationHelper authHelper;
 
@@ -88,31 +85,23 @@ public class DatabaseHelper extends Fragment {
  }
 
  public void createWish(final Wish wish){
-     db.collection("wish")
-             .add(wish)
-             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                 @Override
-                 public void onSuccess(DocumentReference documentReference) {
-                     Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                     mWishInterface.onFinishedAddWish(wish);
-                 }
-             })
-             .addOnFailureListener(new OnFailureListener() {
-                 @Override
-                 public void onFailure(@NonNull Exception e) {
-                     Log.w(TAG, "Error adding document", e);
-                 }
-             });
+//     db.collection("wish")
+//             .add(wish)
+//             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                 @Override
+//                 public void onSuccess(DocumentReference documentReference) {
+//                     Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+//                     mWishInterface.onFinishedAddWish(wish);
+//                 }
+//             })
+//             .addOnFailureListener(new OnFailureListener() {
+//                 @Override
+//                 public void onFailure(@NonNull Exception e) {
+//                     Log.w(TAG, "Error adding document", e);
+//                 }
+//             });
  }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try{
-            mWishInterface =  (WishInterface) getActivity();
-        }catch(ClassCastException e){
-            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
-        }
-    }
+
 }
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
@@ -50,7 +51,7 @@ public class WishAdapter extends ArrayAdapter<Wish> {
             holder.wishPrice = convertView.findViewById(R.id.wish_price);
             holder.wishImage = convertView.findViewById(R.id.wish_image);
             holder.mProgressBar = convertView.findViewById(R.id.wishProgressbar);
-
+            holder.mRatingBar = convertView.findViewById(R.id.ratingBar);
 
 
             convertView.setTag(holder);
@@ -62,10 +63,12 @@ public class WishAdapter extends ArrayAdapter<Wish> {
         String wishNameStr = getItem(position).getName();
         String wishPriceStr = getItem(position).getPrice();
         String wishImagePathStr = getItem(position).getImage();
+        float wishRating = getItem(position).getRating();
 
 
         holder.wishName.setText(wishNameStr);
         holder.wishPrice.setText(wishPriceStr);
+        holder.mRatingBar.setRating(wishRating);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -101,5 +104,6 @@ public class WishAdapter extends ArrayAdapter<Wish> {
         TextView wishPrice;
         ImageView wishImage;
         ProgressBar mProgressBar;
+        RatingBar mRatingBar;
     }
 }
