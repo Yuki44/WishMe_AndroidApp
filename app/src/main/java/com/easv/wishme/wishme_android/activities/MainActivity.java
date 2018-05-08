@@ -27,12 +27,13 @@ import com.easv.wishme.wishme_android.utils.EditWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, ChangePhotoDialog.OnPhotoSelectedListener, HomeFragment.OnWishlistItemClicked,
+public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, HomeFragment.OnWishlistItemClicked,
 WishesFragment.OnEditWishList{
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 1;
+    public static Bitmap mSelectedImage = null;
 
 
 
@@ -45,6 +46,7 @@ WishesFragment.OnEditWishList{
         Log.d(TAG, "onCreate: started.");
         authHelper = new AuthenticationHelper();
         initImageLoader();
+        mSelectedImage = null;
         verifyPermissions();
     }
 
@@ -114,22 +116,22 @@ WishesFragment.OnEditWishList{
 
 
 
-    Bundle imgBundle;
+//    Bundle imgBundle;
 
-    @Override
-    public void getImageBitmap(Bitmap bitmap) {
-        Log.d("abc", "getImageBitmap: image received from ChangePhotoDialog");
-        args.putParcelable("Image", bitmap);
+//    @Override
+//    public void getImageBitmap(Bitmap bitmap) {
+//        Log.d("abc", "getImageBitmap: image received from ChangePhotoDialog");
+//        args.putParcelable("Image", bitmap);
+//
+//       imgBundle = new Bundle();
+//       imgBundle.putParcelable("Img", bitmap);
+//
+//    }
 
-       imgBundle = new Bundle();
-       imgBundle.putParcelable("Img", bitmap);
-
-    }
-
-    public void sendImageToAddWish(){
-        AddWishFragment fragment = new AddWishFragment();
-        fragment.setArguments(imgBundle);
-    }
+//    public void sendImageToAddWish(){
+//        AddWishFragment fragment = new AddWishFragment();
+//        fragment.setArguments(imgBundle);
+//    }
 
     @Override
     public void getWishlistItemClicked(Wishlist wList) {

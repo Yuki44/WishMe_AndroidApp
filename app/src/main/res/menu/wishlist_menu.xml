@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menuitem_edit_wishlist"
-        android:title="Edit"></item>
+        android:title="Edit this Wishlist"></item>
     <item
         android:id="@+id/menuitem_delet_wishlist"
-        android:title="Delete"></item>
+        android:title="Delete all"></item>
 
 </menu>
