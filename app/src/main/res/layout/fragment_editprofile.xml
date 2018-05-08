@@ -43,18 +43,10 @@
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:src="@color/skyBlue"
                 app:civ_border_color="@color/black"
                 app:civ_border_width="0dp" />
 
-            <ImageView
-                android:id="@+id/ivCamera"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="20dp"
-                android:elevation="10dp"
-                android:src="@drawable/ic_addcamera" />
+
 
         </RelativeLayout>
 
@@ -67,8 +59,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingEnd="50dp"
-                android:paddingStart="50dp">
+                android:paddingEnd="40dp"
+                android:paddingStart="40dp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:gravity="center"
+                    android:text="Only your name is required"
+                    android:textSize="15sp" />
 
                 <RelativeLayout
                     android:id="@+id/relLayout4"
@@ -76,25 +77,27 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relLayout2"
                     android:layout_marginEnd="20dp"
-                    android:padding="10dp">
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:layout_marginTop="10dp"
+                    >
+
 
                     <ImageView
                         android:id="@+id/ivPerson"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginTop="20dp"
                         android:src="@drawable/ic_name" />
 
                     <EditText
                         android:id="@+id/nameET"
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_toRightOf="@+id/ivPerson"
                         android:fontFamily="@font/nunito_semibold"
-                        android:hint="Name"
+                        android:hint="Name (Public)"
                         android:imeOptions="actionDone"
                         android:inputType="textCapWords"
                         android:textColor="@color/black" />
@@ -107,7 +110,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relLayout2"
                     android:layout_marginEnd="20dp"
-                    android:padding="10dp">
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:layout_marginTop="10dp"
+                    >
 
                     <ImageView
                         android:id="@+id/ivEmail"
@@ -125,7 +131,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toRightOf="@+id/ivEmail"
                         android:fontFamily="@font/nunito_semibold"
-                        android:hint="Contact email"
+                        android:hint="Any Contact Email (Public)"
                         android:imeOptions="actionDone"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black" />
@@ -138,7 +144,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relLayout2"
                     android:layout_marginEnd="20dp"
-                    android:padding="10dp">
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:layout_marginTop="10dp"
+                    >
 
                     <ImageView
                         android:id="@+id/ivLocation"
@@ -155,7 +164,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toRightOf="@+id/ivLocation"
                         android:fontFamily="@font/nunito_semibold"
-                        android:hint="Location"
+                        android:hint="Address (Public)"
                         android:imeOptions="actionDone"
                         android:inputType="text"
                         android:textColor="@color/black" />

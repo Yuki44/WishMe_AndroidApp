@@ -52,6 +52,7 @@ public class WishAdapter extends ArrayAdapter<Wish> {
             holder.mProgressBar = convertView.findViewById(R.id.wishProgressbar);
 
 
+
             convertView.setTag(holder);
 
         } else {
@@ -61,6 +62,7 @@ public class WishAdapter extends ArrayAdapter<Wish> {
         String wishNameStr = getItem(position).getName();
         String wishPriceStr = getItem(position).getPrice();
         String wishImagePathStr = getItem(position).getImage();
+
 
         holder.wishName.setText(wishNameStr);
         holder.wishPrice.setText(wishPriceStr);

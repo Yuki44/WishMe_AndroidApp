@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="15dp">
+    android:padding="10dp">
 
 
     <ImageView
@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="270dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
@@ -40,47 +40,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/wish_price"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Price"
                 android:textSize="15sp" />
 
-            <ImageView
-                android:id="@+id/stars"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/wish_price"
-                app:srcCompat="@drawable/ic_full_star" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty"
-
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_star_empty" />
-
+                android:focusable="false"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="1" />
 
         </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.easv.wishme.wishme_android.dal;
+package com.easv.wishme.wishme_android.interfaces;
 
 import android.graphics.Bitmap;
 

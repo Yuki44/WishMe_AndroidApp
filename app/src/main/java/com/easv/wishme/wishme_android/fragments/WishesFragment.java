@@ -1,6 +1,5 @@
 package com.easv.wishme.wishme_android.fragments;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,17 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.adapters.WishAdapter;
-import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
-import com.easv.wishme.wishme_android.utils.EditWishlistDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -49,6 +46,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private FloatingActionButton mAddWish;
     private FirebaseFirestore db;
     private Toolbar toolbar;
+    private RatingBar mRatingBar;
 
     public interface OnEditWishList {
         void getWishlist(Wishlist wList);
@@ -69,6 +67,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mWishList = view.findViewById(R.id.wishesList);
         mNameOfWishlist = view.findViewById(R.id.nameOfWishlist);
         mAddWish = (FloatingActionButton) view.findViewById(R.id.addWishFab);
+        mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         db = FirebaseFirestore.getInstance();
         toolbar = view.findViewById(R.id.wishlistToolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
