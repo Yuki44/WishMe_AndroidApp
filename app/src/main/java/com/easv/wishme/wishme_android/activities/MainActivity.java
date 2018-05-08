@@ -23,10 +23,12 @@ import com.easv.wishme.wishme_android.fragments.SignUpStep1;
 import com.easv.wishme.wishme_android.fragments.SignUpStep2;
 import com.easv.wishme.wishme_android.fragments.WishesFragment;
 import com.easv.wishme.wishme_android.utils.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.utils.EditWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, ChangePhotoDialog.OnPhotoSelectedListener, HomeFragment.OnWishlistItemClicked{
+public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, ChangePhotoDialog.OnPhotoSelectedListener, HomeFragment.OnWishlistItemClicked,
+WishesFragment.OnEditWishList{
     User user;
     AuthenticationHelper authHelper;
     private static final String TAG = "MainActivity";
@@ -137,7 +139,18 @@ public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUse
             fragment.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, fragment);
+            transaction.addToBackStack(null);
             transaction.commit();
+    }
+
+    @Override
+    public void getWishlist(Wishlist wList) {
+        EditWishlistDialog dialog = new EditWishlistDialog();
+        args = new Bundle();
+        args.putParcelable("WishList", wList);
+        dialog.setArguments(args);
+
+        dialog.show(getSupportFragmentManager(), getString(R.string.edit));
     }
 }
 

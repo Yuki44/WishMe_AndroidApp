@@ -4,6 +4,7 @@
     <string name="sign_up_2">SignUp2</string>
     <string name="wishes_list">WishesFragment</string>
     <string name="logout">Logout</string>
+    <string name="edit">Edit</string>
     <string name="create_wishlist">CreateWishlistDialog</string>
     <string name="what_is_your_wish">What is your wish?</string>
     <string name="average_price">What\'s the average price?</string>
