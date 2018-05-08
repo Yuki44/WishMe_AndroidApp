@@ -106,11 +106,10 @@ public class SignUpStep1 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try{
-            mOnUserCreatedListener =  (OnUserCreatedListener) getActivity();
+            mOnUserCreatedListener = (OnUserCreatedListener) getActivity();
         }catch(ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
         }
-
     }
 //to here
 

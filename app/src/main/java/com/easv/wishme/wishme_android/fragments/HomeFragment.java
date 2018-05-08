@@ -76,10 +76,11 @@ public class HomeFragment extends Fragment {
     private DatabaseHelper dataHelper;
 
 
-    public interface OnWishlistItemClicked{
-    void getWishlistItemClicked(Wishlist wList);
+    public interface OnWishlistItemClicked {
+        void getWishlistItemClicked(Wishlist wList);
 
     }
+
     OnWishlistItemClicked mOnWishlistItemClicked;
 
     @Nullable
@@ -120,10 +121,10 @@ public class HomeFragment extends Fragment {
                 Wishlist wList = wishList.get(position);
                 Log.d(TAG, "onItemClick: " + wList.getId() + " " + "<><><><><><><><><><><><><><><><>");
                 mOnWishlistItemClicked.getWishlistItemClicked(wList);
-               // wishlistClicked();
+                // wishlistClicked();
             }
         });
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         initProgressBar();
         initImageProgressBar();
         setHasOptionsMenu(true);
@@ -131,11 +132,11 @@ public class HomeFragment extends Fragment {
         setUserInfo();
         setProfileImage();
         mCreateWishlist.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        showCreateWishListDialog();
-    }
-});
+            @Override
+            public void onClick(View v) {
+                showCreateWishListDialog();
+            }
+        });
         return view;
     }
 
@@ -154,6 +155,7 @@ public class HomeFragment extends Fragment {
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -184,40 +186,41 @@ public class HomeFragment extends Fragment {
         dialog.setTargetFragment(HomeFragment.this, 1);
     }
 
-    private void showCreateWishListDialog(){
+    private void showCreateWishListDialog() {
         CreateWishlistDialog dialog = new CreateWishlistDialog();
         dialog.show(getFragmentManager(), getString(R.string.create_wishlist));
         dialog.setTargetFragment(HomeFragment.this, 1);
 
     }
-    private void setUserInfo(){
+
+    private void setUserInfo() {
         showImageProgressBar();
-        User user =  authHelper.getUserWithInfo(new ICallBack() {
-                 @Override
-                 public void onFinish(User user) {
-                     mNameTV.setText(user.getname());
-                     mContactTV.setText(user.getContactEmail());
-                     mAddressTV.setText(user.getAddress());
+        User user = authHelper.getUserWithInfo(new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+                mNameTV.setText(user.getname());
+                mContactTV.setText(user.getContactEmail());
+                mAddressTV.setText(user.getAddress());
 
 
+                Log.d(TAG, "setUserInfo: " + user.toString());
+            }
 
-              Log.d(TAG, "setUserInfo: " + user.toString());
-          }
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
 
-          @Override
-          public void onFinishFireBaseUser(FirebaseUser user) {
+            }
 
-          }
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                setProfileImage();
 
-          @Override
-          public void onFinishGetImage(Bitmap bitmap) {
-              setProfileImage();
-
-          }
-      });
+            }
+        });
 
     }
-    private void setProfileImage(){
+
+    private void setProfileImage() {
         mSelectedImage = authHelper.getProfileImage(new ICallBack() {
             @Override
             public void onFinish(User user) {
@@ -237,9 +240,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
-    private void setWishlist(){
+    private void setWishlist() {
         showProgressBar();
         dataHelper.getWishLists(new ICallBackDatabase() {
             @Override
@@ -250,7 +251,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFinishWishListList(ArrayList list) {
                 wishList = list;
-                wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList , "https://");
+                wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList, "https://");
                 mWishList.setAdapter(wishlistAdapter);
                 mNoListTV.setText("");
                 hideProgressBar();
@@ -259,46 +260,39 @@ public class HomeFragment extends Fragment {
             }
 
 
-
-
-
         });
-        if(wishList == null) {
+        if (wishList == null) {
             mWishlistCard.setVisibility(View.INVISIBLE);
             mNoListTV.setText("You don't have a Wish list yet!");
             hideProgressBar();
         }
 
 
-
-
-
     }
 
 
-
-    private void showProgressBar(){
+    private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar(){
+    private void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private void initProgressBar(){
+    private void initProgressBar() {
 
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
-    private void showImageProgressBar(){
+    private void showImageProgressBar() {
         mProfileProgressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideImageProgressBar(){
+    private void hideImageProgressBar() {
         mProfileProgressBar.setVisibility(View.GONE);
     }
 
-    private void initImageProgressBar(){
+    private void initImageProgressBar() {
 
         mProfileProgressBar.setVisibility(View.INVISIBLE);
     }
@@ -306,11 +300,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try{
+        try {
             mOnWishlistItemClicked = (OnWishlistItemClicked) getActivity();
 
-        }catch(ClassCastException e){
-            Log.e(TAG, "onAttach: ClassCastException: " +  e.getMessage());
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
 
         }
     }
