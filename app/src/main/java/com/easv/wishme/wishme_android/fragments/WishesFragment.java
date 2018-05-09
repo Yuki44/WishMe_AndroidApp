@@ -176,7 +176,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
             case R.id.menuitem_edit_wishlist:
                 mOnEditWishList.getWishlist(listFromHome);
                 return true;
-            case R.id.menuitem_delet_wishlist:
+            case R.id.menuitem_delete_wishlist:
                 //  editProfile();
                 return true;
             default:
