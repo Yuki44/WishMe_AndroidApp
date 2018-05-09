@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 public class CreateWishlistDialog extends DialogFragment {
     private static final String TAG = "CreateWishlistDialog";
     private EditText mNewWishlist;
+    private TextView saveDialog;
     private FirebaseFirestore db;
     private AuthenticationHelper authHelper;
     private DatabaseHelper dataHelper;
@@ -41,25 +44,31 @@ public class CreateWishlistDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_addwishlist, container, false);
 
         mNewWishlist = (EditText) view.findViewById(R.id.newWishlistTX);
-
         db = FirebaseFirestore.getInstance();
         authHelper = new AuthenticationHelper();
         dataHelper = new DatabaseHelper();
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        linear = view.findViewById(R.id.linear);
+        saveDialog = (TextView) view.findViewById(R.id.dialogSave);
+        linear = (LinearLayout) view.findViewById(R.id.linear);
+
         initProgressBar();
 
+                if(!mNewWishlist.getText().toString().trim().isEmpty()){
+                    saveDialog.setVisibility(View.VISIBLE);
+                } else {
+                    saveDialog.setVisibility(View.GONE);
+                }
 
 
 
-        final TextView saveDialog = view.findViewById(R.id.dialogSave);
+
+
         saveDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                linear.setVisibility(View.INVISIBLE);
+                if(!mNewWishlist.getText().toString().trim().isEmpty()){
+                linear.setVisibility(View.GONE);
             showProgressBar();
-if(mNewWishlist.getText().toString().trim() != null){
-    saveDialog.setVisibility(View.GONE);
     Wishlist wList = new Wishlist(mNewWishlist.getText().toString(), authHelper.getmAuth().getUid());
     dataHelper.createWishList(wList, new ICallBackDatabase() {
         @Override
@@ -81,10 +90,6 @@ if(mNewWishlist.getText().toString().trim() != null){
 }
             }
         });
-
-
-
-
 
 
         // Cancel button for closing the dialog
