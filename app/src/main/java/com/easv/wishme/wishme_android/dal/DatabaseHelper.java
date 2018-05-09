@@ -130,27 +130,29 @@ public class DatabaseHelper {
             });
  }
     public Bitmap createWishImage(final Bitmap bitmap, String wishId, final ICallBack callBack){
-        StorageReference userRef = storageRef.child("wish-images/" + wishId);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
+        if(bitmap != null){
+            StorageReference userRef = storageRef.child("wish-images/" + wishId);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = userRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                callBack.onFinishGetImage(bitmap);
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-            }
-        });
-        return bitmap;
-
+            UploadTask uploadTask = userRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    callBack.onFinishGetImage(bitmap);
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                }
+            });
+            return bitmap;
+        }
+        return null;
     }
     public void getWishImage(String wishId, final ICallBack callBack){
         if(wishId != null) {

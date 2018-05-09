@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class WishesFragment extends android.support.v4.app.Fragment {
 
@@ -155,10 +157,30 @@ public class WishesFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onFinnishGetWishes(ArrayList list) {
-                wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, list, "https://");
-                mWishList.setAdapter(wishAdapter);
-                sortListByName();
-                mNoWishes.setText("");
+                final List<Wish> wList = list;
+                for (final Wish w : wList) {
+                    dataHelper.getWishImage(w.getId(), new ICallBack() {
+                        @Override
+                        public void onFinish(User user) {
+
+                        }
+
+                        @Override
+                        public void onFinishFireBaseUser(FirebaseUser user) {
+
+                        }
+
+                        @Override
+                        public void onFinishGetImage(Bitmap bitmap) {
+                            w.setImageBitmap(bitmap);
+                            wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wList);
+                            mWishList.setAdapter(wishAdapter);
+                            sortListByName();
+                            mNoWishes.setText("");
+
+                        }
+                    });
+                }
 
 
             }

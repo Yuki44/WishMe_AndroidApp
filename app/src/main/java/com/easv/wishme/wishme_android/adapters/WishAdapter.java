@@ -2,6 +2,7 @@ package com.easv.wishme.wishme_android.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -19,6 +20,8 @@ import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.interfaces.ICallBack;
+import com.easv.wishme.wishme_android.utils.ImageHandler;
+import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -32,17 +35,15 @@ public class WishAdapter extends ArrayAdapter<Wish> {
     private LayoutInflater mInflater;
     private List<Wish> mWishes = null;
     private int layoutResource;
-    private String mAppend;
-    private DatabaseHelper dataHelper;
 
-    public WishAdapter(@NonNull Context context, int resource, @NonNull List<Wish> wishes, String append) {
+
+
+    public WishAdapter(@NonNull Context context, int resource, @NonNull List<Wish> wishes) {
         super(context, resource, wishes);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutResource = resource;
         this.mContext = context;
-        mAppend = append;
         this.mWishes = wishes;
-        dataHelper = new DatabaseHelper();
     }
 
     @NonNull
@@ -57,9 +58,7 @@ public class WishAdapter extends ArrayAdapter<Wish> {
             holder.wishName = convertView.findViewById(R.id.wish_name);
             holder.wishPrice = convertView.findViewById(R.id.wish_price);
             holder.wishImage = convertView.findViewById(R.id.wish_image);
-            holder.mProgressBar = convertView.findViewById(R.id.wishProgressbar);
             holder.mRatingBar = convertView.findViewById(R.id.ratingBar);
-
 
             convertView.setTag(holder);
 
@@ -68,58 +67,21 @@ public class WishAdapter extends ArrayAdapter<Wish> {
         }
 
         String wishNameStr = getItem(position).getName();
-        String wishPriceStr = getItem(position).getPrice();
+        String wishPriceStr = getItem(position).getPrice();;
+       // holder.wishImage.setImageBitmap(getItem(position).getImageBitmap());
+        Bitmap wishImage = getItem(position).getImageBitmap();
+        Log.d("BITMAP", "" + getItem(position).getImageBitmap());
 
-         dataHelper.getWishImage(getItem(position).getId(), new ICallBack() {
-            @Override
-            public void onFinish(User user) {
 
-            }
 
-            @Override
-            public void onFinishFireBaseUser(FirebaseUser user) {
 
-            }
-
-            @Override
-            public void onFinishGetImage(Bitmap bitmap) {
-                Log.d("TAGGG", "opojdsfoi" + bitmap);
-                holder.wishImage.setImageBitmap(bitmap);
-             /*  ImageLoader imageLoader = ImageLoader.getInstance();
-
-                imageLoader.displayImage(mAppend + bitmap, holder.wishImage, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                        holder.mProgressBar.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        holder.mProgressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        holder.mProgressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                        holder.mProgressBar.setVisibility(View.GONE);
-                    }
-                });*/
-            }
-        });
         //String wishImagePathStr = getItem(position).getImage();
         float wishRating = getItem(position).getRating();
-
 
         holder.wishName.setText(wishNameStr);
         holder.wishPrice.setText(wishPriceStr);
         holder.mRatingBar.setRating(wishRating);
-
-
-
+        holder.wishImage.setImageBitmap(wishImage);
         return convertView;
 
 
@@ -129,7 +91,6 @@ public class WishAdapter extends ArrayAdapter<Wish> {
         TextView wishName;
         TextView wishPrice;
         ImageView wishImage;
-        ProgressBar mProgressBar;
         RatingBar mRatingBar;
     }
 }
