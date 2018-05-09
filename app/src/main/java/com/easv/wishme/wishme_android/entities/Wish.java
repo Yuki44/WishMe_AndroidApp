@@ -5,13 +5,13 @@ import android.os.Parcelable;
 
 public class Wish implements Parcelable {
 
-    private String name, price, link, description, image, owner;
+    private String name, price, link, description, image, owner, id;
     private float rating;
 
     public Wish() {
     }
 
-    public Wish(String name, String price, String link, String description, String image, String owner, float rating) {
+    public Wish(String name, String price, String link, String description, String image, String owner, float rating, String id) {
         this.name = name;
         this.price = price;
         this.link = link;
@@ -19,6 +19,7 @@ public class Wish implements Parcelable {
         this.image = image;
         this.owner = owner;
         this.rating = rating;
+        this.id = id;
     }
 
     protected Wish(Parcel in) {
@@ -29,6 +30,7 @@ public class Wish implements Parcelable {
         image = in.readString();
         owner = in.readString();
         rating = in.readFloat();
+        id = in.readString();
     }
 
     public static final Creator<Wish> CREATOR = new Creator<Wish>() {
@@ -42,6 +44,14 @@ public class Wish implements Parcelable {
             return new Wish[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -109,6 +119,8 @@ public class Wish implements Parcelable {
                 ", image='" + image + '\'' +
                 ", owner='" + owner + '\'' +
                 ", rating='" + rating + '\'' +
+                ", id='" + id + '\'' +
+
                 '}';
     }
 
@@ -126,5 +138,6 @@ public class Wish implements Parcelable {
         dest.writeString(image);
         dest.writeString(owner);
         dest.writeFloat(rating);
+        dest.writeString(id);
     }
 }

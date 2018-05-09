@@ -2,24 +2,35 @@ package com.easv.wishme.wishme_android.dal;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.adapters.WishAdapter;
+import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.easv.wishme.wishme_android.fragments.SignUpStep1;
+import com.easv.wishme.wishme_android.interfaces.ICallBack;
 import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class DatabaseHelper {
@@ -84,14 +95,31 @@ public class DatabaseHelper {
              });
  }
 
- public void createWish(final Wish wish, final ICallBackDatabase callBackDatabase ){
+ public void createWish(final Wish wish, final Bitmap bitmap, final ICallBackDatabase callBackDatabase ){
     db.collection("wish")
             .add(wish)
             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                    callBackDatabase.onFinishWish(wish);
+                    createWishImage(bitmap, documentReference.getId(), new ICallBack() {
+                        @Override
+                        public void onFinish(User user) {
+
+                        }
+
+                        @Override
+                        public void onFinishFireBaseUser(FirebaseUser user) {
+
+                        }
+
+                        @Override
+                        public void onFinishGetImage(Bitmap bitmap) {
+                            callBackDatabase.onFinishWish(wish);
+
+                        }
+                    });
+
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
@@ -101,6 +129,62 @@ public class DatabaseHelper {
                 }
             });
  }
+    public Bitmap createWishImage(final Bitmap bitmap, String wishId, final ICallBack callBack){
+        StorageReference userRef = storageRef.child("wish-images/" + wishId);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = userRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                callBack.onFinishGetImage(bitmap);
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
+        return bitmap;
+
+    }
+    public void getWishImage(Wish wish, final ICallBack callBack){
+        if(wish != null) {
+            StorageReference islandRef = storageRef.child("wish-images/" + wish.getId());
+
+            final long ONE_MEGABYTE = 1024 * 1024;
+            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    //HomeFragment.mSelectedImage = bitmap;
+                    callBack.onFinishGetImage(bitmap);
+                    Log.d(TAG, bitmap.toString());
+                }
+            });
+        }
+    }
+
+    public void getWish(Wishlist listFromHome, final ICallBackDatabase callBackDatabase){
+        final ArrayList list = new ArrayList();
+        db.collection("wish").whereEqualTo("owner", listFromHome.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        Wish wish = document.toObject(Wish.class);
+                        list.add(wish);
+                    }
+                    callBackDatabase.onFinnishGetWishes(list);
+                }
+            }
+        });
+    }
 
 
 }
