@@ -1,6 +1,7 @@
 package com.easv.wishme.wishme_android.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,10 +23,15 @@ import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.adapters.WishAdapter;
+import com.easv.wishme.wishme_android.dal.DatabaseHelper;
+import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
+import com.easv.wishme.wishme_android.interfaces.ICallBack;
+import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -47,6 +53,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private FirebaseFirestore db;
     private Toolbar toolbar;
     private RatingBar mRatingBar;
+    private DatabaseHelper dataHelper;
 
     public interface OnEditWishList {
         void getWishlist(Wishlist wList);
@@ -83,6 +90,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         mNameOfWishlist.setText(listFromHome.getwListName());
         Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
+        dataHelper = new DatabaseHelper();
 
         mWishList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -129,7 +137,31 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         super.onStart();
         mNoWishes.setText("Loading...");
         wishListList = new ArrayList<>();
-        db.collection("wish").whereEqualTo("owner", listFromHome.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        dataHelper.getWish(listFromHome, new ICallBackDatabase() {
+            @Override
+            public void onFinishWishList(Wishlist wList) {
+
+            }
+
+            @Override
+            public void onFinishWishListList(ArrayList list) {
+
+            }
+
+            @Override
+            public void onFinishWish(Wish wish) {
+
+            }
+
+            @Override
+            public void onFinnishGetWishes(ArrayList list) {
+                wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, list, "https://");
+                mWishList.setAdapter(wishAdapter);
+                sortListByName();
+
+            }
+        });
+       /* db.collection("wish").whereEqualTo("owner", listFromHome.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -147,7 +179,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                     mNoWishes.setText("Something went wrong :(");
                 }
             }
-        });
+        });*/
     }
 
     private void sortListByName() {
