@@ -82,6 +82,11 @@ public class EditWishlistDialog extends DialogFragment {
                         public void onFinishWish(Wish wish) {
 
                         }
+
+                        @Override
+                        public void onFinnishGetWishes(ArrayList list) {
+
+                        }
                     });
                 }
             }

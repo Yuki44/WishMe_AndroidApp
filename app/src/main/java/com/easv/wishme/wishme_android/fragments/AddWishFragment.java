@@ -176,7 +176,12 @@ public class AddWishFragment extends Fragment {
                     mOnWishCreated.getWishlistFromAddWish(mWishList);
                }
 
-        });
+               @Override
+               public void onFinnishGetWishes(ArrayList list) {
+
+               }
+
+           });
         }
     }
 
