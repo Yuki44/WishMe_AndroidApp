@@ -29,7 +29,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SignUpStep2 extends Fragment {
 
     private static final String TAG = "CreateUserFragment2";
-
     private CircleImageView profileImage;
     private User mUser;
     private Button signUpBtn;
@@ -37,20 +36,17 @@ public class SignUpStep2 extends Fragment {
     private EditText contactEmailET;
     private AuthenticationHelper authHelper;
     private RelativeLayout mRelativeLayout2;
-
     private EditText addressET;
-
-
 
 // While the file names are the same, the references point to different files
 //mountainsRef.getName().equals(mountainImagesRef.getName());    // true
 //mountainsRef.getPath().equals(mountainImagesRef.getPath());    // false
 
-
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar mProgressBar;
-//from here
+
+    //from here
     public SignUpStep2() {
         super();
         setArguments(new Bundle());
@@ -82,7 +78,6 @@ public class SignUpStep2 extends Fragment {
             Log.d(TAG, "onCreateView: received User: " + mUser.getEmail() + " " + mUser.getPassword());
         }
 
-
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +94,6 @@ public class SignUpStep2 extends Fragment {
         authHelper.signUpNewUser(mUser, new ICallBack() {
             @Override
             public void onFinish(User user) {
-
             }
 
             @Override
@@ -109,11 +103,9 @@ public class SignUpStep2 extends Fragment {
                 mUser.setContactEmail(contactEmailET.getText().toString());
                 authHelper.createUserProfile(mUser);
 
-
                 profileImage.setDrawingCacheEnabled(true);
                 profileImage.buildDrawingCache();
                 Bitmap bitmap = profileImage.getDrawingCache();
-
 
                authHelper.createProfileImage(bitmap, new ICallBack() {
                    @Override
@@ -129,22 +121,14 @@ public class SignUpStep2 extends Fragment {
                    @Override
                    public void onFinishGetImage(Bitmap bitmap) {
                        loadHomeFragment();
-
                    }
                });
-
-
-
             }
 
             @Override
             public void onFinishGetImage(Bitmap bitmap) {
-
             }
         });
-
-
-
     }
 
     private void changePic() {
@@ -152,7 +136,6 @@ public class SignUpStep2 extends Fragment {
         ChangePhotoDialog dialog = new ChangePhotoDialog();
         dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
         dialog.setTargetFragment(SignUpStep2.this, 1);
-
     }
 
     @Override
@@ -165,7 +148,6 @@ public class SignUpStep2 extends Fragment {
             Log.d("abc", "onResume: set image on the view ");
         }
         Log.d(TAG, "resumed");
-
     }
 
     private void showProgressBar(){

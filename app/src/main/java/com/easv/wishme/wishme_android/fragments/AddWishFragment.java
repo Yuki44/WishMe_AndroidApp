@@ -1,6 +1,7 @@
 package com.easv.wishme.wishme_android.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -52,7 +53,6 @@ public class AddWishFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_addwish, container, false);
-
         scrollView = view.findViewById(R.id.scrollView);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mNameInfo = (EditText) view.findViewById(R.id.name_Info);
@@ -150,13 +150,17 @@ public class AddWishFragment extends Fragment {
             wish.setDescription(mDescriptionTxt.getText().toString());
             wish.setRating(rating);
             wish.setOwner(mWishList.getId());
-           // Bitmap wishImage = MainActivity.mSelectedImage;
+            mWishImage.setDrawingCacheEnabled(true);
+            mWishImage.buildDrawingCache();
+            Bitmap bitmap = mWishImage.getDrawingCache();
 
-            Log.d(TAG, "Wish: " + wish);
+
+
+            Log.d(TAG, "Wish: " + bitmap);
 
 
 
-           databaseHelper.createWish(wish, new ICallBackDatabase() {
+           databaseHelper.createWish(wish, bitmap, new ICallBackDatabase() {
                @Override
                public void onFinishWishList(Wishlist wList) {
 
