@@ -13,8 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.activities.MainActivity;
@@ -36,7 +38,7 @@ public class AddWishFragment extends Fragment {
     private Wishlist mWishList;
     private ProgressBar mProgressBar;
     private ScrollView scrollView;
-
+private RelativeLayout mToolbar;
 
     public AddWishFragment() {
         super();
@@ -64,6 +66,7 @@ public class AddWishFragment extends Fragment {
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
+         mToolbar  = view.findViewById(R.id.relativeLayout1);
         mWishList = getWishListFromBundle();
         initProgressBar();
 //        LayerDrawable stars = (LayerDrawable) mRatingBar.getProgressDrawable();
@@ -137,7 +140,8 @@ public class AddWishFragment extends Fragment {
     }
 
     private void saveNewWish() {
-        scrollView.setVisibility(View.INVISIBLE);
+        scrollView.setVisibility(View.GONE);
+        mToolbar.setVisibility(View.GONE);
         showProgressBar();
         Log.d(TAG, "saveNewWish: Clicked on the checkMark");
         if(checkStringIfNull(mNameInfo.getText().toString())){
