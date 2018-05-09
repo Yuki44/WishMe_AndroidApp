@@ -20,8 +20,6 @@ public class SignUpStep1 extends Fragment {
     private static final String TAG = "CreateUserFragment1";
     private EditText mEmailET, mPasswordET, mRepeatPasswordET;
     private Button mNext;
-
-
     private String email, password;
 
     // From here
@@ -29,7 +27,8 @@ public class SignUpStep1 extends Fragment {
         void getUser(User user);
     }
     OnUserCreatedListener mOnUserCreatedListener;
-// to here
+    // to here
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -46,16 +45,12 @@ public class SignUpStep1 extends Fragment {
                 next();
             }
         });
-
         return view;
     }
-
-
 
     private void next() {
                email = mEmailET.getText().toString();
                password = mPasswordET.getText().toString();
-
                if (checkInputs(email,  password, mRepeatPasswordET.getText().toString())) {
                    if(doStringsMatch(password, mRepeatPasswordET.getText().toString())){
                        User user = new User(null, email, password, null, null, false);
@@ -68,8 +63,6 @@ public class SignUpStep1 extends Fragment {
                }else{
                    Toast.makeText(getActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
                }
-
-
     }
 
     /**
@@ -96,6 +89,7 @@ public class SignUpStep1 extends Fragment {
         }
         return true;
     }
+
     //from here
     @Override
     public void onAttach(Context context) {
@@ -106,6 +100,6 @@ public class SignUpStep1 extends Fragment {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
         }
     }
-//to here
+    //to here
 
 }
