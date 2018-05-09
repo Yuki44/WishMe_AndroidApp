@@ -53,11 +53,11 @@ public class CreateWishlistDialog extends DialogFragment {
 
         initProgressBar();
 
-                if(!mNewWishlist.getText().toString().trim().isEmpty()){
-                    saveDialog.setVisibility(View.VISIBLE);
-                } else {
-                    saveDialog.setVisibility(View.GONE);
-                }
+//                if(!mNewWishlist.getText().toString().trim().isEmpty()){
+//                    saveDialog.setVisibility(View.VISIBLE);
+//                } else {
+//                    saveDialog.setVisibility(View.GONE);
+//                }
 
 
 
