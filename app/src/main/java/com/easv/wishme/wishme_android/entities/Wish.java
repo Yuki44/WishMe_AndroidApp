@@ -1,5 +1,6 @@
 package com.easv.wishme.wishme_android.entities;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +8,7 @@ public class Wish implements Parcelable {
 
     private String name, price, link, description, image, owner, id;
     private float rating;
+    private Bitmap imageBitmap;
 
     public Wish() {
     }
@@ -44,6 +46,14 @@ public class Wish implements Parcelable {
             return new Wish[size];
         }
     };
+
+    public Bitmap getImageBitmap() {
+        return imageBitmap;
+    }
+
+    public void setImageBitmap(Bitmap imageBitmap) {
+        this.imageBitmap = imageBitmap;
+    }
 
     public String getId() {
         return id;
