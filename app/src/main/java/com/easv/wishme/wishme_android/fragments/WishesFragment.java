@@ -158,6 +158,8 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                 wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, list, "https://");
                 mWishList.setAdapter(wishAdapter);
                 sortListByName();
+                mNoWishes.setText("");
+
 
             }
         });

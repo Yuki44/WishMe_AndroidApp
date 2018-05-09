@@ -152,18 +152,22 @@ public class DatabaseHelper {
         return bitmap;
 
     }
-    public void getWishImage(Wish wish, final ICallBack callBack){
-        if(wish != null) {
-            StorageReference islandRef = storageRef.child("wish-images/" + wish.getId());
+    public void getWishImage(String wishId, final ICallBack callBack){
+        if(wishId != null) {
+
+            StorageReference islandRef = storageRef.child("wish-images/" + wishId);
+
+            Log.d("TAGGG", "getWishImage" + wishId);
 
             final long ONE_MEGABYTE = 1024 * 1024;
             islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
+
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     //HomeFragment.mSelectedImage = bitmap;
                     callBack.onFinishGetImage(bitmap);
-                    Log.d(TAG, bitmap.toString());
+                    Log.d("DUNNP", bitmap.toString());
                 }
             });
         }
@@ -178,6 +182,7 @@ public class DatabaseHelper {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         Wish wish = document.toObject(Wish.class);
+                        wish.setId(document.getId());
                         list.add(wish);
                     }
                     callBackDatabase.onFinnishGetWishes(list);

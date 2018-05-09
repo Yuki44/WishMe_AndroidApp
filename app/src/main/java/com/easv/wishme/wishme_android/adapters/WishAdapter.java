@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.dal.DatabaseHelper;
+import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
+import com.easv.wishme.wishme_android.interfaces.ICallBack;
+import com.google.firebase.auth.FirebaseUser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -28,6 +33,7 @@ public class WishAdapter extends ArrayAdapter<Wish> {
     private List<Wish> mWishes = null;
     private int layoutResource;
     private String mAppend;
+    private DatabaseHelper dataHelper;
 
     public WishAdapter(@NonNull Context context, int resource, @NonNull List<Wish> wishes, String append) {
         super(context, resource, wishes);
@@ -36,6 +42,7 @@ public class WishAdapter extends ArrayAdapter<Wish> {
         this.mContext = context;
         mAppend = append;
         this.mWishes = wishes;
+        dataHelper = new DatabaseHelper();
     }
 
     @NonNull
@@ -62,7 +69,48 @@ public class WishAdapter extends ArrayAdapter<Wish> {
 
         String wishNameStr = getItem(position).getName();
         String wishPriceStr = getItem(position).getPrice();
-        String wishImagePathStr = getItem(position).getImage();
+
+         dataHelper.getWishImage(getItem(position).getId(), new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                Log.d("TAGGG", "opojdsfoi" + bitmap);
+                holder.wishImage.setImageBitmap(bitmap);
+             /*  ImageLoader imageLoader = ImageLoader.getInstance();
+
+                imageLoader.displayImage(mAppend + bitmap, holder.wishImage, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                        holder.mProgressBar.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        holder.mProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        holder.mProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                        holder.mProgressBar.setVisibility(View.GONE);
+                    }
+                });*/
+            }
+        });
+        //String wishImagePathStr = getItem(position).getImage();
         float wishRating = getItem(position).getRating();
 
 
@@ -70,29 +118,7 @@ public class WishAdapter extends ArrayAdapter<Wish> {
         holder.wishPrice.setText(wishPriceStr);
         holder.mRatingBar.setRating(wishRating);
 
-        ImageLoader imageLoader = ImageLoader.getInstance();
 
-        imageLoader.displayImage(mAppend + wishImagePathStr, holder.wishImage, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                holder.mProgressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                holder.mProgressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                holder.mProgressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                holder.mProgressBar.setVisibility(View.GONE);
-            }
-        });
 
         return convertView;
 
