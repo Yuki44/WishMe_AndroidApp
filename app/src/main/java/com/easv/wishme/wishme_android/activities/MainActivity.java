@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity
         WishesFragment.OnWishListToAddWishListener,
         WishesFragment.OnWishRetrievedListener,
         AddWishFragment.OnWishCreated,
-WishDetailsFragment.UpdateWish{
+WishDetailsFragment.UpdateWish,
+WishEditFragment.UpdateWishDone{
 
     User user;
     AuthenticationHelper authHelper;
@@ -174,6 +175,18 @@ WishDetailsFragment.UpdateWish{
         Bundle args = new Bundle();
         args.putParcelable("WishDetails", wish);
         Log.d(TAG, "getWishFromDetailView: MainActivity::::" + wish);
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void getWishFromEditView(Wish wish) {
+        WishDetailsFragment fragment = new WishDetailsFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("WishDetails", wish);
         fragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);

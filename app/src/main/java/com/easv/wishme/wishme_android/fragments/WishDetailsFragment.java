@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +28,12 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
+import com.easv.wishme.wishme_android.interfaces.ICallBack;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -41,6 +46,7 @@ public class WishDetailsFragment extends Fragment {
     private RatingBar mRatingBar;
     private Toolbar toolbar;
     private ProgressBar mProgressBar;
+    private DatabaseHelper databaseHelper;
     public WishDetailsFragment() {
         super();
         setArguments(new Bundle());
@@ -59,6 +65,7 @@ public class WishDetailsFragment extends Fragment {
         toolbar = view.findViewById(R.id.wishToolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
+        databaseHelper = new DatabaseHelper();
         mNameInfo = (TextView) view.findViewById(R.id.name_Info);
         mWishPrice = (TextView) view.findViewById(R.id.wishPrice);
         mWebsiteTxt = (TextView) view.findViewById(R.id.websiteTxt);
@@ -67,11 +74,14 @@ public class WishDetailsFragment extends Fragment {
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivBackArrow);
         mIvEdit = (ImageView) view.findViewById(R.id.ivEdit);
         mRatingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+        mProgressBar = view.findViewById(R.id.imageProgressBar);
+        initProgressBar();
         setUpWish();
         mIvCheckMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Go Back Method here", Toast.LENGTH_SHORT).show();
+                FragmentManager fm = getFragmentManager();
+                fm.popBackStack();
             }
         });
 
@@ -105,12 +115,42 @@ public class WishDetailsFragment extends Fragment {
     }
 
     private void setUpWish() {
+        showProgressBar();
         mNameInfo.setText(wishToDisplay.getName());
         mWishPrice.setText(wishToDisplay.getPrice());
         mWebsiteTxt.setText(wishToDisplay.getLink());
         mDescriptionTxt.setText(wishToDisplay.getDescription());
         mRatingBar.setRating(wishToDisplay.getRating());
-        mWishImage.setImageBitmap(wishToDisplay.getImageBitmap());
+        databaseHelper.getWishImage(wishToDisplay.getId(), new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                hideProgressBar();
+                mWishImage.setImageBitmap(bitmap);
+
+            }
+        });
+    }
+    private void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initProgressBar() {
+
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
 
