@@ -46,12 +46,17 @@
 
                 <ImageView
                     android:id="@+id/wishImage"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/ic_addphoto"/>
-
+                    android:layout_marginTop="10dp" />
+                <ProgressBar
+                    android:id="@+id/imageProgressBar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="invisible" />
 
 
             </RelativeLayout>

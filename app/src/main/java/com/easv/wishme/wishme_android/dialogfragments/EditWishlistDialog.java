@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class EditWishlistDialog extends DialogFragment {
-    private static final String TAG = "CreateWishlistDialog";
+    private static final String TAG = "EditWishlistDialog";
     private EditText mNewWishlistName;
     private FirebaseFirestore db;
     private AuthenticationHelper authHelper;

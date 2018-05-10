@@ -192,6 +192,14 @@ public class DatabaseHelper {
             }
         });
     }
+    public void editWish(final Wish wish, final ICallBackDatabase callBackDatabase)
+    {
+        wish.setImageBitmap(null);
+        wish.setImage(null);
+        db.collection("wish").document(wish.getId())
+                .set(wish);
+        callBackDatabase.onFinishWish(wish);
+    }
 
 
 }
