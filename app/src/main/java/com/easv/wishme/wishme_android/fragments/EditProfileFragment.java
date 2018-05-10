@@ -32,6 +32,7 @@ public class EditProfileFragment extends Fragment {
     private CircleImageView mImageView;
     private Toolbar toolbar;
     private AuthenticationHelper authHelper;
+    private ProgressBar mProfileProgressBar;
 
     private RelativeLayout mRelativeLayout2;
     private ProgressBar mProgressBar;
@@ -52,8 +53,10 @@ public class EditProfileFragment extends Fragment {
         });
         mRelativeLayout2 = view.findViewById(R.id.relativeLayout2);
         mProgressBar = view.findViewById(R.id.progressBar);
+        mProfileProgressBar = (ProgressBar) view.findViewById(R.id.profileImageProgressBar);
         toolbar = view.findViewById(R.id.editProfileToolbar);
         authHelper = new AuthenticationHelper();
+        initImageProgressBar();
 
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +104,7 @@ public class EditProfileFragment extends Fragment {
 
 
     private void setProfileImage(){
+        showImageProgressBar();
         MainActivity.mSelectedImage = authHelper.getProfileImage(new ICallBack() {
             @Override
             public void onFinish(User user) {}
@@ -110,6 +114,7 @@ public class EditProfileFragment extends Fragment {
 
             @Override
             public void onFinishGetImage(Bitmap bitmap) {
+                hideImageProgressBar();
                 mImageView.setImageBitmap(bitmap);
             }
         });
@@ -123,7 +128,7 @@ public class EditProfileFragment extends Fragment {
     private void initProgressBar(){ mProgressBar.setVisibility(View.INVISIBLE); }
 
     private void updateUser() {
-       mRelativeLayout2.setVisibility(mRelativeLayout2.INVISIBLE);
+       mRelativeLayout2.setVisibility(View.GONE);
         showProgressBar();
         authHelper.getUserWithInfo(new ICallBack() {
             @Override
@@ -181,6 +186,20 @@ public class EditProfileFragment extends Fragment {
        mImageView.setImageBitmap(MainActivity.mSelectedImage);
 
     }
+
+    private void showImageProgressBar(){
+        mProfileProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideImageProgressBar() {
+        mProfileProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initImageProgressBar() {
+
+        mProfileProgressBar.setVisibility(View.INVISIBLE);
+    }
+
 
     @Override
     public void onResume() {
