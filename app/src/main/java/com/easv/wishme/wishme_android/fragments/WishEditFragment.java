@@ -38,8 +38,8 @@ public class WishEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
         mWishName = view.findViewById(R.id.nameET);
-        mWishPrice = view.findViewById(R.id.wishPriceET);
-        mWishLink = view.findViewById(R.id.wishLinkET);
+//        mWishPrice = view.findViewById(R.id.wishPriceET);
+//        mWishLink = view.findViewById(R.id.wishLinkET);
         //mWishDescription = view.findViewById(R.id.descriptionET);
         mImageView = view.findViewById(R.id.wishImage);
         mImageView.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +50,7 @@ public class WishEditFragment extends Fragment {
         });
         toolbar = view.findViewById(R.id.editWishToolbar);
 
-        mScrollView = view.findViewById(R.id.ScrollView);
+//        mScrollView = view.findViewById(R.id.ScrollView);
         mProgressBar = view.findViewById(R.id.progressBar);
 
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);

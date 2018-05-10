@@ -112,9 +112,10 @@ public class HomeFragment extends Fragment {
             }
         });
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
         initProgressBar();
         initImageProgressBar();
-        setHasOptionsMenu(true);
+
         setWishlist();
         setUserInfo();
         setProfileImage();
