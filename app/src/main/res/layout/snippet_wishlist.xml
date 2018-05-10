@@ -8,21 +8,25 @@
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/wishlistToolbar"
-
-            >
+            android:id="@+id/wishlistToolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivBackArrow"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                  android:padding="13dp"
+                    android:src="@drawable/ic_backarrow" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semibold"
-                    android:text="Wishlist (wishes)"
                     android:id="@+id/nameOfWishlist"
+                    android:layout_toEndOf="@id/ivBackArrow"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
 

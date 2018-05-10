@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -78,7 +80,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wishlist, container, false);
+        final View view = inflater.inflate(R.layout.fragment_wishlist, container, false);
         mNoWishes = view.findViewById(R.id.textNoWishes);
         mWishList = view.findViewById(R.id.wishesList);
         mNameOfWishlist = view.findViewById(R.id.nameOfWishlist);
@@ -92,6 +94,16 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         Log.d(TAG, listFromHome.getwListName());
         setHasOptionsMenu(true);
         dataHelper = new DatabaseHelper();
+
+        ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
+        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked back arrow.");
+                FragmentManager fm = getFragmentManager();
+                fm.popBackStack();
+            }
+        });
 
         mWishList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
