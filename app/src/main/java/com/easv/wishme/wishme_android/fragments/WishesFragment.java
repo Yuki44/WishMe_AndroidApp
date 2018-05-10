@@ -157,6 +157,10 @@ public class WishesFragment extends android.support.v4.app.Fragment {
             @Override
             public void onFinnishGetWishes(ArrayList list) {
                 Log.d(TAG, "onFinnishGetWishes: @@@");
+                if(list.size()==0){
+                    mNoWishes.setText("" + mNameOfWishlist.getText() + " is empty");
+                }
+
                 final List<Wish> wList = list;
                 for (final Wish w : wList) {
                     dataHelper.getWishImage(w.getId(), new ICallBack() {
@@ -182,35 +186,9 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                     });
                 }
 
-                if(wishListList.size()==0){
-                    mNoWishes.setText("" + mNameOfWishlist.getText() + " is empty");
-                }
 
             }
         });
-
-
-
-
-       /* db.collection("wish").whereEqualTo("owner", listFromHome.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    mNoWishes.setText("");
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                        Wish wish = document.toObject(Wish.class);
-                        wishListList.add(wish);
-                    }
-                    wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wishListList, "https://");
-                    mWishList.setAdapter(wishAdapter);
-                    sortListByName();
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                    mNoWishes.setText("Something went wrong :(");
-                }
-            }
-        });*/
     }
 
     private void sortListByName() {
