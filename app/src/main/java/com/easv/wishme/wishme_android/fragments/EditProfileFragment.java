@@ -96,7 +96,6 @@ public class EditProfileFragment extends Fragment {
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 

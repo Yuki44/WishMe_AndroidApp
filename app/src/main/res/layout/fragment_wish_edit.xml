@@ -21,41 +21,38 @@
         </RelativeLayout>
     </RelativeLayout>
 
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/relativeLayout1"
-        android:layout_marginTop="50dp"
-        android:id="@+id/ScrollView">
+        android:layout_marginTop="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+
             <RelativeLayout
                 android:id="@+id/relLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="30dp">
+
 
                 <ImageView
                     android:id="@+id/wishImage"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:src="@color/skyBlue" />
+                    android:src="@drawable/ic_addphoto"/>
 
-                <ImageView
-                    android:id="@+id/ivCamera"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
-                    android:elevation="10dp"
-                    android:src="@drawable/ic_addcamera" />
+
 
             </RelativeLayout>
 
@@ -81,17 +78,21 @@
                         />
 
                     <EditText
-                        android:id="@+id/wishNameET"
+                        android:id="@+id/name_Info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/nunito_semibold"
+                        android:hint="@string/what_is_your_wish"
                         android:inputType="textCapWords"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
                 </LinearLayout>
+
+
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -109,19 +110,20 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/ivPriceET"
+                        android:id="@+id/ivPrice"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/ic_price"
                         android:layout_marginTop="5dp"/>
 
                     <EditText
-                        android:id="@+id/wishPriceET"
+                        android:id="@+id/wishPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/nunito_semibold"
-                        android:inputType="text"
+                        android:hint="@string/average_price"
+                        android:inputType="textCapCharacters"
                         android:maxLength="8"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -131,10 +133,9 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relLayout9"
+                android:id="@+id/relLayout6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relLayout8"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:padding="10dp">
@@ -153,11 +154,12 @@
                         android:layout_marginTop="5dp"/>
 
                     <EditText
-                        android:id="@+id/wishLinkET"
+                        android:id="@+id/websiteTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/nunito_semibold"
+                        android:hint="@string/website_link"
                         android:inputType="textUri"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -193,6 +195,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/nunito_semibold"
+                        android:hint="@string/a_short_description"
                         android:inputType="textCapSentences"
                         android:singleLine="true"
                         android:textColor="@color/black"
@@ -224,59 +227,53 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:id="@+id/rating"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:gravity="center_horizontal"
                             android:text="@string/rating_text"
-                            android:textSize="20sp"
-                            android:id="@+id/rating"
-                            />
+                            android:textSize="18sp" />
 
-                        <ImageView
-                            android:id="@+id/stars"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                        <RatingBar
+                            android:id="@+id/ratingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_below="@+id/rating"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            android:numStars="5"
+                            android:stepSize="1" />
 
-                            app:srcCompat="@drawable/ic_full_star" />
+                        <TextView
+                            android:id="@+id/ratingText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ratingBar"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15sp"/>
 
-                        <ImageView
-                            android:id="@+id/stars2"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_toEndOf="@+id/stars"
-                            android:layout_below="@+id/rating"
-                            app:srcCompat="@drawable/ic_star_empty" />
-
-                        <ImageView
-                            android:id="@+id/stars3"
-                            android:layout_width="50dp"
-                            android:layout_toEndOf="@+id/stars2"
-                            android:layout_height="50dp"
-                            android:layout_below="@+id/rating"
-                            app:srcCompat="@drawable/ic_star_empty"
-                            />
-
-                        <ImageView
-                            android:id="@+id/stars4"
-                            android:layout_width="50dp"
-                            android:layout_toEndOf="@+id/stars3"
-                            android:layout_height="50dp"
-                            android:layout_below="@+id/rating"
-                            app:srcCompat="@drawable/ic_star_empty" />
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_toEndOf="@+id/stars4"
-                            android:layout_below="@+id/rating"
-                            app:srcCompat="@drawable/ic_star_empty" />
                     </RelativeLayout>
 
 
                 </LinearLayout>
             </RelativeLayout>
 
+
         </LinearLayout>
     </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible" />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

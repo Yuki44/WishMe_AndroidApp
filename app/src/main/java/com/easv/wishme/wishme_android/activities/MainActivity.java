@@ -26,6 +26,7 @@ import com.easv.wishme.wishme_android.fragments.LoginFragment;
 import com.easv.wishme.wishme_android.fragments.SignUpStep1;
 import com.easv.wishme.wishme_android.fragments.SignUpStep2;
 import com.easv.wishme.wishme_android.fragments.WishDetailsFragment;
+import com.easv.wishme.wishme_android.fragments.WishEditFragment;
 import com.easv.wishme.wishme_android.fragments.WishesFragment;
 import com.easv.wishme.wishme_android.dialogfragments.EditWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity
         WishesFragment.OnEditWishList,
         WishesFragment.OnWishListToAddWishListener,
         WishesFragment.OnWishRetrievedListener,
-        AddWishFragment.OnWishCreated {
+        AddWishFragment.OnWishCreated,
+WishDetailsFragment.UpdateWish{
 
     User user;
     AuthenticationHelper authHelper;
@@ -128,6 +130,7 @@ public class MainActivity extends AppCompatActivity
         fragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -164,11 +167,17 @@ public class MainActivity extends AppCompatActivity
         dialog.show(getSupportFragmentManager(), getString(R.string.edit));
     }
 
-    public void clearBackStack(){
-        FragmentManager fm = this.getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
+
+    @Override
+    public void getWishFromDetailView(Wish wish) {
+        WishEditFragment fragment = new WishEditFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("WishDetails", wish);
+        Log.d(TAG, "getWishFromDetailView: MainActivity::::" + wish);
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 }
 

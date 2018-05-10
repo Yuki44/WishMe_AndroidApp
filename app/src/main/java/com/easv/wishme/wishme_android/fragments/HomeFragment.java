@@ -112,9 +112,10 @@ public class HomeFragment extends Fragment {
             }
         });
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
         initProgressBar();
         initImageProgressBar();
-        setHasOptionsMenu(true);
+
         setWishlist();
         setUserInfo();
         setProfileImage();
@@ -131,6 +132,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu, inflater);
