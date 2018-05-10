@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,12 @@ public class SignUpStep1 extends Fragment {
     private static final String TAG = "CreateUserFragment1";
     private EditText mEmailET, mPasswordET, mRepeatPasswordET;
     private Button mNext;
-    private String email, password;
+    private String email, password, confirmPassword;
 
-    // From here
     public interface OnUserCreatedListener{
         void getUser(User user);
     }
     OnUserCreatedListener mOnUserCreatedListener;
-    // to here
 
     @Nullable
     @Override
@@ -38,7 +37,6 @@ public class SignUpStep1 extends Fragment {
         mPasswordET = (EditText) view.findViewById(R.id.passwordET);
         mRepeatPasswordET = (EditText) view.findViewById(R.id.repeatPasswordET);
         mNext = (Button) view.findViewById(R.id.nextBtn);
-
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,18 +49,55 @@ public class SignUpStep1 extends Fragment {
     private void next() {
                email = mEmailET.getText().toString();
                password = mPasswordET.getText().toString();
-               if (checkInputs(email,  password, mRepeatPasswordET.getText().toString())) {
-                   if(doStringsMatch(password, mRepeatPasswordET.getText().toString())){
-                       User user = new User(null, email, password, null, null, false);
-                       //from here
-                       mOnUserCreatedListener.getUser(user);
-                       //to here
+               confirmPassword = mRepeatPasswordET.getText().toString();
+
+               if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirmPassword)){
+                mEmailET.setError(null);
+                mPasswordET.setError(null);
+                mRepeatPasswordET.setError(null);
+
+                if(email.contains("@") && email.contains(".")){
+
+                   if (password.equals(confirmPassword)){
+
+                       if(password.toCharArray().length >= 6){
+                           User user = new User(null, email, password, null, null, false);
+                           mOnUserCreatedListener.getUser(user);
+                       } else{
+                           mPasswordET.setError("A password must be at least 6 characters long");
+                       }
                    }else{
-                       Toast.makeText(getActivity(), "passwords do not match", Toast.LENGTH_SHORT).show();
+                       mPasswordET.setError("Password doesn't match");
+                       mRepeatPasswordET.setError("Password doesn't match");
                    }
-               }else{
-                   Toast.makeText(getActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+                }else{
+                    mEmailET.setError("A valid email is required");
+                }
+               } else
+                   {
+                       if(TextUtils.isEmpty(email)){
+                           mEmailET.setError("An email is required");
+                       } else if (TextUtils.isEmpty(password)){
+                           mPasswordET.setError("A password is required");
+                       } else if (TextUtils.isEmpty(confirmPassword)){
+                           mRepeatPasswordET.setError("Must repeat the password");
+                       }
+
                }
+
+
+
+
+//               if (checkInputs(email,  password, mRepeatPasswordET.getText().toString())) {
+//                   if(doStringsMatch(password, mRepeatPasswordET.getText().toString())){
+//                       User user = new User(null, email, password, null, null, false);
+//                       mOnUserCreatedListener.getUser(user);
+//                   }else{
+//                       Toast.makeText(getActivity(), "passwords do not match", Toast.LENGTH_SHORT).show();
+//                   }
+//               }else{
+//                   Toast.makeText(getActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+//               }
     }
 
     /**
