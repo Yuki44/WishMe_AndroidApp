@@ -26,24 +26,210 @@
             android:layout_below="@+id/relLayout1"
             android:id="@+id/relLayout2">
 
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:id="@+id/wishImage"
-                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/wishImage"
-                android:layout_marginTop="30dp"
-                android:textSize="30sp"
-                android:textColor="@color/black"
-                android:layout_marginStart="30dp"
-                android:id="@+id/contactName"/>
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/relativeLayout1"
+     >
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                       >
+
+                        <ImageView
+                            android:id="@+id/wishImage"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                           android:src="@color/veryDarkBlue"/>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+
+                            android:gravity="center">
+
+
+                            <TextView
+                                android:id="@+id/name_Info"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:hint="@string/what_is_your_wish"
+                                android:textColor="@color/black"
+                                android:textSize="30sp"
+                                android:gravity="center"
+                                android:text="Wish Name"/>
+
+                        </LinearLayout>
+
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/wishPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textColor="@color/lightGrey"
+                                android:textSize="16sp"
+                                android:gravity="center"
+                                android:text="345 USD"
+                                />
+
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                           <TextView
+                               android:id="@+id/websiteTxt"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:fontFamily="@font/nunito_semibold"
+                               android:textColor="@color/black"
+                               android:textColorLink="@color/veryDarkBlue"
+                               android:autoLink="web"
+                               android:text="www.google.com"
+                               android:gravity="center"
+                               android:textSize="20sp"
+                               />
+
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                      <TextView
+                          android:id="@+id/descriptionTxt"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:fontFamily="@font/nunito_semibold"
+                          android:textColor="@color/black"
+                          android:paddingEnd="10dp"
+                          android:paddingStart="10dp"
+                          android:gravity="center"
+                          android:text="Hello, this is a description of a wish and it is supposed to be loung enough to be able to test it properly."
+                          android:textSize="20sp"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/rating"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/nunito_semibold"
+                                    android:gravity="center_horizontal"
+                                    android:text="Rating:"
+                                    android:textSize="18sp" />
+
+                                <RatingBar
+                                    android:id="@+id/ratingBar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/rating"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="5dp"
+                                    android:isIndicator="true"
+                                    android:numStars="5"
+                                    android:stepSize="1" />
+
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
 
 
         </RelativeLayout>
