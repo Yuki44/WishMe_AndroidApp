@@ -44,7 +44,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "homeFragment";
-    private CardView mWishlistCard;
     private CardView mProfileCard;
     private Toolbar toolbar;
     public WishlistAdapter wishlistAdapter;
@@ -88,7 +87,6 @@ public class HomeFragment extends Fragment {
         mCreateWishlist = (FloatingActionButton) view.findViewById(R.id.createWishlistFab);
         mImageView = view.findViewById(R.id.profileImager);
         mWishList = view.findViewById(R.id.wishlist);
-        registerForContextMenu(mWishList);
         mProfileCard = view.findViewById(R.id.cardView);
         mProfileCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,13 +122,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void wishlistClicked() {
-        WishesFragment fragment = new WishesFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -314,13 +305,5 @@ public class HomeFragment extends Fragment {
         super.onResume();
         setUserInfo();
         setProfileImage();
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-//        getActivity().getMenuInflater().inflate(R.menu.wishlist_menu, menu);
-
     }
 }
