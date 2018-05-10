@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
 import com.easv.wishme.wishme_android.entities.User;
@@ -112,7 +113,7 @@ public class WishEditFragment extends Fragment {
         return view;
     }
 
-    private void editWish(Wish wish) {
+    private void editWish(final Wish wish) {
        wish.setName(mNameInfo.getText().toString());
        wish.setPrice(mWishPrice.getText().toString());
         wish.setLink(mWebsiteTxt.getText().toString());
@@ -130,10 +131,7 @@ public class WishEditFragment extends Fragment {
             }
 
             @Override
-            public void onFinishWish(Wish wish) {
-                hideProgressBar();
-                mUpdateWishDone.getWishFromEditView(wish);
-                Log.d(TAG, "done");
+            public void onFinishWish(final Wish wish) {
             }
 
             @Override
@@ -141,6 +139,27 @@ public class WishEditFragment extends Fragment {
 
             }
         });
+        databaseHelper.createWishImage(MainActivity.mSelectedImage, wish.getId(), new ICallBack() {
+            @Override
+            public void onFinish(User user) {
+
+            }
+
+            @Override
+            public void onFinishFireBaseUser(FirebaseUser user) {
+
+            }
+
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                hideProgressBar();
+                mUpdateWishDone.getWishFromEditView(wish);
+                Log.d(TAG, "done");
+
+            }
+        });
+
+
 
     }
 
@@ -232,6 +251,15 @@ public class WishEditFragment extends Fragment {
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
 
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        if(MainActivity.mSelectedImage != null){
+            mWishImage.setImageBitmap(MainActivity.mSelectedImage);
         }
     }
 
