@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
+import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.adapters.WishlistAdapter;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
@@ -74,6 +76,10 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         toolbar = view.findViewById(R.id.logoutToolbar);
         databaseHelper = new DatabaseHelper();
