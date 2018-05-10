@@ -66,6 +66,7 @@ private RelativeLayout mToolbar;
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
+        mRatingText.setText("Meh...");
          mToolbar  = view.findViewById(R.id.relativeLayout1);
         mWishList = getWishListFromBundle();
         initProgressBar();
