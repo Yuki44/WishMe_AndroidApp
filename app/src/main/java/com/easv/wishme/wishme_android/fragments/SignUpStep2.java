@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,6 +90,10 @@ public class SignUpStep2 extends Fragment {
     }
 
     private void signUp() {
+
+        if(!TextUtils.isEmpty(nameET.getText())){
+
+
         mRelativeLayout2.setVisibility(mRelativeLayout2.INVISIBLE);
         showProgressBar();
         authHelper.signUpNewUser(mUser, new ICallBack() {
@@ -129,6 +134,9 @@ public class SignUpStep2 extends Fragment {
             public void onFinishGetImage(Bitmap bitmap) {
             }
         });
+        } else{
+            nameET.setError("Your name is required");
+        }
     }
 
     private void changePic() {
