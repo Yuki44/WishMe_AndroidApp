@@ -173,11 +173,12 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                         @Override
                         public void onFinishGetImage(Bitmap bitmap) {
                             w.setImageBitmap(bitmap);
-                            wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wList);
-                            mWishList.setAdapter(wishAdapter);
-                            sortListByName();
-                            mNoWishes.setText("");
-
+                            if(w!=null && getActivity()!=null) {
+                                wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wList);
+                                mWishList.setAdapter(wishAdapter);
+                                sortListByName();
+                                mNoWishes.setText("");
+                            }
                         }
                     });
                 }
@@ -185,7 +186,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                 if(wishListList.size()==0){
                     mNoWishes.setText("" + mNameOfWishlist.getText() + " is empty");
                 }
-
             }
         });
 
