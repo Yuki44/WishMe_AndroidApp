@@ -1,12 +1,14 @@
 package com.easv.wishme.wishme_android.fragments;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
@@ -31,12 +34,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class WishDetailsFragment extends Fragment {
 
     private static final String TAG = "WishDetailsFragment";
-    private Toolbar toolbar;
     private Wish wishToDisplay;
     private TextView mNameInfo, mWishPrice, mWebsiteTxt, mDescriptionTxt;
     private ImageView mWishImage, mIvCheckMark, mIvEdit;
     private RatingBar mRatingBar;
-
+    private Toolbar toolbar;
+    private ProgressBar mProgressBar;
     public WishDetailsFragment() {
         super();
         setArguments(new Bundle());
@@ -47,7 +50,6 @@ public class WishDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_detail, container, false);
         wishToDisplay = getWishFromBundle();
-        Log.d(TAG, "onCreateView: wishToDisplay::::::::: " + wishToDisplay);
         toolbar = view.findViewById(R.id.wishToolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
@@ -77,7 +79,6 @@ public class WishDetailsFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.delete_wish_menu, menu);
@@ -97,15 +98,15 @@ public class WishDetailsFragment extends Fragment {
         }
     }
 
-
     private void setUpWish() {
         mNameInfo.setText(wishToDisplay.getName());
         mWishPrice.setText(wishToDisplay.getPrice());
         mWebsiteTxt.setText(wishToDisplay.getLink());
         mDescriptionTxt.setText(wishToDisplay.getDescription());
         mRatingBar.setRating(wishToDisplay.getRating());
-       mWishImage.setImageBitmap(wishToDisplay.getImageBitmap());
+        mWishImage.setImageBitmap(wishToDisplay.getImageBitmap());
     }
+
 
     private Wish getWishFromBundle(){
         Log.d(TAG, "getUserFromBundle: " + getArguments());
@@ -116,4 +117,5 @@ public class WishDetailsFragment extends Fragment {
             return null;
         }
     }
+
 }
