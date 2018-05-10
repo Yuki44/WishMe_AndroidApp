@@ -132,6 +132,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu, inflater);
@@ -184,7 +185,7 @@ public class HomeFragment extends Fragment {
                 mAddressTV.setText(user.getAddress());
 
 
-                Log.d(TAG, "setUserInfo: " + user.toString());
+               // Log.d(TAG, "setUserInfo: " + user.toString());
             }
 
             @Override
@@ -223,44 +224,47 @@ public class HomeFragment extends Fragment {
 
 
     private void setWishlist() {
-        showProgressBar();
+        //showProgressBar();
+
         databaseHelper.getWishLists(new ICallBackDatabase() {
+
             @Override
             public void onFinishWishList(Wishlist wList) {
-
             }
 
             @Override
             public void onFinishWishListList(ArrayList list) {
-
+                Log.d(TAG, "onFinishWishListList: ###gdfgdfgdfgfdg##");
                 if(!list.isEmpty()){
                     wishList = list;
-                    wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList , "https://");
-                    mWishList.setAdapter(wishlistAdapter);
-                    mNoListTV.setText("");
-                    hideProgressBar();
-                    return;
-                } else {
-                    mNoListTV.setText("You don't have any Wishlist yet!");
-                    hideProgressBar();
+                    if (wishList!=null && getActivity()!=null){
+                        wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList , "https://");
+                        mWishList.setAdapter(wishlistAdapter);
+                        mNoListTV.setText("");
+                        //hideProgressBar();
+                        return;
+                    }
+                    } else {
+                   // mNoListTV.setText("You don't have any Wishlist yet!");
+                  // hideProgressBar();
                 }
-
 
             }
 
             @Override
             public void onFinishWish(Wish wish) {
-
+                Log.d(TAG, "onFinishWish: #####");
             }
 
             @Override
             public void onFinnishGetWishes(ArrayList list) {
-
+                Log.d(TAG, "onFinnishGetWishes: #####");
             }
         });
+
         if(wishList == null) {
-            mNoListTV.setText("Loading...");
-            hideProgressBar();
+            mNoListTV.setText("No WishLists yet");
+            //hideProgressBar();
         }
 
     }
