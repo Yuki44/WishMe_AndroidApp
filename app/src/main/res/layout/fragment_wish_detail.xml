@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="com.easv.wishme.wishme_android.fragments.WishDetailsFragment"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,227 +19,221 @@
             <include layout="@layout/snippet_wishdetail_toolbar"/>
 
         </RelativeLayout>
-    </RelativeLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/relativeLayout1"
-        android:layout_marginTop="50dp"
-        android:id="@+id/ScrollView">
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relLayout1"
+            android:id="@+id/relLayout2">
 
-            <RelativeLayout
-                android:id="@+id/relLayout3"
+
+            <ScrollView
+                android:id="@+id/scrollView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp">
-
-                <ImageView
-                    android:id="@+id/wishImage"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:src="@color/skyBlue" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relLayout4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:padding="10dp">
+                android:layout_height="match_parent"
+                android:layout_below="@id/relativeLayout1"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/ivWish"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_wishlist_item"
-                        android:layout_marginTop="5dp"
-                        />
 
-                    <TextView
-                        android:id="@+id/wishNameTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relLayout5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/ivPriceTV"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_price"
-                        android:layout_marginTop="5dp"/>
-
-                    <TextView
-                        android:id="@+id/wishPriceTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:maxLength="8"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relLayout9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relLayout8"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/ivWebsite"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_website"
-                        android:layout_marginTop="5dp"/>
-
-                    <TextView
-                        android:id="@+id/wishLinkTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relLayout7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/ivDescription"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_description"
-                        android:layout_marginTop="5dp"/>
-
-                    <ViewSwitcher
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/my_switcher"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
-
-                        <TextView
-                            android:id="@+id/wishDescriptionTV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            android:clickable="true" />
-
-                        <EditText
-                            android:id="@+id/wishDescriptioET"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:inputType="textCapSentences"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textSize="20sp" />
-                    </ViewSwitcher>
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relLayout8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
 
                     <RelativeLayout
+                        android:id="@+id/relLayout3"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        >
 
-                        <RatingBar
-                            android:id="@+id/wishRatingBar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <ImageView
+                            android:id="@+id/wishImage"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="15dp"
-                            android:numStars="5"
-                            android:stepSize="1"
-                            android:isIndicator="true"/>
+                            android:layout_marginTop="10dp"
+                            android:src="@color/veryDarkBlue"/>
+
+
                     </RelativeLayout>
 
-                </LinearLayout>
-            </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/relLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
 
-        </LinearLayout>
-    </ScrollView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+
+                            android:gravity="center">
+
+
+                            <TextView
+                                android:id="@+id/name_Info"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:hint="@string/what_is_your_wish"
+                                android:textColor="@color/black"
+                                android:textSize="30sp"
+                                android:gravity="center"
+                                android:text="Wish Name"/>
+
+                        </LinearLayout>
+
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/wishPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textColor="@color/lightGrey"
+                                android:textSize="16sp"
+                                android:gravity="center"
+                                android:text="345 USD"
+                                />
+
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/websiteTxt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textColor="@color/black"
+                                android:textColorLink="@color/veryDarkBlue"
+                                android:autoLink="web"
+                                android:text="www.google.com"
+                                android:gravity="center"
+                                android:textSize="20sp"
+                                />
+
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/descriptionTxt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:textColor="@color/black"
+                                android:paddingEnd="10dp"
+                                android:paddingStart="10dp"
+                                android:gravity="center"
+                                android:text="Hello, this is a description of a wish and it is supposed to be loung enough to be able to test it properly."
+                                android:textSize="20sp"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/relLayout8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/rating"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/nunito_semibold"
+                                    android:gravity="center_horizontal"
+                                    android:text="Rating:"
+                                    android:textSize="18sp" />
+
+                                <RatingBar
+                                    android:id="@+id/ratingBar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/rating"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="5dp"
+                                    android:isIndicator="true"
+                                    android:numStars="5"
+                                    android:stepSize="1" />
+
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

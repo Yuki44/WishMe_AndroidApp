@@ -14,176 +14,129 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
+import com.easv.wishme.wishme_android.entities.Wish;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class WishEditFragment extends Fragment {
 
     private static final String TAG = "EditWishFragment";
-    private EditText mWishName, mWishPrice, mWishLink, mWishDescription;
-    private ImageView mImageView;
-    private Toolbar toolbar;
-    public static Bitmap mSelectedImage;
-    private ScrollView mScrollView;
+    private EditText mNameInfo, mWishPrice, mWebsiteTxt, mDescriptionTxt;
+    private TextView mRatingText;
+    private ImageView mCameraIcon, mWishImage, mIvCheckMark;
+    private RatingBar mRatingBar;
+    private float rating;
     private ProgressBar mProgressBar;
-    private FirebaseFirestore db;
-    private CollectionReference mDocRef = FirebaseFirestore.getInstance().collection("wish");
+    private ScrollView scrollView;
+    private RelativeLayout mToolbar;
+    private Wish wishFromBundle;
+
+    public WishEditFragment() {
+        super();
+        setArguments(new Bundle());
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
-        mWishName = view.findViewById(R.id.nameET);
-        mWishPrice = view.findViewById(R.id.wishPriceET);
-        mWishLink = view.findViewById(R.id.wishLinkET);
-        //mWishDescription = view.findViewById(R.id.descriptionET);
-        mImageView = view.findViewById(R.id.wishImage);
-        mImageView.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_wish_edit, container, false);
+        wishFromBundle = getWishFromBundle();
+        scrollView = view.findViewById(R.id.scrollView);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        mNameInfo = (EditText) view.findViewById(R.id.name_Info);
+        mWishPrice = (EditText) view.findViewById(R.id.wishPrice);
+        mWebsiteTxt = (EditText) view.findViewById(R.id.websiteTxt);
+        mDescriptionTxt = (EditText) view.findViewById(R.id.descriptionTxt);
+        mWishImage = (ImageView) view.findViewById(R.id.wishImage);
+        mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
+        mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
+        mRatingText = (TextView) view.findViewById(R.id.ratingText);
+        mToolbar  = view.findViewById(R.id.relativeLayout1);
+
+
+        mWishImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changePic();
+
+                openPhotoDialog();
             }
         });
-        toolbar = view.findViewById(R.id.editWishToolbar);
-
-        mScrollView = view.findViewById(R.id.ScrollView);
-        mProgressBar = view.findViewById(R.id.progressBar);
-
-        ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
-        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+        mIvCheckMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked back arrow.");
-                goToWishesFragment();
+                Toast.makeText(getContext(), "Updated wish method", Toast.LENGTH_SHORT).show();
             }
-        });
 
-        ImageView ivCheckMark = view.findViewById(R.id.ivCheckMark);
-        ivCheckMark.setOnClickListener(new View.OnClickListener() {
+        });
+        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
             @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: saving the edited profile.");
-                if (!mWishName.getText().toString().isEmpty()
-                        && !mWishPrice.getText().toString().isEmpty()
-                        && !mWishLink.getText().toString().isEmpty()
-                        //&& !mmWishDescription.getText().toString().isEmpty()
-                        ) {
-                    Log.d(TAG, "onClick: saving edited Wish: " + mWishName.getText().toString());
-                    updateWish();
-                }
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                setRating();
             }
         });
 
-        initProgressBar();
-        setWishInfo();
-        setProfileImage();
+        setWishToEdit();
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         return view;
     }
 
-    private void changePic() {
-        Log.d(TAG, "onClick: opening dialog to choose new photo");
+    private void setWishToEdit() {
+        mNameInfo.setText(wishFromBundle.getName());
+        mWishPrice.setText(wishFromBundle.getPrice());
+        mWebsiteTxt.setText(wishFromBundle.getLink());
+        mDescriptionTxt.setText(wishFromBundle.getDescription());
+        mRatingBar.setRating(wishFromBundle.getRating());
+        mWishImage.setImageBitmap(wishFromBundle.getImageBitmap());
+    }
+
+    private void openPhotoDialog() {
+        Log.d(TAG, "openPhotoDialog: Opening dialog to choose a photo");
+        mWishImage.setVisibility(View.VISIBLE);
         ChangePhotoDialog dialog = new ChangePhotoDialog();
         dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
         dialog.setTargetFragment(WishEditFragment.this, 1);
     }
 
-    private void goToWishesFragment() {
-        WishesFragment fragment = new WishesFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    private void setRating() {
+        rating = mRatingBar.getRating();
+        mRatingText.setText(String.valueOf(rating));
+        switch ((int) mRatingBar.getRating()) {
+            case 1:
+                mRatingText.setText("Meh...");
+                break;
+            case 2:
+                mRatingText.setText("Good");
+                break;
+            case 3:
+                mRatingText.setText("I like this");
+                break;
+            case 4:
+                mRatingText.setText("I like this A LOT!");
+                break;
+            case 5:
+                mRatingText.setText("Absolutely! It's my mission in life to have this");
+                break;
+            default:
+                mRatingText.setText("");
+        }
     }
 
-    private void setProfileImage(){
-       /*
-       mSelectedImage = authHelper.getProfileImage(new ICallBack() {
-
-            @Override
-            public void onFinish(User user) {}
-
-            @Override
-            public void onFinishFireBaseUser(FirebaseUser user) {}
-
-            @Override
-            public void onFinishGetImage(Bitmap bitmap) {
-                mImageView.setImageBitmap(bitmap);
-            }
-        });
-        */
+    private Wish getWishFromBundle(){
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            return bundle.getParcelable("WishDetails");
+        } else {
+            return null;
+        }
     }
 
-    private void showProgressBar(){ mProgressBar.setVisibility(View.VISIBLE); }
-
-    private void hideProgressBar(){ mProgressBar.setVisibility(View.GONE); }
-
-    private void initProgressBar(){ mProgressBar.setVisibility(View.INVISIBLE); }
-
-    private void updateWish() {
-        /*
-               mScrollView.setVisibility(mScrollView.INVISIBLE);
-               showProgressBar();
-               authHelper.getUserWithInfo(new ICallBack() {
-            @Override
-            public void onFinish(Wish wish) {
-                wish.setName(mWishName.getText().toString());
-                wish.setPrice(mWishLink.getText().toString());
-                wish.setLink(mWishLink.getText().toString());
-                wish.setDescription(mWishDescription).getText.toString();
-
-                authHelper.createUserProfile(user);
-                mImageView.setDrawingCacheEnabled(true);
-                mImageView.buildDrawingCache();
-                Bitmap bitmap = mImageView.getDrawingCache();
-
-                authHelper.createProfileImage(bitmap, new ICallBack() {
-                    @Override
-                    public void onFinish(User user) {}
-
-                    @Override
-                    public void onFinishFireBaseUser(FirebaseUser user) {}
-
-                    @Override
-                    public void onFinishGetImage(Bitmap bitmap) {
-                        goToWishesFragment();
-                    }
-                });
-                Log.d(TAG, "updateWish: " + wish.toString());
-            }
-            @Override
-            public void onFinishFireBaseUser(FirebaseUser user) {}
-
-            @Override
-            public void onFinishGetImage(Bitmap bitmap) {}
-        });
-        */
-    }
-
-    private void setWishInfo() {
-        /*
-        User user = authHelper.getUserWithInfo(new ICallBack() {
-            @Override
-            public void onFinish(Wish wish) {
-                mWishName.setText(wish.getName());
-                mWishPrice.setText(wish.getPrice());
-                mWishLink.setText(wish.getLink());
-                mWishDescription.setText(wish.getDescription());
-            }
-
-            @Override
-            public void onFinishFireBaseUser(FirebaseUser user) {
-            }
-
-            @Override
-            public void onFinishGetImage(Bitmap bitmap) {
-            }
-        });
-        */
-    }
 }
