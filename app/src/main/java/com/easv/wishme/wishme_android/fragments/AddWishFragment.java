@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,8 @@ public class AddWishFragment extends Fragment {
     private Wishlist mWishList;
     private ProgressBar mProgressBar;
     private ScrollView scrollView;
-private RelativeLayout mToolbar;
+    private RelativeLayout mToolbar;
+    private String wishName;
 
     public AddWishFragment() {
         super();
@@ -66,6 +68,7 @@ private RelativeLayout mToolbar;
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
+        mRatingText.setText("Meh...");
          mToolbar  = view.findViewById(R.id.relativeLayout1);
         mWishList = getWishListFromBundle();
         initProgressBar();
@@ -140,53 +143,61 @@ private RelativeLayout mToolbar;
     }
 
     private void saveNewWish() {
-        scrollView.setVisibility(View.GONE);
-        mToolbar.setVisibility(View.GONE);
-        showProgressBar();
-        Log.d(TAG, "saveNewWish: Clicked on the checkMark");
-        if(checkStringIfNull(mNameInfo.getText().toString())){
-            Log.d(TAG, "saveNewWish: Adding a new wish");
-            DatabaseHelper databaseHelper = new DatabaseHelper();
-            Wish wish = new Wish();
-            wish.setName(mNameInfo.getText().toString());
-            wish.setPrice(mWishPrice.getText().toString());
-            wish.setLink(mWebsiteTxt.getText().toString());
-            wish.setDescription(mDescriptionTxt.getText().toString());
-            wish.setRating(rating);
-            wish.setOwner(mWishList.getId());
-            mWishImage.setDrawingCacheEnabled(true);
-            mWishImage.buildDrawingCache();
-            Bitmap bitmap = mWishImage.getDrawingCache();
+
+        wishName = mNameInfo.getText().toString();
+        if (!TextUtils.isEmpty(wishName)) {
+            mNameInfo.setError(null);
 
 
+            scrollView.setVisibility(View.GONE);
+            mToolbar.setVisibility(View.GONE);
+            showProgressBar();
+            Log.d(TAG, "saveNewWish: Clicked on the checkMark");
+            if(checkStringIfNull(mNameInfo.getText().toString())) {
+                Log.d(TAG, "saveNewWish: Adding a new wish");
+                DatabaseHelper databaseHelper = new DatabaseHelper();
+                Wish wish = new Wish();
+                wish.setName(mNameInfo.getText().toString());
+                wish.setPrice(mWishPrice.getText().toString());
+                wish.setLink(mWebsiteTxt.getText().toString());
+                wish.setDescription(mDescriptionTxt.getText().toString());
+                wish.setRating(rating);
+                wish.setOwner(mWishList.getId());
+                mWishImage.setDrawingCacheEnabled(true);
+                mWishImage.buildDrawingCache();
+                Bitmap bitmap = mWishImage.getDrawingCache();
 
-            Log.d(TAG, "Wish: " + bitmap);
+                databaseHelper.createWish(wish, bitmap, new ICallBackDatabase() {
+                    @Override
+                    public void onFinishWishList(Wishlist wList) {
+
+                    }
+
+                    @Override
+                    public void onFinishWishListList(ArrayList list) {
+
+                    }
+
+                    @Override
+                    public void onFinishWish(Wish wish) {
+                        mOnWishCreated.getWishlistFromAddWish(mWishList);
+                    }
+
+                    @Override
+                    public void onFinnishGetWishes(ArrayList list) {
+
+                    }
+
+                });
+            }
 
 
-
-           databaseHelper.createWish(wish, bitmap, new ICallBackDatabase() {
-               @Override
-               public void onFinishWishList(Wishlist wList) {
-
-               }
-
-               @Override
-               public void onFinishWishListList(ArrayList list) {
-
-               }
-
-               @Override
-               public void onFinishWish(Wish wish) {
-                    mOnWishCreated.getWishlistFromAddWish(mWishList);
-               }
-
-               @Override
-               public void onFinnishGetWishes(ArrayList list) {
-
-               }
-
-           });
+        }   else {
+            mNameInfo.setError("Name is required!");
+            scrollView.fullScroll(ScrollView.FOCUS_UP);
         }
+
+
     }
 
     @Override
