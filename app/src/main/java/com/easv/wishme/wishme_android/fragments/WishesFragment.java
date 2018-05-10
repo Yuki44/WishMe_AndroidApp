@@ -44,7 +44,6 @@ import java.util.List;
 
 public class WishesFragment extends android.support.v4.app.Fragment {
 
-
     private static final String TAG = "WishesFragment";
     public ListView mWishList;
     public WishAdapter wishAdapter;
@@ -142,21 +141,22 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         dataHelper.getWish(listFromHome, new ICallBackDatabase() {
             @Override
             public void onFinishWishList(Wishlist wList) {
-
+                Log.d(TAG, "onFinishWishList: @@@");
             }
 
             @Override
             public void onFinishWishListList(ArrayList list) {
-
+                Log.d(TAG, "onFinishWishListList: @@@");
             }
 
             @Override
             public void onFinishWish(Wish wish) {
-
+                Log.d(TAG, "onFinishWish: @@@");
             }
 
             @Override
             public void onFinnishGetWishes(ArrayList list) {
+                Log.d(TAG, "onFinnishGetWishes: @@@");
                 final List<Wish> wList = list;
                 for (final Wish w : wList) {
                     dataHelper.getWishImage(w.getId(), new ICallBack() {
@@ -182,9 +182,16 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                     });
                 }
 
+                if(wishListList.size()==0){
+                    mNoWishes.setText("" + mNameOfWishlist.getText() + " is empty");
+                }
 
             }
         });
+
+
+
+
        /* db.collection("wish").whereEqualTo("owner", listFromHome.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
