@@ -57,6 +57,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private RatingBar mRatingBar;
     private DatabaseHelper dataHelper;
 
+
     public interface OnEditWishList {
         void getWishlist(Wishlist wList);
     }
@@ -112,14 +113,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    private void wishClicked(String wish) {
-        Log.d(TAG, "wishClicked: position:  " + wish);
-        WishDetailsFragment fragment = new WishDetailsFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     private void addWish() {
         mOnWishListToAddWishListener.getWishListToAddWish(listFromHome);
@@ -135,76 +128,68 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         mNoWishes.setText("Loading...");
         wishListList = new ArrayList<>();
-        dataHelper.getWish(listFromHome, new ICallBackDatabase() {
-            @Override
-            public void onFinishWishList(Wishlist wList) {
 
-            }
+            dataHelper.getWish(listFromHome, new ICallBackDatabase() {
+                @Override
+                public void onFinishWishList(Wishlist wList) {
 
-            @Override
-            public void onFinishWishListList(ArrayList list) {
-
-            }
-
-            @Override
-            public void onFinishWish(Wish wish) {
-
-            }
-
-            @Override
-            public void onFinnishGetWishes(ArrayList list) {
-                final List<Wish> wList = list;
-                for (final Wish w : wList) {
-                    dataHelper.getWishImage(w.getId(), new ICallBack() {
-                        @Override
-                        public void onFinish(User user) {
-
-                        }
-
-                        @Override
-                        public void onFinishFireBaseUser(FirebaseUser user) {
-
-                        }
-
-                        @Override
-                        public void onFinishGetImage(Bitmap bitmap) {
-                            w.setImageBitmap(bitmap);
-                            wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wList);
-                            mWishList.setAdapter(wishAdapter);
-                            sortListByName();
-                            mNoWishes.setText("");
-
-                        }
-                    });
                 }
 
+                @Override
+                public void onFinishWishListList(ArrayList list) {
 
-            }
-        });
-       /* db.collection("wish").whereEqualTo("owner", listFromHome.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    mNoWishes.setText("");
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                        Wish wish = document.toObject(Wish.class);
-                        wishListList.add(wish);
+                }
+
+                @Override
+                public void onFinishWish(Wish wish) {
+
+                }
+
+                @Override
+                public void onFinnishGetWishes(ArrayList list) {
+                    final List<Wish> wList = list;
+                    for (final Wish w : wList) {
+                        dataHelper.getWishImage(w.getId(), new ICallBack() {
+                            @Override
+                            public void onFinish(User user) {
+
+                            }
+
+                            @Override
+                            public void onFinishFireBaseUser(FirebaseUser user) {
+
+                            }
+
+                            @Override
+                            public void onFinishGetImage(Bitmap bitmap) {
+                                w.setImageBitmap(bitmap);
+                                if(wList != null && getActivity() != null){
+                                    wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wList);
+                                    mWishList.setAdapter(wishAdapter);
+                                    sortListByName();
+                                    mNoWishes.setText("");
+                                }
+
+
+                            }
+                        });
                     }
-                    wishAdapter = new WishAdapter(getActivity(), R.layout.wish_item, wishListList, "https://");
-                    mWishList.setAdapter(wishAdapter);
-                    sortListByName();
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                    mNoWishes.setText("Something went wrong :(");
+
+
                 }
-            }
-        });*/
-    }
+            });
+        }
+
+
 
     private void sortListByName() {
         Collections.sort(wishListList, new Comparator<Wish>() {
@@ -215,11 +200,10 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         });
     }
 
-    private void checkIfChanged() {
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.wishlist_menu, menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu, inflater);
@@ -262,5 +246,9 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
         }
+    }
+
+    public void callParentMethod(){
+        getActivity().onBackPressed();
     }
 }

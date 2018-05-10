@@ -130,6 +130,7 @@ WishDetailsFragment.UpdateWish{
         fragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -166,12 +167,6 @@ WishDetailsFragment.UpdateWish{
         dialog.show(getSupportFragmentManager(), getString(R.string.edit));
     }
 
-    public void clearBackStack(){
-        FragmentManager fm = this.getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
-    }
 
     @Override
     public void getWishFromDetailView(Wish wish) {
