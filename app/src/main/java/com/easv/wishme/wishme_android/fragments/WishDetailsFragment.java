@@ -1,5 +1,6 @@
 package com.easv.wishme.wishme_android.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -45,6 +46,11 @@ public class WishDetailsFragment extends Fragment {
         setArguments(new Bundle());
     }
 
+    public interface UpdateWish {
+        void getWishFromDetailView(Wish wish);
+    }
+    UpdateWish mUpdateWish;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +78,7 @@ public class WishDetailsFragment extends Fragment {
         mIvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Edit Wish Method here", Toast.LENGTH_SHORT).show();
+                mUpdateWish.getWishFromDetailView(wishToDisplay);
             }
         });
 
@@ -118,4 +124,15 @@ public class WishDetailsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mUpdateWish = (WishDetailsFragment.UpdateWish)  getActivity();
+
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
+
+        }
+    }
 }
