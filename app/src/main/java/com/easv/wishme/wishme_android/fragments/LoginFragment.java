@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
+import com.easv.wishme.wishme_android.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -79,22 +81,47 @@ public class LoginFragment extends Fragment {
     }
 
     private void login(String email, String password){
-        authHelper.getmAuth().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = authHelper.getmAuth().getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            updateUI(null);
-                        }
+        email = mEmailET.getText().toString();
+        password = mPasswordET.getText().toString();
+
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+            mEmailET.setError(null);
+            mPasswordET.setError(null);
+
+            if(email.contains("@") && email.contains(".")){
+
+                    if(password.toCharArray().length >= 6){
+
+                        authHelper.getmAuth().signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            Log.d(TAG, "signInWithEmail:success");
+                                            FirebaseUser user = authHelper.getmAuth().getCurrentUser();
+                                            updateUI(user);
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                            updateUI(null);
+                                        }
+                                    }
+                                });
+                    } else{
+                        mPasswordET.setError("Password must be at least 6 characters long");
                     }
-                });
+            }else{
+                mEmailET.setError("A valid email is required");
+            }
+        } else {
+            if (TextUtils.isEmpty(email)) {
+                mEmailET.setError("Email missing");
+            } else if (TextUtils.isEmpty(password)) {
+                mPasswordET.setError("Password missing");
+            }
+
+        }
     }
 
 }
