@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
@@ -57,7 +58,8 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     private Toolbar toolbar;
     private RatingBar mRatingBar;
     private DatabaseHelper dataHelper;
-
+    private ProgressBar mProgressBar;
+    private RelativeLayout mRelative;
     public interface OnEditWishList {
         void getWishlist(Wishlist wList);
     }
@@ -82,11 +84,14 @@ public class WishesFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_wishlist, container, false);
         mNoWishes = view.findViewById(R.id.textNoWishes);
+        mProgressBar = view.findViewById(R.id.progressBar);
         mWishList = view.findViewById(R.id.wishesList);
         mNameOfWishlist = view.findViewById(R.id.nameOfWishlist);
         mAddWish = (FloatingActionButton) view.findViewById(R.id.addWishFab);
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
+        mRelative = view.findViewById(R.id.relative);
         db = FirebaseFirestore.getInstance();
+        initProgressBar();
         toolbar = view.findViewById(R.id.wishlistToolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         listFromHome = getWishListFromBundle();
@@ -123,14 +128,7 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    private void wishClicked(String wish) {
-        Log.d(TAG, "wishClicked: position:  " + wish);
-        WishDetailsFragment fragment = new WishDetailsFragment();
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+
 
     private void addWish() {
         mOnWishListToAddWishListener.getWishListToAddWish(listFromHome);
@@ -213,8 +211,6 @@ public class WishesFragment extends android.support.v4.app.Fragment {
         });
     }
 
-    private void checkIfChanged() {
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -231,12 +227,53 @@ public class WishesFragment extends android.support.v4.app.Fragment {
                 mOnEditWishList.getWishlist(listFromHome);
                 return true;
             case R.id.menuitem_delete_wishlist:
-                //  editProfile();
+                 deleteWishList(listFromHome);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void deleteWishList(Wishlist listFromHome) {
+        mRelative.setVisibility(getView().INVISIBLE);
+        mAddWish.setVisibility(getView().INVISIBLE);
+        showProgressBar();
+        dataHelper.deleteWishList(listFromHome, new ICallBackDatabase() {
+            @Override
+            public void onFinishWishList(Wishlist wList) {
+                FragmentManager fm = getFragmentManager();
+                fm.popBackStack();
+            }
+
+            @Override
+            public void onFinishWishListList(ArrayList list) {
+
+            }
+
+            @Override
+            public void onFinishWish(Wish wish) {
+
+            }
+
+            @Override
+            public void onFinnishGetWishes(ArrayList list) {
+
+            }
+        });
+    }
+    private void showProgressBar(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void initProgressBar() {
+
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
 
     @Override
     public void onAttach(Context context) {
