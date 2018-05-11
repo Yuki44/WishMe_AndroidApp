@@ -2,6 +2,7 @@ package com.easv.wishme.wishme_android.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -166,6 +167,9 @@ public class AddWishFragment extends Fragment {
                 mWishImage.setDrawingCacheEnabled(true);
                 mWishImage.buildDrawingCache();
                 Bitmap bitmap = mWishImage.getDrawingCache();
+                if(bitmap == null){
+                    bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.images);
+                }
 
                 databaseHelper.createWish(wish, bitmap, new ICallBackDatabase() {
                     @Override
