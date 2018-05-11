@@ -201,6 +201,40 @@ public class DatabaseHelper {
         callBackDatabase.onFinishWish(wish);
     }
 
+    public void deleteWish(final Wish wish, final ICallBackDatabase callBackDatabase){
+        db.collection("wish").document(wish.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        callBackDatabase.onFinishWish(wish);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+
+    }
+    public void deleteWishList(final Wishlist wishlist, final ICallBackDatabase callBackDatabase){
+        db.collection("wishlist").document(wishlist.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        callBackDatabase.onFinishWishList(wishlist);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+
+    }
 
 }
 
