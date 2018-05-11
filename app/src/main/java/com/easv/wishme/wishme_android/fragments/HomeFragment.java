@@ -117,7 +117,6 @@ public class HomeFragment extends Fragment {
         initProgressBar();
         initImageProgressBar();
 
-        setWishlist();
         setUserInfo();
         setProfileImage();
         mCreateWishlist.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +151,12 @@ public class HomeFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setWishlist();
     }
 
     private void editProfile() {
@@ -227,6 +232,7 @@ public class HomeFragment extends Fragment {
     private void setWishlist() {
 //        showProgressBar();
         mNoListTV.setText("Loading...");
+
         databaseHelper.getWishLists(new ICallBackDatabase() {
 
             @Override
@@ -242,14 +248,15 @@ public class HomeFragment extends Fragment {
                         wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList , "https://");
                         mWishList.setAdapter(wishlistAdapter);
                         mNoListTV.setText("");
+
                         //hideProgressBar();
                         mNoListTV.setText("");
                         return;
                     }
-                    } else {
-                    hideProgressBar();
-                    mNoListTV.setText("You don't have any Wishlist yet");
-                }
+                    }
+
+
+
 
             }
 
@@ -263,8 +270,7 @@ public class HomeFragment extends Fragment {
                 Log.d(TAG, "onFinnishGetWishes: ");
             }
         });
-
-
+        mNoListTV.setText("Nothing here yet...");
     }
 
 

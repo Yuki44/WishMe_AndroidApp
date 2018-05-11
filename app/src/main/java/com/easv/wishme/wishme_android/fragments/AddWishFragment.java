@@ -196,7 +196,8 @@ public class AddWishFragment extends Fragment {
                     @Override
                     public void onFinishWish(Wish wish) {
                         MainActivity.mSelectedImage = null;
-                        mOnWishCreated.getWishlistFromAddWish(mWishList);
+                        FragmentManager fm = getFragmentManager();
+                        fm.popBackStack();
                     }
 
                     @Override
