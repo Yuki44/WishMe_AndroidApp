@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class WishEditFragment extends Fragment {
@@ -45,7 +48,7 @@ public class WishEditFragment extends Fragment {
     private ImageView mCameraIcon, mWishImage, mIvCheckMark, mIvBackArrow;
     private RatingBar mRatingBar;
     private float rating;
-    private ProgressBar mProgressBar;
+    private ProgressBar mProgressBar, mImageProgressbar;
     private ScrollView scrollView;
     private RelativeLayout mToolbar;
     private Wish wishFromBundle;
@@ -66,7 +69,8 @@ public class WishEditFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wish_edit, container, false);
         wishFromBundle = getWishFromBundle();
         scrollView = view.findViewById(R.id.scrollView);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.imageProgressBar);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        mImageProgressbar = (ProgressBar) view.findViewById(R.id.imageProgressBar);
         mNameInfo = (EditText) view.findViewById(R.id.name_Info);
         mWishPrice = (EditText) view.findViewById(R.id.wishPrice);
         mWebsiteTxt = (EditText) view.findViewById(R.id.websiteTxt);
@@ -76,8 +80,9 @@ public class WishEditFragment extends Fragment {
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
         mIvBackArrow = view.findViewById(R.id.ivBackArrow);
-        mToolbar  = view.findViewById(R.id.relativeLayout1);
+        mToolbar  = view.findViewById(R.id.relLayout1);
         initProgressBar();
+        initImageProgressBar();
         databaseHelper = new DatabaseHelper();
         mIvBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,11 +119,16 @@ public class WishEditFragment extends Fragment {
     }
 
     private void editWish(final Wish wish) {
+       if(!TextUtils.isEmpty(mNameInfo.getText())){
+        scrollView.setVisibility(View.GONE);
+        mToolbar.setVisibility(View.GONE);
+           showProgressBar();
        wish.setName(mNameInfo.getText().toString());
        wish.setPrice(mWishPrice.getText().toString());
         wish.setLink(mWebsiteTxt.getText().toString());
         wish.setDescription(mDescriptionTxt.getText().toString());
         wish.setRating(mRatingBar.getRating());
+           Log.d("wishid", "editWish: " + wish.getId());
         databaseHelper.editWish(wish, new ICallBackDatabase() {
             @Override
             public void onFinishWishList(Wishlist wList) {
@@ -132,13 +142,24 @@ public class WishEditFragment extends Fragment {
 
             @Override
             public void onFinishWish(final Wish wish) {
-            }
+                if(MainActivity.mSelectedImage == null){
+                    hideProgressBar();
+                    FragmentManager fm = getFragmentManager();
+                    fm.popBackStack();
+                }
+
+ }
 
             @Override
             public void onFinnishGetWishes(ArrayList list) {
 
             }
         });
+
+
+        if(MainActivity.mSelectedImage != null){
+
+
         databaseHelper.createWishImage(MainActivity.mSelectedImage, wish.getId(), new ICallBack() {
             @Override
             public void onFinish(User user) {
@@ -152,14 +173,18 @@ public class WishEditFragment extends Fragment {
 
             @Override
             public void onFinishGetImage(Bitmap bitmap) {
-                hideProgressBar();
-                mUpdateWishDone.getWishFromEditView(wish);
+                MainActivity.mSelectedImage = null;
+                FragmentManager fm = getFragmentManager();
+                fm.popBackStack();
                 Log.d(TAG, "done");
 
             }
         });
+        }
 
-
+}else{
+    mNameInfo.setError("A name is required");
+}
 
     }
 
@@ -176,8 +201,23 @@ public class WishEditFragment extends Fragment {
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
+
+    private void showImageProgressBar(){
+        mImageProgressbar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideImageProgressBar() {
+        mImageProgressbar.setVisibility(View.GONE);
+    }
+
+    private void initImageProgressBar() {
+
+        mImageProgressbar.setVisibility(View.INVISIBLE);
+    }
+
+
     private void setWishToEdit() {
-        showProgressBar();
+       showImageProgressBar();
         mNameInfo.setText(wishFromBundle.getName());
         mWishPrice.setText(wishFromBundle.getPrice());
         mWebsiteTxt.setText(wishFromBundle.getLink());
@@ -196,7 +236,7 @@ public class WishEditFragment extends Fragment {
 
             @Override
             public void onFinishGetImage(Bitmap bitmap) {
-                hideProgressBar();
+               hideImageProgressBar();
                 mWishImage.setImageBitmap(bitmap);
 
             }
