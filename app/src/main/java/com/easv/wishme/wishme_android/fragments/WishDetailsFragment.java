@@ -32,10 +32,14 @@ import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
+import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.easv.wishme.wishme_android.interfaces.ICallBack;
+import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class WishDetailsFragment extends Fragment {
 
@@ -107,11 +111,36 @@ public class WishDetailsFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.delete_wish:
-                Toast.makeText(getContext(), "Wish Deleted method", Toast.LENGTH_SHORT).show();
+                deleteWish(wishToDisplay);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void deleteWish(Wish wish) {
+        databaseHelper.deleteWish(wish, new ICallBackDatabase() {
+            @Override
+            public void onFinishWishList(Wishlist wList) {
+
+            }
+
+            @Override
+            public void onFinishWishListList(ArrayList list) {
+
+            }
+
+            @Override
+            public void onFinishWish(Wish wish) {
+                FragmentManager fm = getFragmentManager();
+                fm.popBackStack();
+            }
+
+            @Override
+            public void onFinnishGetWishes(ArrayList list) {
+
+            }
+        });
     }
 
     private void setUpWish() {
