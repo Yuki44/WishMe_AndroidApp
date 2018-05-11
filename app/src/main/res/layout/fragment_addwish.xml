@@ -87,7 +87,7 @@
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/nunito_semibold"
                         android:hint="@string/what_is_your_wish"
-                        android:inputType="textCapWords"
+                        android:inputType="textCapSentences"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
