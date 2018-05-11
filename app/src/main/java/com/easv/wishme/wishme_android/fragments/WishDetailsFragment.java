@@ -174,7 +174,7 @@ public class WishDetailsFragment extends Fragment {
             public void onFinishGetImage(Bitmap bitmap) {
                 hideImageProgressBar();
                 mWishImage.setImageBitmap(bitmap);
-
+                mRatingBar.setRating(wishToDisplay.getRating());
             }
         });
     }

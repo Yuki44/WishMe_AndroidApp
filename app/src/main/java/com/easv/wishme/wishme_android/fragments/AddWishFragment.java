@@ -19,7 +19,6 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.activities.MainActivity;
@@ -170,13 +169,17 @@ public class AddWishFragment extends Fragment {
                 wish.setPrice(mWishPrice.getText().toString());
                 wish.setLink(mWebsiteTxt.getText().toString());
                 wish.setDescription(mDescriptionTxt.getText().toString());
-                wish.setRating(rating);
+                if(rating == 0){
+                    wish.setRating(1);
+                } else {
+                    wish.setRating(rating);
+                }
                 wish.setOwner(mWishList.getId());
                 mWishImage.setDrawingCacheEnabled(true);
                 mWishImage.buildDrawingCache();
                 Bitmap bitmap = mWishImage.getDrawingCache();
                 if(bitmap == null){
-                    bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.images);
+                    bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.giftdefault);
                 }
 
                 databaseHelper.createWish(wish, bitmap, new ICallBackDatabase() {
