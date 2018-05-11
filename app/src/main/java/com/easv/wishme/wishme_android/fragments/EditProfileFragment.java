@@ -152,6 +152,7 @@ public class EditProfileFragment extends Fragment {
 
                     @Override
                     public void onFinishGetImage(Bitmap bitmap) {
+                        MainActivity.mSelectedImage = null;
                         goToHomeFragment();
                     }
                 });

@@ -125,6 +125,7 @@ public class SignUpStep2 extends Fragment {
 
                    @Override
                    public void onFinishGetImage(Bitmap bitmap) {
+                       MainActivity.mSelectedImage = null;
                        loadHomeFragment();
                    }
                });

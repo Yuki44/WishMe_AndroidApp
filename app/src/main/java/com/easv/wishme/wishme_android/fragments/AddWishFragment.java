@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class AddWishFragment extends Fragment {
     private static final String TAG = "AddWishFragment";
     private EditText mNameInfo, mWishPrice, mWebsiteTxt, mDescriptionTxt;
     private TextView mRatingText;
-    private ImageView mCameraIcon, mWishImage, mIvCheckMark;
+    private ImageView mCameraIcon, mWishImage, mIvCheckMark, mIvBackArrow;
     private RatingBar mRatingBar;
     private float rating;
     private Wishlist mWishList;
@@ -67,6 +68,7 @@ public class AddWishFragment extends Fragment {
         mCameraIcon = (ImageView) view.findViewById(R.id.cameraIcon);
         mWishImage = (ImageView) view.findViewById(R.id.wishImage);
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
+        mIvBackArrow = (ImageView) view.findViewById(R.id.ivBackArrow);
         mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
         mRatingText.setText("Meh...");
@@ -96,6 +98,14 @@ public class AddWishFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveNewWish();
+            }
+        });
+
+        mIvBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                fm.popBackStack();
             }
         });
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
@@ -148,8 +158,6 @@ public class AddWishFragment extends Fragment {
         wishName = mNameInfo.getText().toString();
         if (!TextUtils.isEmpty(wishName)) {
             mNameInfo.setError(null);
-
-
             scrollView.setVisibility(View.GONE);
             mToolbar.setVisibility(View.GONE);
             showProgressBar();
@@ -184,6 +192,7 @@ public class AddWishFragment extends Fragment {
 
                     @Override
                     public void onFinishWish(Wish wish) {
+                        MainActivity.mSelectedImage = null;
                         mOnWishCreated.getWishlistFromAddWish(mWishList);
                     }
 

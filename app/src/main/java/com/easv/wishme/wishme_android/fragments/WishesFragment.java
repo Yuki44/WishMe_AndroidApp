@@ -47,7 +47,7 @@ import java.util.List;
 
 public class WishesFragment extends android.support.v4.app.Fragment {
 
-    private static final String TAG = "WishesFragment";
+    public static final String TAG = "WishesFragment";
     public ListView mWishList;
     public WishAdapter wishAdapter;
     private TextView mNoWishes, mNameOfWishlist;

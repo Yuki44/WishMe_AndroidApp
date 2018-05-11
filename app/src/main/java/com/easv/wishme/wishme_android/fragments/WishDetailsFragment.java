@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,8 +50,9 @@ public class WishDetailsFragment extends Fragment {
     private ImageView mWishImage, mIvCheckMark, mIvEdit;
     private RatingBar mRatingBar;
     private Toolbar toolbar;
-    private ProgressBar mProgressBar;
+    private ProgressBar mImageProgressbar, mProgressBar;
     private DatabaseHelper databaseHelper;
+    private RelativeLayout mContent;
     public WishDetailsFragment() {
         super();
         setArguments(new Bundle());
@@ -78,7 +80,10 @@ public class WishDetailsFragment extends Fragment {
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivBackArrow);
         mIvEdit = (ImageView) view.findViewById(R.id.ivEdit);
         mRatingBar = (RatingBar) view.findViewById(R.id.ratingBar);
-        mProgressBar = view.findViewById(R.id.imageProgressBar);
+        mContent = (RelativeLayout) view.findViewById(R.id.relLayout2);
+        mImageProgressbar = view.findViewById(R.id.imageProgressBar);
+        mProgressBar = view.findViewById(R.id.progressBar);
+        initImageProgressBar();
         initProgressBar();
         setUpWish();
         mIvCheckMark.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +124,9 @@ public class WishDetailsFragment extends Fragment {
     }
 
     private void deleteWish(Wish wish) {
+        toolbar.setVisibility(View.GONE);
+        mContent.setVisibility(View.GONE);
+        showProgressBar();
         databaseHelper.deleteWish(wish, new ICallBackDatabase() {
             @Override
             public void onFinishWishList(Wishlist wList) {
@@ -132,6 +140,7 @@ public class WishDetailsFragment extends Fragment {
 
             @Override
             public void onFinishWish(Wish wish) {
+                showProgressBar();
                 FragmentManager fm = getFragmentManager();
                 fm.popBackStack();
             }
@@ -144,7 +153,7 @@ public class WishDetailsFragment extends Fragment {
     }
 
     private void setUpWish() {
-        showProgressBar();
+        showImageProgressBar();
         mNameInfo.setText(wishToDisplay.getName());
         mWishPrice.setText(wishToDisplay.getPrice());
         mWebsiteTxt.setText(wishToDisplay.getLink());
@@ -163,7 +172,7 @@ public class WishDetailsFragment extends Fragment {
 
             @Override
             public void onFinishGetImage(Bitmap bitmap) {
-                hideProgressBar();
+                hideImageProgressBar();
                 mWishImage.setImageBitmap(bitmap);
 
             }
@@ -204,4 +213,19 @@ public class WishDetailsFragment extends Fragment {
 
         }
     }
+
+    private void showImageProgressBar(){
+        mImageProgressbar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideImageProgressBar() {
+        mImageProgressbar.setVisibility(View.GONE);
+    }
+
+    private void initImageProgressBar() {
+
+        mImageProgressbar.setVisibility(View.INVISIBLE);
+    }
+
+
 }

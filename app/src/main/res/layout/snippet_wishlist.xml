@@ -22,12 +22,15 @@
                     android:src="@drawable/ic_backarrow" />
 
                 <TextView
+                    android:id="@+id/nameOfWishlist"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/nunito_semibold"
-                    android:id="@+id/nameOfWishlist"
                     android:layout_toEndOf="@id/ivBackArrow"
                     android:layout_toRightOf="@+id/ivBackArrow"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:gravity="center_horizontal|start"
+                    android:text="0000"
+                    android:paddingTop="3dp"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
 
