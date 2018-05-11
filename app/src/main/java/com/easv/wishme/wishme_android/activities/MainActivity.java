@@ -154,7 +154,6 @@ WishEditFragment.UpdateWishDone{
         args.putParcelable("WishList", wList);
         fragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.addToBackStack("wishesFragment").commit();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
     }

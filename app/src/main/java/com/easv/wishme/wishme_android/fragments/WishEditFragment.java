@@ -127,7 +127,11 @@ public class WishEditFragment extends Fragment {
        wish.setPrice(mWishPrice.getText().toString());
         wish.setLink(mWebsiteTxt.getText().toString());
         wish.setDescription(mDescriptionTxt.getText().toString());
-        wish.setRating(mRatingBar.getRating());
+           if(mRatingBar.getRating() == 0){
+               wish.setRating(1);
+           } else {
+               wish.setRating(mRatingBar.getRating());
+           }
            Log.d("wishid", "editWish: " + wish.getId());
         databaseHelper.editWish(wish, new ICallBackDatabase() {
             @Override
