@@ -7,7 +7,10 @@ import java.util.ArrayList;
 
 public interface ICallBackDatabase {
     void onFinishWishList(Wishlist wList);
+
     void onFinishWishListList(ArrayList list);
+
     void onFinishWish(Wish wish);
+
     void onFinnishGetWishes(ArrayList list);
 }

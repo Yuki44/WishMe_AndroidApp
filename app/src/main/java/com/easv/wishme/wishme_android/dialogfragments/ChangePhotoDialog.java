@@ -27,22 +27,12 @@ import java.io.InputStream;
 public class ChangePhotoDialog extends DialogFragment {
     private static final String TAG = "ChangePhotoDialog";
     private ImageHandler imgHandler;
-
-
     private static final int CAMERA_REQUEST_CODE = 4321;
     private static final int PICKFILE_REQUEST_CODE = 1234;
     private String picturePath;
 
-//
-//    public interface OnPhotoSelectedListener{
-//        void getImageBitmap(Bitmap bitmap);
-//    }
-//    OnPhotoSelectedListener mOnPhotoSelectedListener;
-
     public static Bitmap rotateImage(Bitmap src, float degree) {
-        // create new matrix
         Matrix matrix = new Matrix();
-        // setup rotation degree
         matrix.postRotate(degree);
         Bitmap bmp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
         return bmp;
@@ -59,15 +49,11 @@ public class ChangePhotoDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: starting camera.");
-
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
-
             }
         });
 
-
-        //Initialize the textview for choosing an image from memory
         TextView selectPhoto = view.findViewById(R.id.dialogChoosePhoto);
         selectPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +65,6 @@ public class ChangePhotoDialog extends DialogFragment {
             }
         });
 
-        // Cancel button for closing the dialog
         TextView cancelDialog = view.findViewById(R.id.dialogCancel);
         cancelDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +73,6 @@ public class ChangePhotoDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
-//        mSelectedImagePath = null;
         return view;
     }
 
@@ -97,42 +80,23 @@ public class ChangePhotoDialog extends DialogFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if (requestCode == PICKFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            try{
-            final Uri selectedImageUri = data.getData();
-            final String imagePath = imgHandler.getFilePath(  getContext(),selectedImageUri);
-            final InputStream imageStream = getContext().getContentResolver().openInputStream(selectedImageUri);
-            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            final Bitmap imgRotated = imgHandler.modifyOrientation(selectedImage, imagePath);
-//            SignUpStep2.mSelectedImage = imgRotated;
-//            EditProfileFragment.mSelectedImage = imgRotated;
+            try {
+                final Uri selectedImageUri = data.getData();
+                final String imagePath = imgHandler.getFilePath(getContext(), selectedImageUri);
+                final InputStream imageStream = getContext().getContentResolver().openInputStream(selectedImageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                final Bitmap imgRotated = imgHandler.modifyOrientation(selectedImage, imagePath);
                 MainActivity.mSelectedImage = imgRotated;
-                Log.d(TAG, "Image sent to main activity");
 
-            Log.d(TAG, imgRotated.toString());
-
-            getDialog().dismiss();
-        } catch(FileNotFoundException e) {
+                getDialog().dismiss();
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
-        } catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             Log.d(TAG, "You haven't chosen a picture");
-            }
-
+        }
     }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        try{
-//            mOnPhotoSelectedListener =  (OnPhotoSelectedListener) getActivity();
-//            Log.d("abc", "onAttach - ref to mainactivity set");
-//        }catch(ClassCastException e){
-//            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
-//        }
-//        super.onAttach(context);
-//    }
-
 }

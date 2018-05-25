@@ -51,6 +51,7 @@ public class ImageHandler {
         matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
+
     public static String getFilePath(Context context, Uri uri) {
         String selection = null;
         String[] selectionArgs = null;
@@ -62,8 +63,7 @@ public class ImageHandler {
                 return Environment.getExternalStorageDirectory() + "/" + split[1];
             } else if (isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
-                uri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                uri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
             } else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -76,19 +76,14 @@ public class ImageHandler {
                     uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
                 selection = "_id=?";
-                selectionArgs = new String[]{
-                        split[1]
-                };
+                selectionArgs = new String[]{split[1]};
             }
         }
         if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = {
-                    MediaStore.Images.Media.DATA
-            };
+            String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = null;
             try {
-                cursor = context.getContentResolver()
-                        .query(uri, projection, selection, selectionArgs, null);
+                cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 if (cursor.moveToFirst()) {
                     return cursor.getString(column_index);

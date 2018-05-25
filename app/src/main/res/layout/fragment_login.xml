@@ -24,7 +24,6 @@
         android:layout_height="match_parent">
 
 
-
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,19 +33,18 @@
             android:paddingStart="70dp">
 
 
-
             <EditText
                 android:id="@+id/emailET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:hint="Email"
-                android:nextFocusDown="@id/passwordET"
-                android:imeOptions="actionNext"
                 android:layout_marginTop="80dp"
                 android:fontFamily="@font/nunito_bold"
-                android:inputType="textEmailAddress" />
+                android:hint="Email"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@id/passwordET" />
 
             <EditText
                 android:id="@+id/passwordET"
@@ -57,9 +55,9 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/nunito_bold"
                 android:hint="Password"
-                android:nextFocusDown="@id/loginBtn"
                 android:imeOptions="actionDone"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:nextFocusDown="@id/loginBtn" />
 
             <Button
                 android:id="@+id/loginBtn"
@@ -67,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/login_button_background"
                 android:layout_marginTop="40dp"
+                android:background="@drawable/login_button_background"
                 android:text="Login" />
 
 
@@ -78,8 +76,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/loginBtn"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/login_button_background"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/login_button_background"
                 android:text="Sign Up" />
 
 

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
-
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +14,6 @@ import android.util.Log;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
-import com.easv.wishme.wishme_android.dal.DatabaseHelper;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
@@ -32,15 +29,7 @@ import com.easv.wishme.wishme_android.dialogfragments.EditWishlistDialog;
 import com.easv.wishme.wishme_android.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends AppCompatActivity
-        implements SignUpStep1.OnUserCreatedListener,
-        HomeFragment.OnWishlistItemClicked,
-        WishesFragment.OnEditWishList,
-        WishesFragment.OnWishListToAddWishListener,
-        WishesFragment.OnWishRetrievedListener,
-        AddWishFragment.OnWishCreated,
-WishDetailsFragment.UpdateWish,
-WishEditFragment.UpdateWishDone{
+public class MainActivity extends AppCompatActivity implements SignUpStep1.OnUserCreatedListener, HomeFragment.OnWishlistItemClicked, WishesFragment.OnEditWishList, WishesFragment.OnWishListToAddWishListener, WishesFragment.OnWishRetrievedListener, AddWishFragment.OnWishCreated, WishDetailsFragment.UpdateWish, WishEditFragment.UpdateWishDone {
 
     User user;
     AuthenticationHelper authHelper;
@@ -52,7 +41,6 @@ WishEditFragment.UpdateWishDone{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate: started.");
         authHelper = new AuthenticationHelper();
         initImageLoader();
         mSelectedImage = null;
@@ -95,8 +83,6 @@ WishEditFragment.UpdateWishDone{
         verifyPermissions();
     }
 
-
-
     @Override
     public void getUser(User user) {
         Log.d(TAG, "getUser: user received from SignupStep1");
@@ -127,7 +113,6 @@ WishEditFragment.UpdateWishDone{
         WishDetailsFragment fragment = new WishDetailsFragment();
         Bundle args = new Bundle();
         args.putParcelable("WishDetails", wish);
-        Log.d(TAG, "getWishToDisplay: MainActivity::::" + wish);
         fragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
@@ -164,17 +149,14 @@ WishEditFragment.UpdateWishDone{
         Bundle args = new Bundle();
         args.putParcelable("WishList", wList);
         dialog.setArguments(args);
-
         dialog.show(getSupportFragmentManager(), getString(R.string.edit));
     }
-
 
     @Override
     public void getWishFromDetailView(Wish wish) {
         WishEditFragment fragment = new WishEditFragment();
         Bundle args = new Bundle();
         args.putParcelable("WishDetails", wish);
-        Log.d(TAG, "getWishFromDetailView: MainActivity::::" + wish);
         fragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);

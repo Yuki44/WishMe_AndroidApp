@@ -3,7 +3,7 @@ package com.easv.wishme.wishme_android.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Wishlist implements Parcelable{
+public class Wishlist implements Parcelable {
 
     String wListName, owner, id;
 
@@ -41,7 +41,6 @@ public class Wishlist implements Parcelable{
         this.owner = owner;
     }
 
-
     public Wishlist() {
     }
 
@@ -60,9 +59,7 @@ public class Wishlist implements Parcelable{
 
     @Override
     public String toString() {
-        return "Wishlist{" +
-                "wListName='" + wListName + '\'' +
-                '}';
+        return "Wishlist{" + "wListName='" + wListName + '\'' + '}';
     }
 
     @Override

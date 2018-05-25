@@ -1,6 +1,5 @@
 package com.easv.wishme.wishme_android.utils;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
@@ -16,10 +15,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
-/**
- * Created by yuki on 28/03/2018.
- */
 
 public class UniversalImageLoader {
 
@@ -40,7 +35,6 @@ public class UniversalImageLoader {
                 if (mProgressBar != null) {
                     mProgressBar.setVisibility(View.VISIBLE);
                 }
-
             }
 
             @Override
@@ -67,22 +61,7 @@ public class UniversalImageLoader {
     }
 
     public ImageLoaderConfiguration getConfig() {
-        //Universal Image Loader Setup
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(defaultImage)
-                .showImageForEmptyUri(defaultImage)
-                .showImageOnFail(defaultImage)
-                .cacheOnDisk(true).cacheInMemory(true)
-                .cacheOnDisk(true).resetViewBeforeLoading(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
-
-
-        return new ImageLoaderConfiguration.Builder(mContext)
-                .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
-                .diskCacheSize(100 * 1024 * 1024)
-                .build();
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().showImageOnLoading(defaultImage).showImageForEmptyUri(defaultImage).showImageOnFail(defaultImage).cacheOnDisk(true).cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(true).imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(300)).build();
+        return new ImageLoaderConfiguration.Builder(mContext).defaultDisplayImageOptions(defaultOptions).memoryCache(new WeakMemoryCache()).diskCacheSize(100 * 1024 * 1024).build();
     }
-
 }

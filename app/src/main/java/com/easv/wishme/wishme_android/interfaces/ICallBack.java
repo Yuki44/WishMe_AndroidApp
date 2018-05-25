@@ -8,6 +8,8 @@ import com.google.firebase.auth.FirebaseUser;
 public interface ICallBack {
 
     void onFinish(User user);
+
     void onFinishFireBaseUser(FirebaseUser user);
+
     void onFinishGetImage(Bitmap bitmap);
 }

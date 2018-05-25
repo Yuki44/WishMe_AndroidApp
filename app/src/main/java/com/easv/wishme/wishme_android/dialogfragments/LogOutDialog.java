@@ -1,13 +1,6 @@
 package com.easv.wishme.wishme_android.dialogfragments;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,7 +17,6 @@ import com.easv.wishme.wishme_android.fragments.LoginFragment;
 public class LogOutDialog extends DialogFragment {
     private static final String TAG = "LogOutDialog";
     private AuthenticationHelper authHelper;
-
 
     @Nullable
     @Override
@@ -47,8 +39,6 @@ public class LogOutDialog extends DialogFragment {
             }
         });
 
-
-        // Cancel button for closing the dialog
         TextView cancelDialog = view.findViewById(R.id.dialogCancel);
         cancelDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,9 +47,6 @@ public class LogOutDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
         return view;
     }
-
-
 }

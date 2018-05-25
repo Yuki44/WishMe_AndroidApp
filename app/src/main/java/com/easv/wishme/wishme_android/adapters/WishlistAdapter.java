@@ -37,24 +37,17 @@ public class WishlistAdapter extends ArrayAdapter<Wishlist> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final WishlistAdapter.ViewHolder holder;
-
         if (convertView == null) {
             convertView = mInflater.inflate(layoutResource, parent, false);
             holder = new WishlistAdapter.ViewHolder();
-
             holder.wishlistName = convertView.findViewById(R.id.wishlist_name);
             holder.mProgressBar = convertView.findViewById(R.id.wishlistProgressbar);
-
             convertView.setTag(holder);
-
         } else {
             holder = (WishlistAdapter.ViewHolder) convertView.getTag();
         }
-
         String wishlistNameStr = getItem(position).getwListName();
-
         holder.wishlistName.setText(wishlistNameStr);
-
         return convertView;
     }
 
@@ -62,5 +55,4 @@ public class WishlistAdapter extends ArrayAdapter<Wishlist> {
         TextView wishlistName;
         ProgressBar mProgressBar;
     }
-
 }

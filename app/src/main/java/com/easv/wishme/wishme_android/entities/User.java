@@ -19,8 +19,8 @@ public class User implements Parcelable {
         this.contactEmail = contactEmail;
         this.image = image;
     }
-    public User() {
 
+    public User() {
     }
 
     protected User(Parcel in) {
@@ -94,14 +94,7 @@ public class User implements Parcelable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", address='" + address + '\'' +
-                ", contactEmail='" + contactEmail + '\'' +
-                ", image='" + image + '\'' +
-                '}';
+        return "User{" + "name='" + name + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + ", address='" + address + '\'' + ", contactEmail='" + contactEmail + '\'' + ", image='" + image + '\'' + '}';
     }
 
     @Override
@@ -119,16 +112,15 @@ public class User implements Parcelable {
         dest.writeByte((byte) (image ? 1 : 0));
     }
 
-    public User(Map<String, Object> map)
-    {
-        name = (String)map.get("name");
-        email = (String)map.get("email");
-        password = (String)map.get("password");
-        address = (String)map.get("address");
-        contactEmail = (String)map.get("contactEmail");
+    public User(Map<String, Object> map) {
+        name = (String) map.get("name");
+        email = (String) map.get("email");
+        password = (String) map.get("password");
+        address = (String) map.get("address");
+        contactEmail = (String) map.get("contactEmail");
     }
-    public Map<String, Object> toMap()
-    {
+
+    public Map<String, Object> toMap() {
         Map<String, Object> res = new HashMap<>();
         res.put("name", getname());
         res.put("email", getEmail());

@@ -15,7 +15,6 @@ import android.widget.EditText;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
-import com.easv.wishme.wishme_android.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginFragment extends Fragment {
 
     private static final String TAG = "loginFragment";
-    private  EditText mEmailET, mPasswordET;
+    private EditText mEmailET, mPasswordET;
     private Button mLoginBtn, mSignUpBtn;
     private AuthenticationHelper authHelper;
 
@@ -49,7 +48,7 @@ public class LoginFragment extends Fragment {
                 login(mEmailET.getText().toString(), mPasswordET.getText().toString());
             }
         });
-     return view;
+        return view;
     }
 
     private void signUp() {
@@ -63,7 +62,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = authHelper.getmAuth().getCurrentUser();
         updateUI(currentUser);
     }
@@ -77,41 +75,33 @@ public class LoginFragment extends Fragment {
         } else {
             Log.d(TAG, "UpdateUi user null");
         }
-
     }
 
-    private void login(String email, String password){
+    private void login(String email, String password) {
         email = mEmailET.getText().toString();
         password = mPasswordET.getText().toString();
-
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             mEmailET.setError(null);
             mPasswordET.setError(null);
-
-            if(email.contains("@") && email.contains(".")){
-
-                    if(password.toCharArray().length >= 6){
-
-                        authHelper.getmAuth().signInWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
-                                            Log.d(TAG, "signInWithEmail:success");
-                                            FirebaseUser user = authHelper.getmAuth().getCurrentUser();
-                                            updateUI(user);
-                                        } else {
-                                            // If sign in fails, display a message to the user.
-                                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                            updateUI(null);
-                                        }
-                                    }
-                                });
-                    } else{
-                        mPasswordET.setError("Password must be at least 6 characters long");
-                    }
-            }else{
+            if (email.contains("@") && email.contains(".")) {
+                if (password.toCharArray().length >= 6) {
+                    authHelper.getmAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = authHelper.getmAuth().getCurrentUser();
+                                updateUI(user);
+                            } else {
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                updateUI(null);
+                            }
+                        }
+                    });
+                } else {
+                    mPasswordET.setError("Password must be at least 6 characters long");
+                }
+            } else {
                 mEmailET.setError("A valid email is required");
             }
         } else {
@@ -120,8 +110,6 @@ public class LoginFragment extends Fragment {
             } else if (TextUtils.isEmpty(password)) {
                 mPasswordET.setError("Password missing");
             }
-
         }
     }
-
 }

@@ -121,16 +121,7 @@ public class Wish implements Parcelable {
 
     @Override
     public String toString() {
-        return "Wish{" +
-                "name='" + name + '\'' +
-                ", price='" + price + '\'' +
-                ", link='" + link + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                ", owner='" + owner + '\'' +
-                ", rating='" + rating + '\'' +
-                ", id='" + id + '\'' +
-
+        return "Wish{" + "name='" + name + '\'' + ", price='" + price + '\'' + ", link='" + link + '\'' + ", description='" + description + '\'' + ", image='" + image + '\'' + ", owner='" + owner + '\'' + ", rating='" + rating + '\'' + ", id='" + id + '\'' +
                 '}';
     }
 

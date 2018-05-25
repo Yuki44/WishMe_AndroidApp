@@ -8,6 +8,7 @@
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -36,10 +37,10 @@
                     android:id="@+id/ivCheckMark"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:padding="13dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="15dp"
+                    android:padding="13dp"
                     android:src="@drawable/ic_checkmark_white" />
 
 

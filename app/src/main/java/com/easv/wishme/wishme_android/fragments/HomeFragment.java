@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.easv.wishme.wishme_android.R;
-import com.easv.wishme.wishme_android.activities.MainActivity;
 import com.easv.wishme.wishme_android.adapters.WishlistAdapter;
 import com.easv.wishme.wishme_android.dal.AuthenticationHelper;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
@@ -56,7 +54,6 @@ public class HomeFragment extends Fragment {
     private TextView mContactTV;
     private ProgressBar mProgressBar;
     private ProgressBar mProfileProgressBar;
-
     private CircleImageView mImageView;
     private ArrayList<Wishlist> wishList;
     private FirebaseFirestore db;
@@ -65,10 +62,8 @@ public class HomeFragment extends Fragment {
     public static Bitmap mSelectedImage;
     private DatabaseHelper databaseHelper;
 
-
     public interface OnWishlistItemClicked {
         void getWishlistItemClicked(Wishlist wList);
-
     }
 
     OnWishlistItemClicked mOnWishlistItemClicked;
@@ -77,7 +72,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
         }
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -107,16 +102,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Wishlist wList = wishList.get(position);
-                Log.d(TAG, "onItemClick: " + wList.getId() + " " + "<><><><><><><><><><><><><><><><>");
                 mOnWishlistItemClicked.getWishlistItemClicked(wList);
-                // wishlistClicked();
             }
         });
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         setHasOptionsMenu(true);
         initProgressBar();
         initImageProgressBar();
-
         setUserInfo();
         setProfileImage();
         mCreateWishlist.setOnClickListener(new View.OnClickListener() {
@@ -129,18 +122,16 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.menuitem_logout:
                 logout();
@@ -178,7 +169,6 @@ public class HomeFragment extends Fragment {
         CreateWishlistDialog dialog = new CreateWishlistDialog();
         dialog.show(getFragmentManager(), getString(R.string.create_wishlist));
         dialog.setTargetFragment(HomeFragment.this, 1);
-
     }
 
     private void setUserInfo() {
@@ -189,35 +179,27 @@ public class HomeFragment extends Fragment {
                 mNameTV.setText(user.getname());
                 mContactTV.setText(user.getContactEmail());
                 mAddressTV.setText(user.getAddress());
-
-
-               // Log.d(TAG, "setUserInfo: " + user.toString());
             }
 
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {
-
             }
 
-
-          @Override
-          public void onFinishGetImage(Bitmap bitmap) {
-              setProfileImage();
-          }
-      });
-
+            @Override
+            public void onFinishGetImage(Bitmap bitmap) {
+                setProfileImage();
+            }
+        });
     }
 
     private void setProfileImage() {
         mSelectedImage = authHelper.getProfileImage(new ICallBack() {
             @Override
             public void onFinish(User user) {
-
             }
 
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {
-
             }
 
             @Override
@@ -228,51 +210,39 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
     private void setWishlist() {
-//        showProgressBar();
         mNoListTV.setText("Loading...");
-
         databaseHelper.getWishLists(new ICallBackDatabase() {
-
             @Override
             public void onFinishWishList(Wishlist wList) {
             }
 
             @Override
             public void onFinishWishListList(ArrayList list) {
-                Log.d(TAG, "onFinishWishListList: got wishlist list");
-                if(list.size() != 0){
+                if (list.size() != 0) {
                     wishList = list;
-                    if (wishList!=null && getActivity()!=null){
-                        wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList , "https://");
+                    if (wishList != null && getActivity() != null) {
+                        wishlistAdapter = new WishlistAdapter(getActivity(), R.layout.wishlist_item, wishList, "https://");
                         mWishList.setAdapter(wishlistAdapter);
                         mNoListTV.setText("");
-
-                        //hideProgressBar();
                         mNoListTV.setText("");
                         return;
                     }
-                    }
-
-
-
-
+                }
             }
 
             @Override
             public void onFinishWish(Wish wish) {
-                Log.d(TAG, "onFinishWish: ");
+
             }
 
             @Override
             public void onFinnishGetWishes(ArrayList list) {
-                Log.d(TAG, "onFinnishGetWishes: ");
+
             }
         });
         mNoListTV.setText("Nothing here yet...");
     }
-
 
     private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -283,14 +253,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void initProgressBar() {
-
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
-
-
-
-    private void showImageProgressBar(){
+    private void showImageProgressBar() {
         mProfileProgressBar.setVisibility(View.VISIBLE);
     }
 
@@ -299,7 +265,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void initImageProgressBar() {
-
         mProfileProgressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -308,10 +273,8 @@ public class HomeFragment extends Fragment {
         super.onAttach(context);
         try {
             mOnWishlistItemClicked = (OnWishlistItemClicked) getActivity();
-
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
-
         }
     }
 
