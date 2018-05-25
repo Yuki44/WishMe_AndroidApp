@@ -10,168 +10,165 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
             android:id="@+id/relativeLayout1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <include layout="@layout/snippet_home"></include>
 
         </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout1"
-        android:background="@color/white"
-        android:padding="10dp">
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView"
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_height="255dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/grey_border"
-            app:cardElevation="5dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="260dp">
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImager"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_centerHorizontal="true"
-                    android:elevation="10dp"
-                    app:civ_border_color="@color/lightGrey"
-                    app:civ_border_width="0dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="15dp"/>
-
-                <ProgressBar
-                    android:id="@+id/profileImageProgressBar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="invisible" />
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/profileImager"
-                    android:layout_centerHorizontal="true"
-                    android:columnCount="2"
-                    android:rowCount="3"
-                    android:layout_marginBottom="15dp">
-
-                    <ImageView
-                        android:id="@+id/ivPerson"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_name" />
-
-                    <TextView
-                        android:id="@+id/nameTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:textAlignment="center"
-                        android:textSize="20sp" />
-
-
-                    <ImageView
-                        android:id="@+id/ivEmail"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-
-                        android:src="@drawable/ic_email" />
-
-                    <TextView
-                        android:id="@+id/contactTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:textAlignment="center"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:id="@+id/ivLocation"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_location" />
-
-                    <TextView
-                        android:id="@+id/addressTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:textAlignment="center"
-                        android:textSize="20sp" />
-
-                </GridLayout>
-
-
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout2"
-
-        android:visibility="visible">
-
-
-        <ListView
-            android:id="@+id/wishlist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:divider="@null">
-
-        </ListView>
-
-        <ProgressBar
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/progressBar"
-            android:layout_centerInParent="true"
-            />
-
-        <TextView
-            android:id="@+id/noListTV"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/nunito_semibold"
-            android:textColor="@color/darkGrey"
-            android:textSize="25sp" />
+            android:layout_below="@+id/relativeLayout1"
+            android:background="@color/white"
+            android:padding="10dp">
 
-    </RelativeLayout>
-    </RelativeLayout>
 
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="255dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/grey_border"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp">
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profileImager"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        app:civ_border_color="@color/lightGrey"
+                        app:civ_border_width="0dp" />
+
+                    <ProgressBar
+                        android:id="@+id/profileImageProgressBar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="25dp"
+                        android:visibility="invisible" />
+
+                    <GridLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profileImager"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="15dp"
+                        android:columnCount="2"
+                        android:rowCount="3">
+
+                        <ImageView
+                            android:id="@+id/ivPerson"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_name" />
+
+                        <TextView
+                            android:id="@+id/nameTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
+
+
+                        <ImageView
+                            android:id="@+id/ivEmail"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+
+                            android:src="@drawable/ic_email" />
+
+                        <TextView
+                            android:id="@+id/contactTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/ivLocation"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_location" />
+
+                        <TextView
+                            android:id="@+id/addressTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
+
+                    </GridLayout>
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout2"
+
+            android:visibility="visible">
+
+
+            <ListView
+                android:id="@+id/wishlist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:divider="@null">
+
+            </ListView>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/noListTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/nunito_semibold"
+                android:textColor="@color/darkGrey"
+                android:textSize="25sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/createWishlistFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/createWishlistFab"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"

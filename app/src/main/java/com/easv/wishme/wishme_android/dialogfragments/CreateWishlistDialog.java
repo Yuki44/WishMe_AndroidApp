@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +34,6 @@ public class CreateWishlistDialog extends DialogFragment {
     private ProgressBar mProgressBar;
     private LinearLayout linear;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,51 +49,36 @@ public class CreateWishlistDialog extends DialogFragment {
 
         initProgressBar();
 
-//                if(!mNewWishlist.getText().toString().trim().isEmpty()){
-//                    saveDialog.setVisibility(View.VISIBLE);
-//                } else {
-//                    saveDialog.setVisibility(View.GONE);
-//                }
-
-
-
-
-
         saveDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mNewWishlist.getText().toString().trim().isEmpty()){
-                linear.setVisibility(View.GONE);
-            showProgressBar();
-    Wishlist wList = new Wishlist(mNewWishlist.getText().toString(), authHelper.getmAuth().getUid());
-    dataHelper.createWishList(wList, new ICallBackDatabase() {
-        @Override
-        public void onFinishWishList(Wishlist wList) {
-            getDialog().dismiss();
-            loadHomeFragment();
-        }
+                if (!mNewWishlist.getText().toString().trim().isEmpty()) {
+                    linear.setVisibility(View.GONE);
+                    showProgressBar();
+                    Wishlist wList = new Wishlist(mNewWishlist.getText().toString(), authHelper.getmAuth().getUid());
+                    dataHelper.createWishList(wList, new ICallBackDatabase() {
+                        @Override
+                        public void onFinishWishList(Wishlist wList) {
+                            getDialog().dismiss();
+                            loadHomeFragment();
+                        }
 
-        @Override
-        public void onFinishWishListList(ArrayList list) {
+                        @Override
+                        public void onFinishWishListList(ArrayList list) {
+                        }
 
-        }
+                        @Override
+                        public void onFinishWish(Wish wish) {
+                        }
 
-        @Override
-        public void onFinishWish(Wish wish) {
-
-        }
-
-        @Override
-        public void onFinnishGetWishes(ArrayList list) {
-
-        }
-    });
-}
+                        @Override
+                        public void onFinnishGetWishes(ArrayList list) {
+                        }
+                    });
+                }
             }
         });
 
-
-        // Cancel button for closing the dialog
         TextView cancelDialog = view.findViewById(R.id.dialogCancel);
         cancelDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,24 +87,25 @@ public class CreateWishlistDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
         return view;
     }
 
-    private void loadHomeFragment(){
+    private void loadHomeFragment() {
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
     }
-    private void showProgressBar(){
+
+    private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar(){
+    private void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private void initProgressBar(){ mProgressBar.setVisibility(View.INVISIBLE);}
-
+    private void initProgressBar() {
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
 }

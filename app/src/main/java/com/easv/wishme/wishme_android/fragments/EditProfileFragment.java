@@ -58,8 +58,8 @@ public class EditProfileFragment extends Fragment {
         toolbar = view.findViewById(R.id.editProfileToolbar);
         authHelper = new AuthenticationHelper();
         initImageProgressBar();
-
         ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
+
         ivBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,9 +101,6 @@ public class EditProfileFragment extends Fragment {
         transaction.commit();
     }
 
-
-
-
     private void setProfileImage(){
         showImageProgressBar();
         MainActivity.mSelectedImage = authHelper.getProfileImage(new ICallBack() {
@@ -138,7 +135,6 @@ public class EditProfileFragment extends Fragment {
                 user.setContactEmail(mContactEmailET.getText().toString());
                 user.setAddress(mAddressET.getText().toString());
                 authHelper.createUserProfile(user);
-
                 mImageView.setDrawingCacheEnabled(true);
                 mImageView.buildDrawingCache();
                 Bitmap bitmap = mImageView.getDrawingCache();
@@ -156,7 +152,6 @@ public class EditProfileFragment extends Fragment {
                         goToHomeFragment();
                     }
                 });
-                Log.d(TAG, "setUserInfo: " + user.toString());
             }
 
             @Override
@@ -186,7 +181,6 @@ public class EditProfileFragment extends Fragment {
 
     private void setNewProfileImage(){
        mImageView.setImageBitmap(MainActivity.mSelectedImage);
-
     }
 
     private void showImageProgressBar(){
@@ -197,19 +191,13 @@ public class EditProfileFragment extends Fragment {
         mProfileProgressBar.setVisibility(View.GONE);
     }
 
-    private void initImageProgressBar() {
-
-        mProfileProgressBar.setVisibility(View.INVISIBLE);
-    }
-
+    private void initImageProgressBar() { mProfileProgressBar.setVisibility(View.INVISIBLE); }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume");
         if(MainActivity.mSelectedImage != null){
             mImageView.setImageBitmap(MainActivity.mSelectedImage);
-            Log.d("abc", "onResume: set image on the view ");
         }
         Log.d(TAG, "resumed");
     }

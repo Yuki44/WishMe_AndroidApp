@@ -6,9 +6,9 @@
         android:layout_height="50dp">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/wishlistToolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/wishlistToolbar">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -29,8 +29,8 @@
                     android:layout_toRightOf="@+id/ivBackArrow"
                     android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_horizontal|start"
-                    android:text="0000"
                     android:paddingTop="3dp"
+                    android:text="0000"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
 

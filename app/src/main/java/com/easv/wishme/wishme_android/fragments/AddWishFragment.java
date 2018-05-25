@@ -47,6 +47,7 @@ public class AddWishFragment extends Fragment {
         super();
         setArguments(new Bundle());
     }
+
     public interface OnWishCreated {
         void getWishlistFromAddWish(Wishlist wList);
 
@@ -68,14 +69,12 @@ public class AddWishFragment extends Fragment {
         mWishImage = (ImageView) view.findViewById(R.id.wishImage);
         mIvCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
         mIvBackArrow = (ImageView) view.findViewById(R.id.ivBackArrow);
-        mRatingBar  = (RatingBar) view.findViewById(R.id.ratingBar);
+        mRatingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         mRatingText = (TextView) view.findViewById(R.id.ratingText);
         mRatingText.setText("Meh...");
-         mToolbar  = view.findViewById(R.id.relativeLayout1);
+        mToolbar = view.findViewById(R.id.relativeLayout1);
         mWishList = getWishListFromBundle();
         initProgressBar();
-//        LayerDrawable stars = (LayerDrawable) mRatingBar.getProgressDrawable();
-//        stars.getDrawable(2).setColorFilter(Color.parseColor("#ca0c05"), PorterDuff.Mode.SRC_ATOP);
         mWishImage.setVisibility(View.GONE);
         mCameraIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +87,6 @@ public class AddWishFragment extends Fragment {
         mWishImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 openPhotoDialog();
             }
         });
@@ -107,7 +105,7 @@ public class AddWishFragment extends Fragment {
                 fm.popBackStack();
             }
         });
-        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
+        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 setRating();
@@ -115,16 +113,16 @@ public class AddWishFragment extends Fragment {
         });
         return view;
     }
-    private void showProgressBar(){
+
+    private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar(){
+    private void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private void initProgressBar(){
-
+    private void initProgressBar() {
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -153,23 +151,20 @@ public class AddWishFragment extends Fragment {
     }
 
     private void saveNewWish() {
-
         wishName = mNameInfo.getText().toString();
         if (!TextUtils.isEmpty(wishName)) {
             mNameInfo.setError(null);
             scrollView.setVisibility(View.GONE);
             mToolbar.setVisibility(View.GONE);
             showProgressBar();
-            Log.d(TAG, "saveNewWish: Clicked on the checkMark");
-            if(checkStringIfNull(mNameInfo.getText().toString())) {
-                Log.d(TAG, "saveNewWish: Adding a new wish");
+            if (checkStringIfNull(mNameInfo.getText().toString())) {
                 DatabaseHelper databaseHelper = new DatabaseHelper();
                 Wish wish = new Wish();
                 wish.setName(mNameInfo.getText().toString());
                 wish.setPrice(mWishPrice.getText().toString());
                 wish.setLink(mWebsiteTxt.getText().toString());
                 wish.setDescription(mDescriptionTxt.getText().toString());
-                if(rating == 0){
+                if (rating == 0) {
                     wish.setRating(1);
                 } else {
                     wish.setRating(rating);
@@ -178,19 +173,17 @@ public class AddWishFragment extends Fragment {
                 mWishImage.setDrawingCacheEnabled(true);
                 mWishImage.buildDrawingCache();
                 Bitmap bitmap = mWishImage.getDrawingCache();
-                if(bitmap == null){
+                if (bitmap == null) {
                     bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.giftdefault);
                 }
 
                 databaseHelper.createWish(wish, bitmap, new ICallBackDatabase() {
                     @Override
                     public void onFinishWishList(Wishlist wList) {
-
                     }
 
                     @Override
                     public void onFinishWishListList(ArrayList list) {
-
                     }
 
                     @Override
@@ -202,40 +195,29 @@ public class AddWishFragment extends Fragment {
 
                     @Override
                     public void onFinnishGetWishes(ArrayList list) {
-
                     }
-
                 });
             }
-
-
-        }   else {
+        } else {
             mNameInfo.setError("Name is required!");
             scrollView.fullScroll(ScrollView.FOCUS_UP);
         }
-
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("abc", "onResume: got image from bundle");
-        if(MainActivity.mSelectedImage != null){
+        if (MainActivity.mSelectedImage != null) {
             mWishImage.setImageBitmap(MainActivity.mSelectedImage);
-            Log.d("abc", "onResume: set image on the view ");
-        }else {
+        } else {
             mCameraIcon.setVisibility(View.VISIBLE);
             mWishImage.setVisibility(View.GONE);
         }
         Log.d(TAG, "resumed");
-
     }
 
 
-
     private void openPhotoDialog() {
-        Log.d(TAG, "openPhotoDialog: Opening dialog to choose a photo");
         mWishImage.setVisibility(View.VISIBLE);
         ChangePhotoDialog dialog = new ChangePhotoDialog();
         dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
@@ -245,26 +227,23 @@ public class AddWishFragment extends Fragment {
     public boolean checkStringIfNull(String string) {
         return !string.equals("");
     }
-    private Wishlist getWishListFromBundle() {
 
+    private Wishlist getWishListFromBundle() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             return bundle.getParcelable("WishList");
         } else {
             return null;
         }
-
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
             mOnWishCreated = (AddWishFragment.OnWishCreated) getActivity();
-
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
-
         }
     }
-
 }

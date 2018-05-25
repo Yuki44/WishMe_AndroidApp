@@ -2,15 +2,12 @@ package com.easv.wishme.wishme_android.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,27 +15,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
 import com.easv.wishme.wishme_android.R;
 import com.easv.wishme.wishme_android.dal.DatabaseHelper;
-import com.easv.wishme.wishme_android.dialogfragments.ChangePhotoDialog;
 import com.easv.wishme.wishme_android.entities.User;
 import com.easv.wishme.wishme_android.entities.Wish;
 import com.easv.wishme.wishme_android.entities.Wishlist;
 import com.easv.wishme.wishme_android.interfaces.ICallBack;
 import com.easv.wishme.wishme_android.interfaces.ICallBackDatabase;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -53,6 +43,7 @@ public class WishDetailsFragment extends Fragment {
     private ProgressBar mImageProgressbar, mProgressBar;
     private DatabaseHelper databaseHelper;
     private RelativeLayout mContent;
+
     public WishDetailsFragment() {
         super();
         setArguments(new Bundle());
@@ -61,6 +52,7 @@ public class WishDetailsFragment extends Fragment {
     public interface UpdateWish {
         void getWishFromDetailView(Wish wish);
     }
+
     UpdateWish mUpdateWish;
 
     @Nullable
@@ -107,13 +99,11 @@ public class WishDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.delete_wish_menu, menu);
-        // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.delete_wish:
                 deleteWish(wishToDisplay);
@@ -130,12 +120,10 @@ public class WishDetailsFragment extends Fragment {
         databaseHelper.deleteWish(wish, new ICallBackDatabase() {
             @Override
             public void onFinishWishList(Wishlist wList) {
-
             }
 
             @Override
             public void onFinishWishListList(ArrayList list) {
-
             }
 
             @Override
@@ -147,7 +135,6 @@ public class WishDetailsFragment extends Fragment {
 
             @Override
             public void onFinnishGetWishes(ArrayList list) {
-
             }
         });
     }
@@ -162,12 +149,10 @@ public class WishDetailsFragment extends Fragment {
         databaseHelper.getWishImage(wishToDisplay.getId(), new ICallBack() {
             @Override
             public void onFinish(User user) {
-
             }
 
             @Override
             public void onFinishFireBaseUser(FirebaseUser user) {
-
             }
 
             @Override
@@ -178,6 +163,7 @@ public class WishDetailsFragment extends Fragment {
             }
         });
     }
+
     private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
     }
@@ -187,15 +173,13 @@ public class WishDetailsFragment extends Fragment {
     }
 
     private void initProgressBar() {
-
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
-
-    private Wish getWishFromBundle(){
+    private Wish getWishFromBundle() {
         Log.d(TAG, "getUserFromBundle: " + getArguments());
         Bundle bundle = this.getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             return bundle.getParcelable("WishDetails");
         } else {
             return null;
@@ -206,15 +190,13 @@ public class WishDetailsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mUpdateWish = (WishDetailsFragment.UpdateWish)  getActivity();
-
+            mUpdateWish = (WishDetailsFragment.UpdateWish) getActivity();
         } catch (ClassCastException e) {
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
-
         }
     }
 
-    private void showImageProgressBar(){
+    private void showImageProgressBar() {
         mImageProgressbar.setVisibility(View.VISIBLE);
     }
 
@@ -223,9 +205,6 @@ public class WishDetailsFragment extends Fragment {
     }
 
     private void initImageProgressBar() {
-
         mImageProgressbar.setVisibility(View.INVISIBLE);
     }
-
-
 }

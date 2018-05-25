@@ -34,16 +34,15 @@ public class EditWishlistDialog extends DialogFragment {
     private LinearLayout linear;
     private Wishlist listFromHome;
 
-
     public EditWishlistDialog() {
         super();
         setArguments(new Bundle());
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_wishlist_edit, container, false);
-
         mNewWishlistName = (EditText) view.findViewById(R.id.newWishlistNameTX);
         listFromHome = getWishListFromBundle();
         db = FirebaseFirestore.getInstance();
@@ -55,7 +54,6 @@ public class EditWishlistDialog extends DialogFragment {
         mNewWishlistName.setText(oldWishlistName);
         mNewWishlistName.setSelection(mNewWishlistName.getText().length());
         initProgressBar();
-
 
         final TextView saveDialog = view.findViewById(R.id.dialogSave);
         saveDialog.setOnClickListener(new View.OnClickListener() {
@@ -80,20 +78,16 @@ public class EditWishlistDialog extends DialogFragment {
 
                         @Override
                         public void onFinishWish(Wish wish) {
-
                         }
 
                         @Override
                         public void onFinnishGetWishes(ArrayList list) {
-
                         }
                     });
                 }
             }
         });
 
-
-        // Cancel button for closing the dialog
         TextView cancelDialog = view.findViewById(R.id.dialogCancel);
         cancelDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +96,6 @@ public class EditWishlistDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
         return view;
     }
 
@@ -122,18 +115,15 @@ public class EditWishlistDialog extends DialogFragment {
     }
 
     private void initProgressBar() {
-
         mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     private Wishlist getWishListFromBundle() {
-
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             return bundle.getParcelable("WishList");
         } else {
             return null;
         }
-
     }
 }
